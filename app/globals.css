@@ -1,26 +1,253 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+::-webkit-scrollbar {
+  @apply bg-blue-950;
+  width: 8px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+::-webkit-scrollbar-thumb {
+  @apply bg-yellow-500 rounded-sm;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-yellow-400;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: #eab308 #1e293b;
+}
+
+div,
+span {
+  caret-color: transparent;
+}
+
+input,
+textarea {
+  caret-color: white;
+  /* TODO: Find common class names for inputs and make inputs uniform across the app */
+}
+
+.glossary-link {
+  color: #4f7ee3;
+  font-weight: bold;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.glossary-panel {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 350px;
+  height: 100%;
+  background: #1e1e1e;
+  color: white;
+  box-shadow: -4px 0 10px rgba(0, 0, 0, 0.4);
+  padding: 20px;
+  z-index: 1000;
+}
+
+table {
+  @apply w-full text-sm text-gray-200 rounded-xl overflow-hidden border border-blue-900/40 shadow-md from-slate-900/90 to-black/95 backdrop-blur-sm border-separate min-w-full;
+  background: radial-gradient(ellipse at center, rgba(30, 40, 60, 0.9), rgba(5, 10, 20, 0.95));
+}
+
+thead {
+  @apply bg-gradient-to-b from-slate-800/70 to-slate-900/80 border-b border-blue-800/40;
+}
+
+th {
+  @apply px-4 py-3 font-semibold text-amber-500 text-xs text-center uppercase tracking-wider;
+}
+
+td {
+  @apply px-4 py-2 border-t border-slate-700/50 text-center;
+}
+
+th:first-child {
+  @apply top-0;
+}
+
+th:first-child,
+td:first-child {
+  @apply left-0 z-20 sticky;
+}
+
+tr:nth-child(even) {
+  @apply bg-gray-800/30;
+}
+
+tr:nth-child(odd) {
+  @apply bg-gray-900/20;
+}
+
+table:not(.readonly):not(.disabled) tr:not(.disabled):hover {
+  @apply bg-gray-700/20 transition-colors;
+}
+
+/* Disable hover effect if readonly or disabled */
+table.readonly tr:hover,
+table.disabled tr:hover,
+tr.readonly:hover,
+tr.disabled:hover {
+  @apply cursor-default;
+}
+
+tr.selected {
+  @apply relative bg-gradient-to-r from-blue-900/40 to-indigo-800/30 border border-blue-500/40 shadow-inner shadow-blue-800/50;
+}
+
+tr.selected td {
+  @apply font-semibold text-amber-300;
+}
+
+tr.disabled:not(.selected) {
+  @apply opacity-40 cursor-not-allowed bg-gray-900/40 border border-slate-700/40;
+}
+
+tr.disabled:not(.selected) td {
+  @apply text-gray-500;
+}
+
+caption {
+  @apply mb-2 font-semibold text-amber-400 text-lg;
+}
+
+.table-container {
+  @apply overflow-x-auto rounded-lg border border-gray-700/50;
+  backdrop-filter: blur(4px);
+}
+
+.clip-triangle {
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.clip-hexagon {
+  clip-path: polygon(25% 5%, 75% 5%, 100% 50%, 75% 95%, 25% 95%, 0% 50%);
+}
+
+.clip-octagon {
+  clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+}
+
+.clip-decagon {
+  clip-path: polygon(50% 0%, 80% 10%, 95% 35%, 95% 65%, 80% 90%, 50% 100%, 20% 90%, 5% 65%, 5% 35%, 20% 10%);
+}
+
+.clip-dodecagon {
+  clip-path: polygon(35% 0%, 65% 0%, 90% 20%, 100% 50%, 90% 80%, 65% 100%, 35% 100%, 10% 80%, 0% 50%, 10% 20%);
+}
+
+.clip-icosagon {
+  clip-path: polygon(
+    50% 0%,
+    65% 2%,
+    80% 10%,
+    90% 25%,
+    98% 40%,
+    100% 50%,
+    98% 60%,
+    90% 75%,
+    80% 90%,
+    65% 98%,
+    50% 100%,
+    35% 98%,
+    20% 90%,
+    10% 75%,
+    2% 60%,
+    0% 50%,
+    2% 40%,
+    10% 25%,
+    20% 10%,
+    35% 2%
+  );
+}
+
+ul {
+  @apply list-disc list-inside;
+}
+
+/* ✨ Character Sheet Box Style */
+.sheet-box {
+  @apply relative bg-gradient-to-b from-amber-50 to-yellow-100 shadow-md border-2 border-yellow-900 rounded-xl overflow-hidden;
+}
+
+/* Golden glowing outer rim */
+.sheet-box::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(145deg, #d4af37 0%, #b8860b 50%, #8b6f24 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.9;
+  z-index: 0; /* ✅ ensure the frame sits behind the inner content */
+}
+
+/* Inner panel — now sits above the glowing border */
+.sheet-inner {
+  @apply relative z-10 rounded-lg p-2 bg-gradient-to-b from-amber-100/80 to-yellow-50/60 backdrop-blur-sm;
+}
+
+.skill-bubble {
+  @apply shadow-sm border border-yellow-700 rounded-full w-4 h-4 transition-all duration-150;
+}
+
+.skill-bubble-empty {
+  background: radial-gradient(circle at 30% 30%, #fdf6d9 0%, #e7d9a9 70%, #d2b874 100%);
+  @apply border-amber-600;
+}
+
+.skill-bubble-filled {
+  background: radial-gradient(circle at 30% 30%, #fff5b1 0%, #e5b100 60%, #a17400 100%);
+  box-shadow: inset 0 0 2px rgba(255, 255, 255, 0.4), 0 0 4px rgba(255, 215, 0, 0.5), 0 1px 2px rgba(0, 0, 0, 0.3);
+  @apply border-yellow-900;
+}
+
+.sheet-shield {
+  @apply stroke-yellow-300;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.4));
+  transform: translateZ(0); /* ensures GPU rendering */
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.sheet-shield > path {
+  fill: url(#shieldGradient); /* metallic gold gradient */
+}
+
+/* Fancy Text */
+
+.header-xl {
+  @apply bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600 drop-shadow font-bold text-transparent text-4xl;
+}
+.header-lg {
+  @apply bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600 drop-shadow font-bold text-transparent text-2xl;
+}
+
+.header {
+  @apply font-semibold text-amber-400 text-xl;
+}
+
+.paragraph {
+  @apply text-gray-300 leading-relaxed;
+}
+
+.card {
+  @apply shadow-lg backdrop-blur-sm p-6 border border-gray-400 rounded-xl;
+}
+
+form {
+  @apply flex flex-col gap-1;
+}
+
+form > input {
+  @apply p-2 border border-gray-300 rounded w-full;
 }
