@@ -1,8 +1,9 @@
 "use server";
-
-import prisma from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import { z } from "zod";
-
+import { hash } from "bcrypt-ts";
+import { redirect } from "next/navigation";
+const saltRounds = 10;
 const loginSchema = z.object({
   email: z.email(),
   password: z.string().min(6, "Password must be at least 6 characters"),
@@ -67,13 +68,14 @@ export async function registerUser(initialState: any, formData: FormData) {
     return {
       errors: ["User already exists, try logging in"],
     };
+  } else {
+    const hashedPassword = await hash(validatedFields.data.email, saltRounds);
+    await prisma.user.create({
+      data: {
+        email: validatedFields.data.email,
+        passwordHash: hashedPassword,
+      },
+    });
+    redirect("/dashboard");
   }
-  // else {
-  //   await prisma.user.create({
-  //     data: {
-  //       email: validatedFields.data.email,
-  //       passwordHash:
-  //     }
-  //   })
-  // }
 }
