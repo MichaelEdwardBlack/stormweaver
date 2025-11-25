@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FeatureCard } from "./components/FeatureCard";
+import { FeatureCard } from "../components/FeatureCard";
 import { useSession } from "next-auth/react";
 
 export default function HomePage() {

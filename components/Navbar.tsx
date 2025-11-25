@@ -16,7 +16,7 @@ export function Navbar() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link href="/" className="font-bold text-amber-400 text-2xl tracking-wide">
-            Cosmere Forge
+            StormWeaver
           </Link>
 
           {/* Desktop Nav */}

@@ -7,7 +7,7 @@ import {
   ItemAcquisition,
   Attribute,
   Skill,
-} from "@/app/generated/prisma/client";
+} from "@/lib/generated/prisma/client";
 import { prisma } from "@/lib/prisma";
 
 async function main() {

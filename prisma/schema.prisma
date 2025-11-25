@@ -1,6 +1,6 @@
 generator client {
   provider = "prisma-client"
-  output   = "../app/generated/prisma"
+  output   = "../lib/generated/prisma"
 }
 
 datasource db {
@@ -8,70 +8,63 @@ datasource db {
 }
 
 model Account {
-  id                 String    @id @default(cuid())
-  userId             String
-  providerType       String
-  providerId         String
-  providerAccountId  String
-  refreshToken       String?
-  accessToken        String?
-  accessTokenExpires DateTime?
-  createdAt          DateTime  @default(now())
-  updatedAt          DateTime  @updatedAt
-  user               User      @relation(fields: [userId], references: [id])
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([providerId, providerAccountId])
+  @@id([provider, providerAccountId])
 }
 
 model Session {
-  id           String   @id @default(cuid())
+  sessionToken String   @unique
   userId       String
   expires      DateTime
-  sessionToken String   @unique
-  accessToken  String   @unique
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
-  user         User     @relation(fields: [userId], references: [id])
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model User {
-  id           String        @id @default(cuid())
-  email        String        @unique
-  passwordHash String?
-  name         String?
-  imageUrl     String?
-  characters   Character[]
-  settings     UserSettings?
-  accounts     Account[]
-  sessions     Session[]
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
+  id            String        @id @default(cuid())
+  email         String        @unique
+  emailVerified DateTime?
+  passwordHash  String?
+  name          String?
+  image         String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  accounts      Account[]
+  characters    Character[]
+  sessions      Session[]
+  settings      UserSettings?
 }
 
 model UserSettings {
-  id     String @id @default(uuid())
-  userId String @unique
-  user   User   @relation(fields: [userId], references: [id])
-
+  id            String   @id @default(uuid())
+  userId        String   @unique
   diceTextColor String   @default("black")
   diceColor     String   @default("yellow")
   treeView      TreeView
+  user          User     @relation(fields: [userId], references: [id])
 }
 
-model VerificationRequest {
-  id         String   @id @default(cuid())
+model VerificationToken {
   identifier String
-  token      String   @unique
+  token      String
   expires    DateTime
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
 
-  @@unique([identifier, token])
-}
-
-enum TreeView {
-  broad
-  tall
+  @@id([identifier, token])
 }
 
 model Character {
@@ -82,16 +75,179 @@ model Character {
   createdAt  DateTime             @default(now())
   updatedAt  DateTime             @updatedAt
   ancestry   Ancestry?
+  userId     String
+  user       User                 @relation(fields: [userId], references: [id])
   attributes CharacterAttribute[]
-  skills     CharacterSkill[]
-  talents    CharacterTalent[]
+  expertises CharacterExpertise[]
   equipment  CharacterItem[]
   paths      CharacterPath[]
-  expertises CharacterExpertise[]
+  skills     CharacterSkill[]
   story      CharacterStory?
+  talents    CharacterTalent[]
+}
 
-  userId String
-  user   User   @relation(fields: [userId], references: [id])
+model CharacterAttribute {
+  id          String    @id @default(cuid())
+  characterId String
+  attribute   Attribute
+  value       Int       @default(0)
+  character   Character @relation(fields: [characterId], references: [id])
+
+  @@unique([characterId, attribute])
+}
+
+model CharacterSkill {
+  id          String    @id @default(cuid())
+  skill       Skill
+  characterId String
+  rank        Int       @default(0)
+  character   Character @relation(fields: [characterId], references: [id])
+
+  @@unique([characterId, skill])
+}
+
+model Talent {
+  id                 String              @id @default(cuid())
+  name               String
+  description        String
+  actionCost         ActionCost
+  characterTalents   CharacterTalent[]
+  modifierSource     ModifierSource?
+  requiredOther      OtherRequirement[]
+  requiredSkills     SkillRequirement[]
+  talentRequirements TalentRequirement[] @relation("RequiredTalents")
+  requiredTalents    TalentRequirement[]
+}
+
+model TalentRequirement {
+  id         Int    @id @default(autoincrement())
+  talentId   String
+  requiredId String
+  required   Talent @relation("RequiredTalents", fields: [requiredId], references: [id])
+  talent     Talent @relation(fields: [talentId], references: [id])
+}
+
+model SkillRequirement {
+  id       Int    @id @default(autoincrement())
+  talentId String
+  skillId  String
+  minRank  Int
+  talent   Talent @relation(fields: [talentId], references: [id])
+}
+
+model OtherRequirement {
+  id       Int     @id @default(autoincrement())
+  talentId String
+  key      String
+  value    String?
+  talent   Talent  @relation(fields: [talentId], references: [id])
+}
+
+model CharacterTalent {
+  id               String    @id @default(cuid())
+  isAncestryTalent Boolean   @default(false)
+  applyModifiers   Boolean   @default(true)
+  talentId         String
+  characterId      String
+  character        Character @relation(fields: [characterId], references: [id])
+  talent           Talent    @relation(fields: [talentId], references: [id])
+
+  @@unique([characterId, talentId])
+}
+
+model ItemTemplate {
+  id             String          @id @default(cuid())
+  name           String
+  type           ItemType
+  description    String?
+  price          Int?
+  acquisition    ItemAcquisition @default(purchase)
+  weight         Float
+  acquireNote    String?
+  characterItems CharacterItem[]
+  modifierSource ModifierSource?
+}
+
+model CharacterItem {
+  id          String       @id @default(cuid())
+  characterId String
+  equipped    Boolean      @default(false)
+  itemId      String
+  character   Character    @relation(fields: [characterId], references: [id])
+  item        ItemTemplate @relation(fields: [itemId], references: [id])
+}
+
+model CharacterPath {
+  id             String    @id @default(cuid())
+  path           Path
+  characterId    String
+  level          Int
+  isHeroic       Boolean
+  isRadiant      Boolean
+  isSinger       Boolean
+  isStartingPath Boolean
+  character      Character @relation(fields: [characterId], references: [id])
+}
+
+model CharacterExpertise {
+  id          String        @id @default(cuid())
+  name        String
+  type        ExpertiseType
+  isOrigin    Boolean
+  characterId String
+  character   Character     @relation(fields: [characterId], references: [id])
+}
+
+model CharacterStory {
+  id                   String          @id @default(cuid())
+  purpose              String
+  obstacle             String
+  occupation           String
+  relationships        String
+  loyalties            String
+  personality          String
+  appearance           String
+  possibleRadiantOrder String
+  other                String
+  characterId          String          @unique
+  goals                CharacterGoal[]
+  character            Character       @relation(fields: [characterId], references: [id])
+}
+
+model CharacterGoal {
+  id          String         @id @default(cuid())
+  description String
+  progress    Int            @default(0)
+  storyId     String
+  story       CharacterStory @relation(fields: [storyId], references: [id])
+}
+
+model Modifier {
+  id         String             @id @default(cuid())
+  sourceId   String
+  targetType ModifierTargetType
+  targetKey  String?
+  operator   ModifierOperator
+  value      Int?
+  diceValue  String?
+  damageType String?
+  createdAt  DateTime           @default(now())
+  source     ModifierSource     @relation(fields: [sourceId], references: [id])
+}
+
+model ModifierSource {
+  id        String        @id @default(cuid())
+  type      SourceType
+  itemId    String?       @unique
+  talentId  String?       @unique
+  modifiers Modifier[]
+  item      ItemTemplate? @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  talent    Talent?       @relation(fields: [talentId], references: [id], onDelete: Cascade)
+}
+
+enum TreeView {
+  broad
+  tall
 }
 
 enum Ancestry {
@@ -105,17 +261,6 @@ enum Visibility {
   public
 }
 
-model CharacterAttribute {
-  id          String    @id @default(cuid())
-  characterId String
-  attribute   Attribute
-  value       Int       @default(0)
-
-  character Character @relation(fields: [characterId], references: [id])
-
-  @@unique([characterId, attribute])
-}
-
 enum Attribute {
   strength
   speed
@@ -123,17 +268,6 @@ enum Attribute {
   willpower
   awareness
   presence
-}
-
-model CharacterSkill {
-  id          String @id @default(cuid())
-  skill       Skill
-  characterId String
-  rank        Int    @default(0)
-
-  character Character @relation(fields: [characterId], references: [id])
-
-  @@unique([characterId, skill])
 }
 
 enum Skill {
@@ -167,19 +301,6 @@ enum Skill {
   transportation
 }
 
-model Talent {
-  id                 String              @id @default(cuid())
-  name               String
-  description        String
-  actionCost         ActionCost
-  requiredTalents    TalentRequirement[]
-  requiredSkills     SkillRequirement[]
-  requiredOther      OtherRequirement[]
-  modifierSource     ModifierSource?
-  characterTalents   CharacterTalent[]
-  talentRequirements TalentRequirement[] @relation("RequiredTalents")
-}
-
 enum ActionCost {
   ONE_ACTION
   TWO_ACTIONS
@@ -188,58 +309,6 @@ enum ActionCost {
   ALWAYS_ACTIVE
   SPECIAL_ACTION
   REACTION
-}
-
-model TalentRequirement {
-  id       Int    @id @default(autoincrement())
-  talent   Talent @relation(fields: [talentId], references: [id])
-  talentId String
-
-  required   Talent @relation("RequiredTalents", fields: [requiredId], references: [id])
-  requiredId String
-}
-
-model SkillRequirement {
-  id       Int    @id @default(autoincrement())
-  talent   Talent @relation(fields: [talentId], references: [id])
-  talentId String
-
-  skillId String
-  minRank Int
-}
-
-model OtherRequirement {
-  id       Int    @id @default(autoincrement())
-  talent   Talent @relation(fields: [talentId], references: [id])
-  talentId String
-
-  key   String
-  value String?
-}
-
-model CharacterTalent {
-  id               String    @id @default(cuid())
-  isAncestryTalent Boolean   @default(false)
-  applyModifiers   Boolean   @default(true)
-  talentId         String
-  talent           Talent    @relation(fields: [talentId], references: [id])
-  characterId      String
-  character        Character @relation(fields: [characterId], references: [id])
-
-  @@unique([characterId, talentId]) // prevents duplicate talents
-}
-
-model ItemTemplate {
-  id             String          @id @default(cuid())
-  name           String
-  type           ItemType
-  description    String?
-  price          Int?
-  acquisition    ItemAcquisition @default(purchase)
-  weight         Float
-  acquireNote    String?
-  modifierSource ModifierSource?
-  characterItems CharacterItem[]
 }
 
 enum ItemType {
@@ -257,38 +326,14 @@ enum ItemAcquisition {
   startingKit
 }
 
-model CharacterItem {
-  id          String       @id @default(cuid())
-  characterId String
-  character   Character    @relation(fields: [characterId], references: [id])
-  equipped    Boolean      @default(false)
-  itemId      String
-  item        ItemTemplate @relation(fields: [itemId], references: [id])
-}
-
-model CharacterPath {
-  id             String    @id @default(cuid())
-  path           Path
-  characterId    String
-  level          Int
-  isHeroic       Boolean
-  isRadiant      Boolean
-  isSinger       Boolean
-  isStartingPath Boolean
-  character      Character @relation(fields: [characterId], references: [id])
-}
-
 enum Path {
-  // heroic paths
   agent
   envoy
   hunter
   leader
   scholar
   warrior
-  // singer
   singer
-  // radiant paths
   dustbringer
   edgedancer
   elsecaller
@@ -300,45 +345,12 @@ enum Path {
   windrunner
 }
 
-model CharacterExpertise {
-  id          String        @id @default(cuid())
-  name        String
-  type        ExpertiseType
-  isOrigin    Boolean
-  characterId String
-  character   Character     @relation(fields: [characterId], references: [id])
-}
-
 enum ExpertiseType {
   armor
   cultural
   utility
   specialty
   weapon
-}
-
-model CharacterStory {
-  id                   String          @id @default(cuid())
-  purpose              String
-  obstacle             String
-  goals                CharacterGoal[]
-  occupation           String
-  relationships        String
-  loyalties            String
-  personality          String
-  appearance           String
-  possibleRadiantOrder String
-  other                String
-  characterId          String          @unique
-  character            Character       @relation(fields: [characterId], references: [id])
-}
-
-model CharacterGoal {
-  id          String         @id @default(cuid())
-  description String
-  progress    Int            @default(0)
-  storyId     String
-  story       CharacterStory @relation(fields: [storyId], references: [id])
 }
 
 enum ModifierTargetType {
@@ -357,40 +369,12 @@ enum ModifierTargetType {
 }
 
 enum ModifierOperator {
-  ADD // +2
-  MULTIPLY // x1.5
-  OVERRIDE // set to specific value
-  DIE_STEP // e.g. d6 -> d8
-  TIER_SCALING // add tier * value
-  LEVEL_SCALING // add level * value
-}
-
-model Modifier {
-  id       String         @id @default(cuid())
-  sourceId String
-  source   ModifierSource @relation(fields: [sourceId], references: [id])
-
-  targetType ModifierTargetType
-  targetKey  String? // "strength", "acrobatics", "longsword", etc.
-
-  operator   ModifierOperator
-  value      Int? // e.g. +2 or +1 (for die step)
-  diceValue  String? // e.g. "1d6", "2d8"
-  damageType String? // "keen", "cold", "slashing"
-
-  createdAt DateTime @default(now())
-}
-
-model ModifierSource {
-  id       String     @id @default(cuid())
-  type     SourceType
-  itemId   String?    @unique
-  talentId String?    @unique
-
-  item   ItemTemplate? @relation(fields: [itemId], references: [id], onDelete: Cascade)
-  talent Talent?       @relation(fields: [talentId], references: [id], onDelete: Cascade)
-
-  modifiers Modifier[]
+  ADD
+  MULTIPLY
+  OVERRIDE
+  DIE_STEP
+  TIER_SCALING
+  LEVEL_SCALING
 }
 
 enum SourceType {

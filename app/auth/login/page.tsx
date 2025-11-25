@@ -2,30 +2,21 @@
 
 import { useActionState } from "react";
 import Link from "next/link";
-import { MotionButton } from "@/app/components/MotionButton";
-import { loginUser } from "@/app/actions/auth";
-
-const initialState = {
-  email: "",
-  password: "",
-  errors: [],
-};
+import { MotionButton } from "@/components/MotionButton";
+import { loginUser } from "@/lib/actions/auth";
 
 export const LoginPage = () => {
-  const [state, formAction, pending] = useActionState(loginUser, initialState);
+  const [state, action, pending] = useActionState(loginUser, undefined);
   return (
     <div className="w-full max-w-sm card">
       <div className="pb-3 font-bold text-2xl">Login</div>
-      <form action={formAction}>
+      <form action={action}>
         <label>Email</label>
         <input id="email" name="email" />
+        {state?.errors?.email && <p className="text-red-400">{state.errors.email}</p>}
         <label>Password</label>
         <input id="password" name="password" type="password" />
-        <ul className="text-red-400">
-          {state?.errors.map((error, i) => (
-            <li key={i}>{error}</li>
-          ))}
-        </ul>
+        {state?.errors?.password && <p className="text-red-400">{state.errors.password}</p>}
         <MotionButton
           className="bg-blue-500 mt-4 px-1 py-2 rounded-lg font-semibold text-lg hover:blue-600"
           disabled={pending}
