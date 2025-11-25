@@ -6,6 +6,7 @@ import { compare } from "bcrypt-ts";
 import { loginSchema } from "./schemas";
 import { encode as defaultEncode } from "next-auth/jwt";
 import { v4 as uuid } from "uuid";
+import { redirect } from "next/navigation";
 
 declare module "next-auth" {
   /**
@@ -28,6 +29,7 @@ declare module "next-auth/jwt" {
 
 const prismaAdapter = PrismaAdapter(prisma);
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  debug: true,
   adapter: prismaAdapter,
   providers: [
     Credentials({
@@ -37,7 +39,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const user = await prisma.user.findFirstOrThrow({
           where: { email: validatedFields.email },
         });
+        console.log("authorize user", user);
         const isMatch = await compare(validatedFields.password, user.passwordHash as string);
+        console.log("isMatch", isMatch);
         if (isMatch) {
           return user;
         } else {
@@ -48,6 +52,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   ],
   callbacks: {
     async jwt({ token, account }) {
+      console.log("async jwt", token, account);
       if (account?.provider === "credentials") {
         token.credentials = true;
       }
@@ -67,6 +72,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
   jwt: {
     encode: async function (params) {
+      console.log("jwt encode", params);
       if (params.token?.credentials) {
         const sessionToken = uuid();
 

@@ -4,6 +4,7 @@ import { z } from "zod";
 import { hash } from "bcrypt-ts";
 import { redirect } from "next/navigation";
 import { LoginFormState, loginSchema, RegisterFormState, registerSchema } from "../schemas";
+import { signIn } from "@/lib/auth";
 
 const SALT_LENGTH = 10;
 
@@ -18,6 +19,15 @@ export async function loginUser(state: LoginFormState, formData: FormData) {
       errors: z.flattenError(validatedFields.error).fieldErrors,
     };
   }
+  try {
+    await signIn("credentials", formData);
+  } catch (e: any) {
+    console.log("error", e);
+    return {
+      message: e,
+    };
+  }
+  redirect("/dashboard");
 }
 
 export async function registerUser(state: RegisterFormState, formData: FormData) {
@@ -45,7 +55,7 @@ export async function registerUser(state: RegisterFormState, formData: FormData)
       message: "An error occurred while creating your account.",
     };
   } else {
-    const hashedPassword = await hash(validatedFields.data.email, SALT_LENGTH);
+    const hashedPassword = await hash(validatedFields.data.password, SALT_LENGTH);
     await prisma.user.create({
       data: {
         name: validatedFields.data.name,
