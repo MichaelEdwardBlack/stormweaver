@@ -1,5 +1,181 @@
 @import "tailwindcss";
+/* Enable auto system dark mode */
+:root {
+  color-scheme: light dark;
+}
 
+@theme {
+  /* ----- COLOR PALETTE: LIGHT MODE ----- */
+  /* ===== PRIMARY: Purple → Blue (gradient look) ===== */
+  --color-primary-50: #f5f3ff;
+  --color-primary-100: #ede9fe;
+  --color-primary-200: #ddd6fe;
+  --color-primary-300: #c4b5fd;
+  --color-primary-400: #a78bfa;
+  --color-primary-500: #8b5cf6;/* core purple */
+  --color-primary-600: #6d28d9;
+  --color-primary-700: #4c1d95;
+  --color-primary-800: #3b1774;
+  --color-primary-900: #2a1252;
+
+  /* ===== SECONDARY (cool blue complement) ===== */
+  --color-secondary-50: #eff6ff;
+  --color-secondary-100: #dbeafe;
+  --color-secondary-200: #bfdbfe;
+  --color-secondary-300: #93c5fd;
+  --color-secondary-400: #60a5fa;
+  --color-secondary-500: #3b82f6;
+  --color-secondary-600: #2563eb;
+  --color-secondary-700: #1d4ed8;
+  --color-secondary-800: #1e3a8a;
+  --color-secondary-900: #172554;
+
+  /* ===== ACCENT: Amber / Golden (the yellow you liked) ===== */
+  --color-accent-50: #fffbeb;
+  --color-accent-100: #fef3c7;
+  --color-accent-200: #fde68a;
+  --color-accent-300: #fcd34d;
+  --color-accent-400: #fbbf24;
+  --color-accent-500: #f59e0b; /* core amber */
+  --color-accent-600: #d97706;
+  --color-accent-700: #b45309;
+  --color-accent-800: #92400e;
+  --color-accent-900: #78350f;
+
+  /* ===== Background gradient ===== */
+  --gradient-primary: linear-gradient(135deg,
+      var(--color-primary-700),
+      var(--color-secondary-600));
+
+  --color-blue-50: #f0f7ff;
+  --color-blue-100: #d6e9ff;
+  --color-blue-200: #add3ff;
+  --color-blue-300: #7fbaff;
+  --color-blue-400: #4f9eff;
+  --color-blue-500: #1d82ff;
+  --color-blue-600: #0f66db;
+  --color-blue-700: #0a4ca9;
+  --color-blue-800: #063377;
+  --color-blue-900: #031b46;
+
+  --color-red-50: #fef7f5;
+  --color-red-100: #fde6df;
+  --color-red-200: #f9c7b6;
+  --color-red-300: #f3a48a;
+  --color-red-400: #ec7f5c;
+  --color-red-500: #e4582d;
+  --color-red-600: #c03e1c;
+  --color-red-700: #8f2c13;
+  --color-red-800: #5e1b0b;
+  --color-red-900: #2f0d04;
+
+  --color-green-50: #f4fdf7;
+  --color-green-100: #d7fbe4;
+  --color-green-200: #b2f6cd;
+  --color-green-300: #82efb0;
+  --color-green-400: #51e591;
+  --color-green-500: #22db71;
+  --color-green-600: #16b356;
+  --color-green-700: #0e8a3f;
+  --color-green-800: #085f2a;
+  --color-green-900: #033616;
+
+  /* Neutral (grays) */
+  --color-neutral-50: #fafafa;
+  --color-neutral-100: #f4f4f5;
+  --color-neutral-200: #e4e4e7;
+  --color-neutral-300: #d4d4d8;
+  --color-neutral-400: #a1a1aa;
+  --color-neutral-500: #71717a;
+  --color-neutral-600: #52525b;
+  --color-neutral-700: #3f3f46;
+  --color-neutral-800: #27272a;
+  --color-neutral-900: #18181b;
+
+  /* Semantic colors */
+  --color-success: #16a34a;
+  --color-warning: #eab308;
+  --color-error: #dc2626;
+}
+
+/* ----- DARK MODE OVERRIDES ----- */
+@media (prefers-color-scheme: dark) {
+  @theme {
+    /* Purple-blue deepened */
+    --color-primary-500: #7c3aed;
+    --color-primary-600: #5b21b6;
+    --color-primary-700: #4c1d95;
+    --color-primary-800: #3a166e;
+    --color-primary-900: #2a1052;
+  
+    /* Secondary deep blues */
+    --color-secondary-500: #2563eb;
+    --color-secondary-600: #1e4fd1;
+    --color-secondary-700: #1a3ea5;
+    --color-secondary-800: #152f7a;
+    --color-secondary-900: #102153;
+  
+    /* Amber shifts warmer in dark mode */
+    --color-accent-500: #fbbf24;
+    --color-accent-600: #d97706;
+    --color-accent-700: #a34b03;
+    --color-accent-800: #743302;
+    --color-accent-900: #4a2101;
+  
+    /* Background gradient for dark mode */
+    --gradient-primary: linear-gradient(135deg,
+        var(--color-primary-900),
+        var(--color-secondary-800));
+        
+    --color-blue-50: #0b1624;
+    --color-blue-100: #132642;
+    --color-blue-200: #1b3b66;
+    --color-blue-300: #22528d;
+    --color-blue-400: #2a6ab5;
+    --color-blue-500: #3282de;
+    --color-blue-600: #5fa2f7;
+    --color-blue-700: #96c3ff;
+    --color-blue-800: #c6dfff;
+    --color-blue-900: #eaf4ff;
+
+    --color-red-50: #24120c;
+    --color-red-100: #3f1c12;
+    --color-red-200: #5b2718;
+    --color-red-300: #7a341f;
+    --color-red-400: #9c4429;
+    --color-red-500: #bf5635;
+    --color-red-600: #e07154;
+    --color-red-700: #f9a789;
+    --color-red-800: #ffd4c5;
+    --color-red-900: #fff0ec;
+
+    --color-green-50: #0b1d14;
+    --color-green-100: #123321;
+    --color-green-200: #184a30;
+    --color-green-300: #206142;
+    --color-green-400: #2c7e57;
+    --color-green-500: #3e9b71;
+    --color-green-600: #63c693;
+    --color-green-700: #98e5bc;
+    --color-green-800: #c8f7db;
+    --color-green-900: #ebfdf3;
+
+    --color-neutral-50: #18181b;
+    --color-neutral-100: #27272a;
+    --color-neutral-200: #3f3f46;
+    --color-neutral-300: #52525b;
+    --color-neutral-400: #71717a;
+    --color-neutral-500: #a1a1aa;
+    --color-neutral-600: #d4d4d8;
+    --color-neutral-700: #e4e4e7;
+    --color-neutral-800: #f4f4f5;
+    --color-neutral-900: #fafafa;
+
+    --color-success: #22c55e;
+    --color-warning: #facc15;
+    --color-error: #ef4444;
+  }
+}
 ::-webkit-scrollbar {
   @apply bg-blue-950;
   width: 8px;
