@@ -1,12 +1,11 @@
 import NextAuth, { type DefaultSession } from "next-auth";
 import { prisma } from "@/lib/prisma";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { PrismaAdapter } from "@auth/prisma-adapter";
 import Credentials from "next-auth/providers/credentials";
 import { compare } from "bcrypt-ts";
 import { loginSchema } from "./schemas";
 import { encode as defaultEncode } from "next-auth/jwt";
 import { v4 as uuid } from "uuid";
-import { redirect } from "next/navigation";
 
 declare module "next-auth" {
   /**
