@@ -11,7 +11,7 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="bg-slate-800 border-slate-700 border-b">
+    <nav className="bg-transparent border-amber-300 border-b-2">
       <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}

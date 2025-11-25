@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default async function DashboardPage() {
   const session = await auth();
-
+  console.log("session", session);
   if (!session) {
     redirect("/auth/login");
   }
