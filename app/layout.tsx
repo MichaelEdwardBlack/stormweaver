@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`bg-linear-to-b from-blue-950 to-black p-2 lg:p-8 w-full min-h-screen text-white ${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`bg-linear-to-b from-primary-400 to-primary-600 dark:from-primary-800 dark:to-black p-2 lg:p-8 w-full min-h-screen text-text ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Providers>
           <Navbar />

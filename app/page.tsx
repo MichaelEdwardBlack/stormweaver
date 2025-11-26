@@ -31,9 +31,9 @@ export default function HomePage() {
       {/* HERO */}
       <section className="flex flex-col items-center mt-20 px-4 text-center">
         <h2 className="drop-shadow-lg mb-4 font-extrabold text-4xl tracking-tight">Build Your Legend in the Cosmere</h2>
-        <p className="max-w-2xl text-slate-300 text-lg">
+        <p className="max-w-2xl text-lg">
           Create, customize, and manage your characters for the fan-made
-          <span className="font-semibold text-white"> Cosmere RPG</span>. Track attributes, skills, talents, equipment,
+          <span className="font-semibold"> Cosmere RPG</span>. Track attributes, skills, talents, equipment,
           investiture, and more — all in one beautiful interface.
         </p>
 
@@ -62,7 +62,7 @@ export default function HomePage() {
       </section>
 
       {/* DISCLAIMER */}
-      <footer className="px-4 pb-10 text-slate-400 text-sm text-center">
+      <footer className="px-4 pb-10 text-sm text-center">
         <p className="opacity-80">
           This project is a <b>fan-made</b> tool for the Cosmere RPG. It is{" "}
           <b>

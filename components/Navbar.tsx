@@ -44,7 +44,7 @@ export function Navbar() {
           </div>
 
           {/* Mobile Menu Button */}
-          <button className="md:hidden text-white" onClick={() => setOpen(!open)}>
+          <button className="md:hidden" onClick={() => setOpen(!open)}>
             {open ? <FaX size={28} /> : <GiHamburgerMenu size={28} />}
           </button>
         </div>
