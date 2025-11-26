@@ -4,37 +4,56 @@ import { useActionState } from "react";
 import Link from "next/link";
 import { registerUser } from "@/lib/actions/auth";
 import { MotionButton } from "@/components/MotionButton";
+import { Input } from "@/components/Input";
+import { Card } from "@/components/Card";
+import { Button } from "@/components/Button";
 
 export const RegisterPage = () => {
   const [state, action, pending] = useActionState(registerUser, undefined);
   return (
-    <div className="w-full max-w-sm card">
-      <div className="pb-3 font-bold text-2xl">Create an Account</div>
+    <Card className="mt-8 min-w-sm">
+      <div className="pb-3 text-2xl font-bold">Create an Account</div>
       <form action={action}>
-        <label>Name</label>
-        <input id="name" name="name" />
-        {state?.errors?.name && <p className="text-red-400">{state.errors.name}</p>}
-        <label>Email</label>
-        <input id="email" name="email" />
-        {state?.errors?.email && <p className="text-red-400">{state.errors.email}</p>}
-        <label>Password</label>
-        <input id="password" name="password" type="password" />
-        {state?.errors?.password && <p className="text-red-400">{state.errors.password}</p>}
-        <label>Confirm Password</label>
-        <input id="confirmPassword" name="confirmPassword" type="password" />
-        {state?.errors?.confirmPassword && <p className="text-red-400">{state.errors.confirmPassword}</p>}
-        <MotionButton
-          className="bg-blue-500 mt-4 px-1 py-2 rounded-lg font-semibold text-lg hover:blue-600"
-          disabled={pending}
-          type="submit"
-        >
+        <Input
+          id="name"
+          name="name"
+          label="Name"
+          placeholder="Kaladin Stormblessed"
+          errors={state?.errors?.name}
+          required
+        />
+        <Input
+          id="email"
+          name="email"
+          label="Email"
+          type="email"
+          placeholder="you@example.com"
+          errors={state?.errors?.email}
+        />
+        <Input
+          id="password"
+          name="password"
+          label="Password"
+          type="password"
+          errors={state?.errors?.password}
+          required
+        />
+        <Input
+          id="confirmPassword"
+          name="confirmPassword"
+          label="Confirm Password"
+          type="password"
+          errors={state?.errors?.confirmPassword}
+          required
+        />
+        <Button disabled={pending} type="submit">
           Create Account
-        </MotionButton>
+        </Button>
         <Link href={"/auth/login"}>
           Already have an account? <span className="text-blue-400">Login Here!</span>
         </Link>
       </form>
-    </div>
+    </Card>
   );
 };
 

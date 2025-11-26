@@ -5,13 +5,6 @@
 }
 
 @theme {
-  --color-text-light: #000000;
-  /* text for light mode */
-  --color-text-dark: #ffffff;
-  /* text for dark mode */
-  --color-text: var(--color-text-light);
-  --color-surface: var(--color-surface-light);
-
   /* ===== PRIMARY: Purple → Blue family ===== */
   --color-primary-50: #f5f3ff;
   --color-primary-100: #ebe9ff;
@@ -55,19 +48,8 @@
   --color-success: #16a34a;
   --color-warning: #eab308;
   --color-error: #dc2626;
-
-  /* ===== OPTIONAL — SURFACE COLORS (cards, panels, sheets) ===== */
-  --color-surface-light: #ffffff;
-  --color-surface-dark: #1a1a1e;
 }
 
-/* ----- DARK MODE OVERRIDES ----- */
-@media (prefers-color-scheme: dark) {
-  @theme {
-    --color-text: var(--color-text-dark);
-    --color-surface: var(--color-surface-dark);
-  }
-}
 ::-webkit-scrollbar {
   @apply bg-blue-950;
   width: 8px;

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "../components/Navbar";
 import { Providers } from "./providers";
+import { auth } from "@/lib/auth";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,19 +20,17 @@ export const metadata: Metadata = {
   description: "Cosmere RPG Character Creator and Manager",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`bg-linear-to-b from-primary-400 to-primary-600 dark:from-primary-800 dark:to-black p-2 lg:p-8 w-full min-h-screen text-text ${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+    <html lang="en" suppressHydrationWarning>
+      <body className={`min-h-screen flex flex-col ${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Providers>
           <Navbar />
-          <main>{children}</main>
+          {children}
         </Providers>
       </body>
     </html>

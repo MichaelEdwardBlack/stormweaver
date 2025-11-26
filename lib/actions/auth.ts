@@ -5,6 +5,7 @@ import { hash } from "bcrypt-ts";
 import { redirect } from "next/navigation";
 import { LoginFormState, loginSchema, RegisterFormState, registerSchema } from "../schemas";
 import { signIn } from "@/lib/auth";
+import { isRedirectError } from "next/dist/client/components/redirect-error";
 
 const SALT_LENGTH = 10;
 
@@ -22,10 +23,16 @@ export async function loginUser(state: LoginFormState, formData: FormData) {
   try {
     await signIn("credentials", formData);
   } catch (e: any) {
-    console.log("error", e);
-    return {
-      message: e,
-    };
+    if (isRedirectError(e)) {
+      console.log("isRedirectError");
+    } else {
+      console.log("error", e);
+      return {
+        errors: {
+          password: ["Invalid credentials"],
+        },
+      };
+    }
   }
   redirect("/dashboard");
 }
