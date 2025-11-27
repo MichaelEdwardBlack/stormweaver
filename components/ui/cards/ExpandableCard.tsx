@@ -77,7 +77,7 @@ export const ExpandableCard: React.FC<ExpandableCardProps> = ({
                   e.stopPropagation();
                   action();
                 }}
-                className={cn("px-3 py-2 rounded dark:bg-neutral-700 bg-neutral-300", actionClassName)}
+                className={cn("px-3 py-2 rounded dark:bg-neutral-700 bg-neutral-200", actionClassName)}
               >
                 {actionLabel ?? "Action"}
               </MotionButton>
