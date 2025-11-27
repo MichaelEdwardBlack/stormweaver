@@ -1,4 +1,4 @@
-import { clsx } from "clsx";
+import { cn } from "@/lib/utils/styles";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -9,7 +9,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 export const Input = ({ label, helperText, errors, className, ...props }: InputProps) => {
   const hasError = errors && errors.length > 0;
   return (
-    <div className={clsx("flex flex-col", className)}>
+    <div className={cn("flex flex-col", className)}>
       {label && <label className="mb-1 text-sm font-medium text-neutral-700 dark:text-neutral-200">{label}</label>}
       <input
         {...props}

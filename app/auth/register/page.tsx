@@ -3,10 +3,10 @@
 import { useActionState } from "react";
 import Link from "next/link";
 import { registerUser } from "@/lib/actions/auth";
-import { MotionButton } from "@/components/MotionButton";
-import { Input } from "@/components/Input";
-import { Card } from "@/components/Card";
-import { Button } from "@/components/Button";
+import { MotionButton } from "@/components/ui/buttons/MotionButton";
+import { Input } from "@/components/ui/Input";
+import { Card } from "@/components/ui/cards/Card";
+import { Button } from "@/components/ui/buttons/Button";
 
 export const RegisterPage = () => {
   const [state, action, pending] = useActionState(registerUser, undefined);

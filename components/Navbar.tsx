@@ -11,31 +11,31 @@ export const Navbar = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="top-0 z-50 sticky bg-white/70 dark:bg-neutral-900/40 shadow-lg backdrop-blur-lg border-white/20 dark:border-neutral-700/40 border-b w-full">
+    <nav className="sticky top-0 z-50 w-full border-b shadow-lg bg-white/80 dark:bg-neutral-900/80 backdrop-blur-lg border-white/20 dark:border-neutral-700/40">
       {/* Main navbar */}
-      <div className="flex justify-between items-center mx-auto px-6 py-3 max-w-7xl">
+      <div className="flex items-center justify-between px-6 py-3 mx-auto max-w-7xl">
         {/* Logo */}
-        <Link href="/" className="font-semibold text-neutral-900 dark:text-white text-lg tracking-tight">
+        <Link href="/" className="text-lg font-semibold tracking-tight text-neutral-900 dark:text-white">
           StormWeaver
         </Link>
 
         {/* Desktop links */}
-        <div className="hidden md:flex items-center gap-6 text-sm">
+        <div className="items-center hidden gap-6 text-sm md:flex">
           <Link
             href="/dashboard"
-            className="text-neutral-700 hover:text-primary-500 dark:hover:text-primary-300 dark:text-neutral-200 transition"
+            className="transition text-neutral-700 hover:text-primary-500 dark:hover:text-primary-300 dark:text-neutral-200"
           >
             Dashboard
           </Link>
           <Link
             href="/characters"
-            className="text-neutral-700 hover:text-primary-500 dark:hover:text-primary-300 dark:text-neutral-200 transition"
+            className="transition text-neutral-700 hover:text-primary-500 dark:hover:text-primary-300 dark:text-neutral-200"
           >
             Characters
           </Link>
           <Link
             href="/settings"
-            className="text-neutral-700 hover:text-primary-500 dark:hover:text-primary-300 dark:text-neutral-200 transition"
+            className="transition text-neutral-700 hover:text-primary-500 dark:hover:text-primary-300 dark:text-neutral-200"
           >
             Settings
           </Link>
@@ -56,7 +56,7 @@ export const Navbar = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.25 }}
-            className="md:hidden top-full left-0 z-40 absolute flex flex-col space-y-3 bg-white/70 dark:bg-neutral-900/40 shadow-lg backdrop-blur-lg px-6 py-4 border-white/20 dark:border-neutral-700/40 border-t w-full"
+            className="absolute left-0 z-40 flex flex-col w-full px-6 py-4 space-y-3 border-t shadow-lg md:hidden top-full bg-white/80 dark:bg-neutral-900/80 backdrop-blur-lg border-white/20 dark:border-neutral-700/40"
           >
             <Link href="/dashboard" className="text-neutral-900 dark:text-neutral-200" onClick={() => setOpen(false)}>
               Dashboard

@@ -3,7 +3,7 @@ import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import Link from "next/link";
 import { AnimatedCardGrid } from "./components/AnimatedCardGrid";
-import { HoverCard } from "@/components/HoverCard";
+import { HoverCard } from "@/components/ui/cards/HoverCard";
 
 export default async function DashboardPage() {
   const session = await auth();
@@ -30,32 +30,32 @@ export default async function DashboardPage() {
 
       {/* Quick Actions */}
       <AnimatedCardGrid className="mt-10">
-        <HoverCard className="p-6 transition cursor-pointer border-primary/40 bg-primary/10 hover:bg-primary/20">
-          <Link href="/builder">
+        <Link href="/characters/new">
+          <HoverCard className="h-full hover:bg-primary-50 dark:hover:bg-primary-950/20">
             <h2 className="mb-2 text-xl font-semibold text-primary-500 dark:text-primary-200">➕ Create Character</h2>
             <p className="text-sm dark:text-neutral-300 text-neutral-500">
               Start building a new hero for your Cosmere adventures.
             </p>
-          </Link>
-        </HoverCard>
+          </HoverCard>
+        </Link>
 
         {/* My Characters */}
-        <HoverCard className="p-6 transition cursor-pointer border-secondary/40 bg-secondary/10 hover:bg-secondary/20">
-          <Link href="/characters">
-            <h2 className="mb-2 text-xl font-semibold text-secondary-200">📜 My Characters</h2>
+        <Link href="/characters">
+          <HoverCard className="h-full hover:bg-green-50 dark:hover:bg-green-950/20">
+            <h2 className="mb-2 text-xl font-semibold text-green-500 dark:text-green-200">📜 My Characters</h2>
             <p className="text-sm dark:text-neutral-300 text-neutral-500">
               View, edit, or delete your existing characters.
             </p>
-          </Link>
-        </HoverCard>
+          </HoverCard>
+        </Link>
 
         {/* Talent Browser */}
-        <HoverCard className="p-6 transition cursor-pointer border-accent/40 bg-accent/10 hover:bg-accent/20">
-          <Link href="/talents">
-            <h2 className="mb-2 text-xl font-semibold text-accent-200">⭐ Talent Browser</h2>
+        <Link href="/talents">
+          <HoverCard className="h-full hover:bg-accent-50 dark:hover:bg-accent-950/20">
+            <h2 className="mb-2 text-xl font-semibold dark:text-accent-200 text-accent-500">⭐ Talent Browser</h2>
             <p className="text-sm dark:text-neutral-300 text-neutral-500">Explore talent trees and plan your builds.</p>
-          </Link>
-        </HoverCard>
+          </HoverCard>
+        </Link>
       </AnimatedCardGrid>
 
       {/* Character List */}

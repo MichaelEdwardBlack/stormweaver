@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Button } from "./Button";
+import { Button } from "./ui/buttons/Button";
 import { signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
@@ -13,12 +13,13 @@ export const LoginLogoutButton = ({ onClick }: { onClick?: () => void }) => {
   if (session) {
     return (
       <Button
+        variant="solid"
         onClick={() => {
           signOut();
           onClick?.();
         }}
       >
-        Logout
+        Log Out
       </Button>
     );
   } else {
