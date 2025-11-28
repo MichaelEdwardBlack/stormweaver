@@ -10,7 +10,7 @@ export const MobileSidebar = () => {
     <>
       {/* Toggle Button */}
       <button
-        className="md:hidden fixed bottom-4 left-4 z-50 p-2 rounded-md bg-neutral-800 text-white shadow-lg"
+        className="fixed z-50 p-2 text-white rounded-md shadow-lg md:hidden bottom-4 left-4 bg-neutral-800"
         onClick={() => setOpen(true)}
       >
         <LuPanelLeftOpen />

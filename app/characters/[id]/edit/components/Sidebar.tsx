@@ -83,23 +83,13 @@ export const Sidebar = ({ mobile = false, onClose }: { mobile?: boolean; onClose
         animate={{ width: collapsed ? "4rem" : "16rem" }}
         transition={{ width: { duration: 0.3, ease: "easeInOut" } }}
         className={cn(
-          "h-full min-h-0 flex flex-col overflow-auto py-4 md:px-4 border-r bg-neutral-100/60 dark:bg-neutral-900/60 backdrop-blur-md border-neutral-700/40",
-          collapsed ? "items-center" : "",
-          mobile && "fixed inset-y-0 left-0 z-50 w-64 shadow-xl animate-in"
+          "flex flex-col sticky top-14 md:top-16 h-[92vh] overflow-hidden py-4 border-r",
+          "bg-neutral-100/60 dark:bg-neutral-900/60 backdrop-blur-md border-neutral-700/40",
+          collapsed ? "items-center px-2" : "px-4",
+          mobile && "fixed top-14 md:top-16 left-0 z-50 w-64 shadow-xl animate-in"
         )}
       >
-        {/* SIDEBAR COLLAPSE BUTTON */}
-        <button
-          className={cn(
-            "cursor-pointer p-2 rounded-md transition sticky top-0",
-            "dark:text-neutral-300 text-neutral-700 hover:bg-neutral-300/40 hover:text-black dark:hover:bg-neutral-700/40 dark:hover:text-white",
-            collapsed ? "place-self-center" : "place-self-end"
-          )}
-          onClick={() => setCollapsed(!collapsed)}
-        >
-          {collapsed ? <LuPanelLeftOpen /> : <LuPanelLeftClose />}
-        </button>
-        <nav className="flex flex-col space-y-2 w-full">
+        <nav className="flex flex-col w-full space-y-2">
           {sections.map((sec) => {
             const isActiveParent = pathname?.includes(sec.path);
             const isOpen = openSections[sec.path];
@@ -123,7 +113,7 @@ export const Sidebar = ({ mobile = false, onClose }: { mobile?: boolean; onClose
                   {/* Label only shown if not collapsed */}
                   {!collapsed && (
                     <>
-                      <span className="ml-3 flex-1 text-left">{sec.name}</span>
+                      <span className="flex-1 ml-3 text-left">{sec.name}</span>
 
                       <motion.span animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
                         <LuChevronDown />
@@ -181,9 +171,21 @@ export const Sidebar = ({ mobile = false, onClose }: { mobile?: boolean; onClose
             );
           })}
         </nav>
+        {/* SIDEBAR COLLAPSE BUTTON */}
+        <button
+          className={cn(
+            "cursor-pointer p-2 rounded-md transition",
+            "dark:text-neutral-300 text-neutral-700 hover:bg-neutral-300/40 hover:text-black dark:hover:bg-neutral-700/40 dark:hover:text-white",
+            collapsed ? "place-self-center" : "place-self-end",
+            mobile ? "hidden" : "visible"
+          )}
+          onClick={() => (mobile ? onClose?.() : setCollapsed(!collapsed))}
+        >
+          {collapsed ? <LuPanelLeftOpen /> : <LuPanelLeftClose />}
+        </button>
       </motion.aside>
       {/* MOBILE BACKDROP */}
-      {mobile && <div onClick={onClose} className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40" />}
+      {mobile && <div onClick={onClose} className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm" />}
     </>
   );
 };
