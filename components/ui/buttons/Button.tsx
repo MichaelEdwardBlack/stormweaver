@@ -1,5 +1,6 @@
 "use client";
 
+import Spinner from "@/components/Spinner";
 import { cn } from "@/lib/utils/styles";
 import { motion, type MotionProps } from "framer-motion";
 
@@ -12,6 +13,7 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
     variant?: ButtonVariant;
     color?: ButtonColor;
     className?: string;
+    pending?: boolean;
   };
 
 export const Button: React.FC<ButtonProps> = ({
@@ -20,10 +22,11 @@ export const Button: React.FC<ButtonProps> = ({
   color = "primary",
   disabled,
   className,
+  pending,
   ...rest
 }) => {
   const base =
-    "px-4 py-2 rounded-lg font-medium transition-all select-none focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer";
+    "flex justify-center gap-1 px-4 py-2 rounded-lg font-medium transition-all select-none focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer";
 
   // ===========================
   // COLOR MAPS
@@ -93,6 +96,7 @@ export const Button: React.FC<ButtonProps> = ({
       {...rest}
     >
       {children}
+      {pending && <Spinner />}
     </motion.button>
   );
 };

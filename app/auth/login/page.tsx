@@ -29,7 +29,7 @@ export const LoginPage = () => {
           errors={state?.errors.password}
           required
         />
-        <Button disabled={pending} type="submit">
+        <Button disabled={pending} type="submit" pending={pending}>
           Login
         </Button>
         <Link href={"/auth/register"}>
