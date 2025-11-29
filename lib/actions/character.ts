@@ -71,3 +71,17 @@ export async function toggleOriginCulture(characterId: string, culture: string) 
     };
   }
 }
+
+export async function updateName(characterId: string, name: string) {
+  const session = await auth();
+  if (!session) throw new Error("Unauthorized");
+
+  const response = await prisma.character.update({
+    where: { id: characterId, userId: session.user.id },
+    data: {
+      name,
+    },
+  });
+  revalidatePath(`/characters/${characterId}/edit/origin/name`);
+  return response;
+}

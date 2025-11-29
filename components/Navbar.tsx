@@ -11,7 +11,10 @@ export const Navbar = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b shadow-lg bg-white/80 dark:bg-neutral-900/80 backdrop-blur-lg border-white/20 dark:border-neutral-700/40">
+    <nav
+      id="navbar"
+      className="sticky top-0 z-50 w-full border-b shadow-lg bg-white/80 dark:bg-neutral-900/80 backdrop-blur-lg border-white/20 dark:border-neutral-700/40"
+    >
       {/* Main navbar */}
       <div className="flex items-center justify-between px-6 py-3 mx-auto max-w-7xl">
         {/* Logo */}

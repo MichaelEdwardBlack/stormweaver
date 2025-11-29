@@ -3,8 +3,14 @@ export type CultureInfoType = {
   description: string;
   descriptions: string[];
   names: string[];
+
+  // NEW
+  maleNames: string[];
+  femaleNames: string[];
+
   expertise: string;
 };
+
 export const CulturalInfo: CultureInfoType[] = [
   {
     name: "Alethi",
@@ -36,6 +42,28 @@ export const CulturalInfo: CultureInfoType[] = [
       "Yaladir",
       "Zalith",
     ],
+    maleNames: [
+      "Adelar",
+      "Arin",
+      "Dannic",
+      "Elhamir",
+      "Hilar",
+      "Janar",
+      "Kalith",
+      "Kaladin",
+      "Lanerin",
+      "Marith",
+      "Nar",
+      "Ravir",
+      "Rilin",
+      "Selith",
+      "Taren",
+      "Tel",
+      "Valerin",
+      "Yaladir",
+      "Zalith",
+    ],
+    femaleNames: ["Ersha", "Varda"],
     expertise:
       "As a character with the Alethi expertise, you know the names, locations, and highprinces of each princedom. Choose a princedom your character has lived in. You can replicate its regional dialect, and you know how to find vendors, public organizations, and noteworthy landmarks there. Choose how proficient you are in spoken Alethi, and reading and writing glyphs, as well as your literacy in women's script (depending on your gender and regard for gender norms). Regardless of your religious beliefs, you're familiar with the basic tenets of Vorinism, the Almighty, and the Heralds.",
   },
@@ -69,6 +97,24 @@ export const CulturalInfo: CultureInfoType[] = [
       "Wolu",
       "Yemzil",
     ],
+    maleNames: [
+      "Adebazik",
+      "Arnok",
+      "Baxtol",
+      "Chivik",
+      "Falkir",
+      "Ganxir",
+      "Hauzir",
+      "Kunde",
+      "Maliq",
+      "Raukir",
+      "Sigwir",
+      "Tigzir",
+      "Uju",
+      "Wolu",
+      "Yemzil",
+    ],
+    femaleNames: ["Dalwa", "Etosha", "Jirana", "Nineka", "Tama", "Koxi"],
     expertise:
       "As a character with the Azish expertise, you know about the bureaucracy, Bronze Palace, Prime Aqasix, and the viziers. You can recall basic facts about each member state in the Azish Empire. Choose how proficient you are in Azish sign language, as well as in spoken and written Azish. You can easily navigate civic buildings to review current laws, request the help of a constable for law enforcement, file a complaint, or take the vizier exam. Regardless of your religious beliefs, you're familiar with the Kadasixes and scions.",
   },
@@ -98,6 +144,36 @@ export const CulturalInfo: CultureInfoType[] = [
       "Torona",
       "Yorino",
     ],
+    maleNames: [
+      "Aloro",
+      "Dunal",
+      "Duro",
+      "Hanol",
+      "Jonio",
+      "Kunor",
+      "Lurio",
+      "Luron",
+      "Palor",
+      "Polino",
+      "Relio",
+      "Sulio",
+      "Yorino",
+    ],
+    femaleNames: [
+      "Aloro",
+      "Dunal",
+      "Duro",
+      "Hanol",
+      "Jonio",
+      "Kunor",
+      "Lurio",
+      "Luron",
+      "Palor",
+      "Polino",
+      "Relio",
+      "Sulio",
+      "Yorino",
+    ],
     expertise:
       "As a character with the Herdazian expertise, you know of the king and prominent ranching families. You know how to navigate between expansive ranches, including how to avoid the coastal areas inhabited by vicious greatshells. Choose how proficient you are in spoken and written Herdazian, along with reading and writing glyphs. You know about basic tools for ranching, including sparkflickers. Regardless of your religious beliefs, you're familiar with the basic tenets of Herdazian Vorinism.",
   },
@@ -125,6 +201,8 @@ export const CulturalInfo: CultureInfoType[] = [
       "Palir",
       "Ynne",
     ],
+    maleNames: ["Drin", "Imral", "Palir", "Rallin", "Rellis", "Syderim", "Byrle", "Jyste", "Lalys", "Lyre"],
+    femaleNames: ["Ilori", "Lysna", "Myi", "Ryli", "Ynne", "Byrle", "Jyste", "Lalys", "Lyre"],
     expertise:
       "As a character with the Iriali expertise, you know fo the Iriali Triumvirate——the two kings and queen who rule together. Choose a city or rural area your character has lived in; you know how to find vendors, public organizations, and noteworthy landmarks there. Choose how proficient you are in spoken and written Iri. Regardless of your religious beliefs, you're familiar with the basic tenets of the One and the Long Trail. You also know basic strategies for travel and journeys, such as management of supplies.",
   },
@@ -153,6 +231,20 @@ export const CulturalInfo: CultureInfoType[] = [
       "Trilam",
       "Zorlinth",
     ],
+    maleNames: [
+      "Arivian",
+      "Baranam",
+      "Dorval",
+      "Harnith",
+      "Kintar",
+      "Korenth",
+      "Larnish",
+      "Lorvis",
+      "Telvar",
+      "Trilam",
+      "Zorlinth",
+    ],
+    femaleNames: ["Lervian", "Navil", "Ovelgian", "Sartal", "Sarvena"],
     expertise:
       "As a character with the Kharbranthian expertise, you're familiar with the city's major education systems and their designations. Even if you don't know how to use common medicines, you know their names and functions. as well as basic hygiene measures to ward off rotspren. Choose how proficient you are in speaking Kharbranthian and reading and writing glyphs, as well as in women's script (depending on your gender and regard for gender norms). Regardless of your religious beliefs, you're familiar with the basic tenets of Vorinism, the Almight, and the Heralds.",
   },
@@ -184,6 +276,23 @@ export const CulturalInfo: CultureInfoType[] = [
       "Varem",
       "Welten",
     ],
+    maleNames: [
+      "Berdol",
+      "Eldir",
+      "Fenral",
+      "Gromil",
+      "Jarnak",
+      "Kethan",
+      "Lurin",
+      "Nalim",
+      "Orlan",
+      "Saren",
+      "Tirith",
+      "Urlan",
+      "Varem",
+      "Welten",
+    ],
+    femaleNames: ["Istarin", "Koriel", "Nirith", "Rishai"],
     expertise:
       "As a character with the Listener expertise, you're aware of dullform, mateform, nimbleform, warform, and workform (even if you're human and can't assume them yourself), and you're familiar with the listener council known as the Five. Depending on your interests, you might know some of the songs of the listeners. You know basic facts about Shattered Plains ecology. Choose how proficient you are in the listener language and how familiar you are with the rythms (though an singer instinctively knows all the rythms). You know about the War of Reckoning and the Alethi armies that fight for gemhearts on the plateaus.",
   },
@@ -212,6 +321,20 @@ export const CulturalInfo: CultureInfoType[] = [
       "Valten",
       "Xaltor",
     ],
+    maleNames: [
+      "Atarel",
+      "Balar",
+      "Farlar",
+      "Gerem",
+      "Lortan",
+      "Nathural",
+      "Oranat",
+      "Tsalar",
+      "Tsorem",
+      "Valten",
+      "Xaltor",
+    ],
+    femaleNames: ["Cetsa", "Linarat", "Nalina", "Talinan", "Valisha"],
     expertise:
       "As a character with the Natan expertise, you've heard tales of the lands the Natan people lost and what they were like during their full glory. You know what highstorms are like at full potency, as well as defensive measures you can take to protect yourself and your property. Choose how proficient your are in Natan or another Vorin language. Regardless of your religious beliefs, you're familiar with the basic tenets of Vorinism, as well as with the common Natan reverence for the moons.",
   },
@@ -241,6 +364,8 @@ export const CulturalInfo: CultureInfoType[] = [
       "Vara",
       "Wesh",
     ],
+    maleNames: ["Avand", "Fashan", "Hailor", "Ilesh", "Lish", "Neshor", "Trin", "Wesh"],
+    femaleNames: ["Ashi", "Calsi", "Isna", "Jersa", "Naila", "Rifta", "Sha", "Tana", "Vara"],
     expertise:
       "As a character with the Rshi expertise, you know about the existence of Tai-na greatshells, spren deities, and tales of islands going to war. You're familiar with the basic ecology of the Reshi Sea and the locations of major stationary islands. Choose how proficient you are in speaking and writing Reshi. You know whcih resources are unavailable in the Reshi Isles and which nations they are typically sourced from. Regardless of whether you choose to engage with the tradition yourself, you're familiar with the Reshi inclination toward fierce but quickly resolved social conflicts.",
   },
@@ -257,13 +382,22 @@ export const CulturalInfo: CultureInfoType[] = [
     names: [
       "Allo-daughter-Zethar",
       "Ethsono-son-Alvo",
-      "Geshson-Nar",
+      "Gesh-son-Nar",
       "Lanethen-child-Gemth",
-      "Lorseth-sonson-Thalor",
+      "Lorseth-son-son-Thalor",
       "Nama-son-Elhlan",
       "Shal-daughter-Xin",
       "Szam-child-Lorn",
     ],
+    maleNames: [
+      "Ethsono-son-Alvo",
+      "Gesh-son-Nar",
+      "Lanethen-child-Gemth",
+      "Lorseth-son-son-Thalor",
+      "Nama-son-Elhlan",
+      "Szam-child-Lorn",
+    ],
+    femaleNames: ["Allo-daughter-Zethar", "Lanethen-child-Gemth", "Shal-daughter-Xin", "Szam-child-Lorn"],
     expertise:
       "As a character with the Shin expertise, you're familiar with the mild highstorms that reach the isolated western lands of Shinovar, as well as the ecology and architecture they support. You know how to barter by diminishing the perceived value of your offerings. Choose how proficient you are in speaking and writing Shin. Regardless of your religious beliefs, you're familiar with the basic tenets of Stone Shamanism.",
   },
@@ -291,6 +425,23 @@ export const CulturalInfo: CultureInfoType[] = [
       "Uvlost",
       "Ylbedr",
     ],
+    maleNames: [
+      "Alstrym",
+      "Bnlath",
+      "Brekmynv",
+      "Bryndal",
+      "Calkl",
+      "Cazmerk",
+      "Creyn",
+      "Dvalnm",
+      "Klazmn",
+      "Mralt",
+      "Pradlvk",
+      "Tlkry",
+      "Uvlost",
+      "Ylbedr",
+    ],
+    femaleNames: ["Elcryn"],
     expertise:
       "As a character with the Thaylen expertise, you're familiar with the elective monarchy and the merchant councils. You know the names and reputations of major artifabrian guilds, and you've likely experienced fabrials as a part of everyday life. You know tips to mitigate sea sickness and arrange travel between the three islands and outer islets. Choose how proficient you are in speaking and writing Thaylen. Regardless of your religious beliefs, you're familiear with the basic tenets of Vorinism, as well as the Passions.",
   },
@@ -312,6 +463,8 @@ export const CulturalInfo: CultureInfoType[] = [
       "Unla'biki'ai'karath",
       "Yamloho'tamai'sinak",
     ],
+    maleNames: ["Arluno'ratha'tu", "Harlun'thaoka", "Kalorunel'ith", "Tha'enithmonal'toko"],
+    femaleNames: ["Ina'larataka'noom", "Luau'nun'iel", "Unla'biki'ai'karath", "Yamloho'tamai'sinak"],
     expertise:
       "As a character with the Unkalaki expertise, you know about the leadership, ecology, and myths of the oceans atop the peak. Due to your lineage or lived experience, your body is familiar with breathing thin air, allowing you to keep your wits about you. Choose how proficient you are in speaking and writing Unkalaki. Regardless of your religious beliefs, you know of the gods of the waters, mountains, and trees, along with the practice of worshiping spren as gods. You also know of the phenomenon of strange offworld visitors emerging from the oceans.",
   },
@@ -336,6 +489,8 @@ export const CulturalInfo: CultureInfoType[] = [
       "Varli",
       "Tet Zashu",
     ],
+    maleNames: ["Nan Amallan", "Bervash", "Van Elnaha", "Nan Quish", "Tet Ridvish", "Varli", "Tet Zashu"],
+    femaleNames: ["Asha Cemdon", "Dorlivana", "Lerinda", "Shulla"],
     expertise:
       "As a character with the Veden expertise, you're familiar with the king, the princedoms, and the four major ethnic groups in Jah Keved. Choose how proficient you are in speaking Veden and reading and writing glyphs, as well as your literacy in women's script (depending on your gender and regard for gender norms). If relevant to your backstory, also choose how proficient you are in the Alethi, Bav, or Siln languages. Regardless of your religious beliefs, you're familiar with the basic tenets of Vlorinism and current events relevant to the church.",
   },
@@ -346,6 +501,8 @@ export const CulturalInfo: CultureInfoType[] = [
     descriptions: [
       "Occupation, exile, or tourism may lead a person to live a life of traveling from one place to the next. You could be a traveling surgeon reluctant to return home to Jah Keved, a mercenary from Steen, or an Iriali tidereader sent to gain insights from the shores of faraway lands. Whatever the reason, the lifestyle of a perpetual traveler involves learning land and sea routes between major cities, remaining aware of bandit and pirate risks, and maintaining familiarity with mobile storm shelters, map-reading, and modes of long-distance transportation",
     ],
+    maleNames: [],
+    femaleNames: [],
     names: [],
     expertise:
       " As a character with the Wayfarer expertise, you know how to read international map keys. You can find trustworthy currency exchange hubs in major cities, which can be used to switch out dun spheres for infused ones. From your travels, you've learned basic greetings and a few cultural touchstones from various nations.",
@@ -353,3 +510,5 @@ export const CulturalInfo: CultureInfoType[] = [
 ];
 
 export const AllNames = CulturalInfo.flatMap((culture) => culture.names);
+export const AllFemaleNames = CulturalInfo.flatMap((culture) => culture.femaleNames);
+export const AllMaleNames = CulturalInfo.flatMap((culture) => culture.maleNames);

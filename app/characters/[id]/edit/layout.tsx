@@ -15,7 +15,7 @@ export default function CharacterEditLayout({ children }: Props) {
       <div className="md:hidden">
         <MobileSidebar />
       </div>
-      <main className="flex-1 w-full min-w-0 p-6 bg-neutral-50 dark:bg-neutral-900">{children}</main>
+      <main className="flex-1 w-full p-6 bg-neutral-50 dark:bg-neutral-900">{children}</main>
     </div>
   );
 }
