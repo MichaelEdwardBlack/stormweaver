@@ -21,8 +21,6 @@ import { PiIdentificationCard, PiTreeStructure } from "react-icons/pi";
 import { LuChevronDown } from "react-icons/lu";
 import { IoIosStats } from "react-icons/io";
 import { GiSkills } from "react-icons/gi";
-
-// ICONS for subsections (change to whatever you want)
 import { LuBadge, LuLayers, LuUsers, LuSword } from "react-icons/lu";
 import { FaLevelUpAlt } from "react-icons/fa";
 

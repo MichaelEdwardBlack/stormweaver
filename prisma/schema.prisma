@@ -68,22 +68,23 @@ model VerificationToken {
 }
 
 model Character {
-  id         String               @id @default(cuid())
-  name       String
-  level      Int                  @default(1)
-  visibility Visibility           @default(owner)
-  createdAt  DateTime             @default(now())
-  updatedAt  DateTime             @updatedAt
-  ancestry   Ancestry?
-  userId     String
-  user       User                 @relation(fields: [userId], references: [id])
-  attributes CharacterAttribute[]
-  expertises CharacterExpertise[]
-  equipment  CharacterItem[]
-  paths      CharacterPath[]
-  skills     CharacterSkill[]
-  story      CharacterStory?
-  talents    CharacterTalent[]
+  id          String               @id @default(cuid())
+  name        String
+  level       Int                  @default(1)
+  visibility  Visibility           @default(owner)
+  createdAt   DateTime             @default(now())
+  updatedAt   DateTime             @updatedAt
+  ancestry    Ancestry?
+  startingKit String?
+  userId      String
+  user        User                 @relation(fields: [userId], references: [id])
+  attributes  CharacterAttribute[]
+  expertises  CharacterExpertise[]
+  equipment   CharacterItem[]
+  paths       CharacterPath[]
+  skills      CharacterSkill[]
+  story       CharacterStory?
+  talents     CharacterTalent[]
 }
 
 model CharacterAttribute {
