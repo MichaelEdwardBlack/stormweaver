@@ -1,9 +1,8 @@
-import { ExpandableCard } from "@/components/ui/cards/ExpandableCard";
 import { auth } from "@/lib/auth";
-import { CulturalInfo } from "@/lib/data/culture";
 import { ExpertiseType } from "@/lib/generated/prisma/enums";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
+import { CulturePicker } from "./CulturePicker";
 
 export default async function CulturePage({ params }: { params: Promise<{ id: string }> }) {
   const session = await auth();
@@ -13,7 +12,6 @@ export default async function CulturePage({ params }: { params: Promise<{ id: st
     where: { characterId: id, type: ExpertiseType.cultural, isOrigin: true },
   });
   const selectedNames = culturalExperises.map((expertise) => expertise.name);
-  const isDisabled = selectedNames.length >= 2;
   return (
     <div className="flex flex-col gap-3">
       <div className="font-bold text-lg">Select 2 Cultural Expertises</div>
@@ -33,42 +31,7 @@ export default async function CulturePage({ params }: { params: Promise<{ id: st
           High Society expertise.
         </p>
       </div>
-      {CulturalInfo.map((info) => (
-        <ExpandableCard
-          key={info.name}
-          title={info.name}
-          description={info.description}
-          action={async () => {
-            "use server";
-            if (selectedNames.includes(info.name)) {
-              // removeCulture(info.name);
-            } else {
-              if (isDisabled) return;
-              // addCulture(info.name);
-              // removeCulturalExpertise(info.name);
-            }
-          }}
-          actionLabel={selectedNames.includes(info.name) ? "Selected" : "Select"}
-          className={selectedNames.includes(info.name) ? "border-2 border-blue-500" : ""}
-          actionClassName={
-            selectedNames.includes(info.name)
-              ? "bg-yellow-600"
-              : isDisabled
-              ? "bg-gray-800 opacity-50 cursor-not-allowed"
-              : ""
-          }
-        >
-          <div className="flex flex-col gap-3">
-            {info.descriptions.map((desc, idx) => (
-              <p key={idx}>{desc}</p>
-            ))}
-            <div className="my-4 text-2xl font-bold">{info.name} Names</div>
-            <p>{info.names.join(", ")}</p>
-            <div className="my-4 text-2xl font-bold">{info.name} Expertise</div>
-            <p>{info.expertise}</p>
-          </div>
-        </ExpandableCard>
-      ))}
+      <CulturePicker selectedCultures={selectedNames} characterId={id} />
     </div>
   );
 }

@@ -1,3 +1,5 @@
+"use client";
+
 export const HumanDescription = () => {
   return (
     <div className="flex flex-col gap-3">

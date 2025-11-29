@@ -1,3 +1,5 @@
+"use client";
+
 export const SingerDescription = () => {
   return (
     <div className="flex flex-col gap-3">

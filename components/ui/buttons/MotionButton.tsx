@@ -1,4 +1,5 @@
 "use client";
+import { cn } from "@/lib/utils/styles";
 import { motion } from "framer-motion";
 import type { MotionProps } from "framer-motion";
 
@@ -14,7 +15,7 @@ export const MotionButton: React.FC<Props> = ({ children, className, disabled, .
       whileHover={{ scale: disabled ? 1 : 1.05 }}
       whileTap={{ scale: disabled ? 1 : 0.95 }}
       transition={{ type: "spring", stiffness: 400, damping: 20 }}
-      className={`focus:outline-none ${disabled ? "" : "cursor-pointer"} ${className}`}
+      className={cn("focus:outline-none", disabled ? "" : "cursor-pointer", className)}
       disabled={disabled}
       {...rest}
     >

@@ -28,7 +28,6 @@ declare module "next-auth/jwt" {
 
 const prismaAdapter = PrismaAdapter(prisma);
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  debug: true,
   adapter: prismaAdapter,
   providers: [
     Credentials({
