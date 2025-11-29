@@ -6,13 +6,25 @@ import { useParams, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-import { GiAnvilImpact, GiCharacter, GiHorizonRoad, GiScrollQuill } from "react-icons/gi";
-import { LuPanelLeftClose, LuPanelLeftOpen } from "react-icons/lu";
-import { PiIdentificationCard } from "react-icons/pi";
+import {
+  GiAnvilImpact,
+  GiCharacter,
+  GiChestArmor,
+  GiHorizonRoad,
+  GiLightBackpack,
+  GiProgression,
+  GiScrollQuill,
+  GiSmart,
+} from "react-icons/gi";
+import { LuBadgePlus, LuPanelLeftClose, LuPanelLeftOpen } from "react-icons/lu";
+import { PiIdentificationCard, PiTreeStructure } from "react-icons/pi";
 import { LuChevronDown } from "react-icons/lu";
+import { IoIosStats } from "react-icons/io";
+import { GiSkills } from "react-icons/gi";
 
 // ICONS for subsections (change to whatever you want)
 import { LuBadge, LuLayers, LuUsers, LuSword } from "react-icons/lu";
+import { FaLevelUpAlt } from "react-icons/fa";
 
 const sections = [
   {
@@ -30,8 +42,11 @@ const sections = [
     path: "path",
     icon: <GiHorizonRoad />,
     children: [
-      { name: "Class Path", path: "class", icon: <LuLayers /> },
-      { name: "Talents", path: "talents", icon: <LuBadge /> },
+      { name: "Starting Path", path: "starting", icon: <PiTreeStructure /> },
+      { name: "Attributes", path: "attributes", icon: <IoIosStats /> },
+      { name: "Skills", path: "skills", icon: <GiSkills /> },
+      { name: "Expertise - from Intelligence", path: "expertise", icon: <GiSmart /> },
+      { name: "Bonus Ancestry Talent", path: "bonus", icon: <LuBadgePlus /> },
     ],
   },
   {
@@ -39,9 +54,9 @@ const sections = [
     path: "equipment",
     icon: <GiAnvilImpact />,
     children: [
+      { name: "Starting Kit", path: "kit", icon: <GiLightBackpack /> },
       { name: "Weapons", path: "weapons", icon: <LuSword /> },
-      { name: "Armor", path: "armor", icon: <LuLayers /> },
-      { name: "Gear", path: "gear", icon: <LuBadge /> },
+      { name: "Armor", path: "armor", icon: <GiChestArmor /> },
     ],
   },
   {
@@ -51,6 +66,18 @@ const sections = [
     children: [
       { name: "Background", path: "background", icon: <LuLayers /> },
       { name: "Goals", path: "goals", icon: <LuBadge /> },
+    ],
+  },
+  {
+    name: "Advancement",
+    path: "advancement",
+    icon: <GiProgression />,
+    children: [
+      { name: "Level", path: "level", icon: <FaLevelUpAlt /> },
+      { name: "Attributes", path: "attributes", icon: <IoIosStats /> },
+      { name: "Skills", path: "skills", icon: <GiSkills /> },
+      { name: "Expertise - from Intelligence", path: "expertise", icon: <GiSmart /> },
+      { name: "Bonus Ancestry Talent", path: "bonus", icon: <LuBadgePlus /> },
     ],
   },
 ];

@@ -8,6 +8,7 @@ import { AllFemaleNames, AllMaleNames, AllNames, CulturalInfo } from "@/lib/data
 import { FaDiceD20 } from "react-icons/fa6";
 import { cn } from "@/lib/utils/styles";
 import { GiFemale, GiMale } from "react-icons/gi";
+import { MotionButton } from "@/components/ui/buttons/MotionButton";
 
 interface Props {
   characterId: string;
@@ -64,7 +65,7 @@ export function NameInput({ characterId, characterName, characterCulture }: Prop
     <div className="flex flex-col gap-3">
       <label className="text-xl font-bold">Enter Your Heroe's Name:</label>
 
-      <div className="relative flex items-center justify-center w-full max-w-md">
+      <div className="flex items-center justify-center w-full max-w-md">
         <input
           type="text"
           className="w-full p-2 pr-20 border border-r-0 rounded-md rounded-r-none border-neutral-300 focus:outline-none focus:ring-2 focus:ring-accent-500 peer"
@@ -98,27 +99,27 @@ export function NameInput({ characterId, characterName, characterCulture }: Prop
       </div>
       <div className="py-4 text-xl font-semibold">Filter Names by Gender</div>
       <div className="flex flex-row gap-4">
-        <button
+        <MotionButton
           className={cn(
-            "p-2 cursor-pointer rounded border peer-focus:ring-2 peer-focus:ring-accent-500 peer-focus:outline-none border-neutral-300 hover:border-primary-500 hover:text-primary-500",
+            "p-2 rounded border peer-focus:ring-2 peer-focus:ring-accent-500 peer-focus:outline-none border-neutral-300 hover:border-primary-500 hover:text-primary-500 hover:bg-primary-50 dark:hover:bg-primary-950",
             gender === "male" && "text-primary-400 border-primary-400"
           )}
           type="button"
           onClick={() => onGenderSelect("male")}
         >
           <GiMale size={24} />
-        </button>
+        </MotionButton>
 
-        <button
+        <MotionButton
           className={cn(
-            "p-2 cursor-pointer rounded border peer-focus:ring-2 peer-focus:ring-accent-500 peer-focus:outline-none border-neutral-300 hover:border-primary-500 hover:text-primary-500",
+            "p-2 rounded border peer-focus:ring-2 peer-focus:ring-accent-500 peer-focus:outline-none border-neutral-300 hover:border-primary-500 hover:text-primary-500 hover:bg-primary-50 dark:hover:bg-primary-950",
             gender === "female" && "text-primary-400 border-primary-400"
           )}
           type="button"
           onClick={() => onGenderSelect("female")}
         >
           <GiFemale size={24} />
-        </button>
+        </MotionButton>
       </div>
     </div>
   );

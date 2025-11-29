@@ -53,10 +53,31 @@
   --color-error: #dc2626;
 }
 
+::-webkit-scrollbar {
+  @apply dark:bg-primary-950 bg-primary-50;
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-accent-500 rounded-sm;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-accent-400;
+}
+
 .scrollbar-thin {
   scrollbar-width: thin;
-  scrollbar-color: #f59e0b #1e293b;
+  scrollbar-color: var(--color-accent-500) var(--color-primary-50)
 }
+
+@media (prefers-color-scheme: dark) {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-accent-500) var(--color-primary-950)
+  }
+}
+
 
 .glossary-link {
   color: #4f7ee3;
@@ -81,7 +102,7 @@
 }
 
 table {
-  @apply w-full min-w-full overflow-hidden text-sm text-gray-200 border border-separate shadow-md rounded-xl border-blue-900/40 from-slate-900/90 to-black/95 backdrop-blur-sm;
+  @apply w-full min-w-full overflow-hidden text-sm text-neutral-200 border border-separate shadow-md rounded-xl border-blue-900/40 from-slate-900/90 to-black/95 backdrop-blur-sm;
   background: radial-gradient(ellipse at center, rgba(30, 40, 60, 0.9), rgba(5, 10, 20, 0.95));
 }
 
@@ -90,7 +111,7 @@ thead {
 }
 
 th {
-  @apply px-4 py-3 text-xs font-semibold tracking-wider text-center uppercase text-amber-500;
+  @apply px-4 py-3 text-xs font-semibold tracking-wider text-center uppercase text-accent-500;
 }
 
 td {
@@ -107,15 +128,15 @@ td:first-child {
 }
 
 tr:nth-child(even) {
-  @apply bg-gray-800/30;
+  @apply bg-neutral-800/30;
 }
 
 tr:nth-child(odd) {
-  @apply bg-gray-900/20;
+  @apply bg-neutral-900/20;
 }
 
 table:not(.readonly):not(.disabled) tr:not(.disabled):hover {
-  @apply transition-colors bg-gray-700/20;
+  @apply transition-colors bg-neutral-700/20;
 }
 
 /* Disable hover effect if readonly or disabled */
@@ -131,23 +152,23 @@ tr.selected {
 }
 
 tr.selected td {
-  @apply font-semibold text-amber-300;
+  @apply font-semibold text-accent-300;
 }
 
 tr.disabled:not(.selected) {
-  @apply border cursor-not-allowed opacity-40 bg-gray-900/40 border-slate-700/40;
+  @apply border cursor-not-allowed opacity-40 bg-neutral-900/40 border-slate-700/40;
 }
 
 tr.disabled:not(.selected) td {
-  @apply text-gray-500;
+  @apply text-neutral-500;
 }
 
 caption {
-  @apply mb-2 text-lg font-semibold text-amber-400;
+  @apply mb-2 text-lg font-semibold text-accent-400;
 }
 
 .table-container {
-  @apply overflow-x-auto border rounded-lg border-gray-700/50;
+  @apply overflow-x-auto border rounded-lg border-neutral-700/50;
   backdrop-filter: blur(4px);
 }
 
@@ -202,7 +223,7 @@ ul {
 
 /* ✨ Character Sheet Box Style */
 .sheet-box {
-  @apply relative overflow-hidden border-2 border-yellow-900 shadow-md bg-gradient-to-b from-amber-50 to-yellow-100 rounded-xl;
+  @apply relative overflow-hidden border-2 border-accent-900 shadow-md bg-linear-to-b from-accent-50 to-accent-100 rounded-xl;
 }
 
 /* Golden glowing outer rim */
@@ -223,26 +244,26 @@ ul {
 
 /* Inner panel — now sits above the glowing border */
 .sheet-inner {
-  @apply relative z-10 p-2 rounded-lg bg-gradient-to-b from-amber-100/80 to-yellow-50/60 backdrop-blur-sm;
+  @apply relative z-10 p-2 rounded-lg bg-linear-to-b from-accent-100/80 to-accent-50/60 backdrop-blur-sm;
 }
 
 .skill-bubble {
-  @apply w-4 h-4 transition-all duration-150 border border-yellow-700 rounded-full shadow-sm;
+  @apply w-4 h-4 transition-all duration-150 border border-accent-700 rounded-full shadow-sm;
 }
 
 .skill-bubble-empty {
   background: radial-gradient(circle at 30% 30%, #fdf6d9 0%, #e7d9a9 70%, #d2b874 100%);
-  @apply border-amber-600;
+  @apply border-accent-600;
 }
 
 .skill-bubble-filled {
   background: radial-gradient(circle at 30% 30%, #fff5b1 0%, #e5b100 60%, #a17400 100%);
   box-shadow: inset 0 0 2px rgba(255, 255, 255, 0.4), 0 0 4px rgba(255, 215, 0, 0.5), 0 1px 2px rgba(0, 0, 0, 0.3);
-  @apply border-yellow-900;
+  @apply border-accent-900;
 }
 
 .sheet-shield {
-  @apply stroke-yellow-300;
+  @apply stroke-accent-300;
   filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.4));
   transform: translateZ(0); /* ensures GPU rendering */
   transition: transform 0.2s ease, filter 0.2s ease;
@@ -255,22 +276,22 @@ ul {
 /* Fancy Text */
 
 .header-xl {
-  @apply text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600 drop-shadow;
+  @apply text-4xl font-bold text-transparent bg-clip-text bg-linear-to-r from-accent-400 to-accent-600 drop-shadow;
 }
 .header-lg {
-  @apply text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600 drop-shadow;
+  @apply text-2xl font-bold text-transparent bg-clip-text bg-linear-to-r from-accent-400 to-accent-600 drop-shadow;
 }
 
 .header {
-  @apply text-xl font-semibold text-amber-400;
+  @apply text-xl font-semibold text-accent-400;
 }
 
 .paragraph {
-  @apply leading-relaxed text-gray-300;
+  @apply leading-relaxed text-neutral-300;
 }
 
 .card {
-  @apply p-6 border border-gray-400 shadow-lg backdrop-blur-sm rounded-xl;
+  @apply p-6 border border-neutral-400 shadow-lg backdrop-blur-sm rounded-xl;
 }
 
 form {
@@ -278,5 +299,5 @@ form {
 }
 
 form > input {
-  @apply w-full p-2 border border-gray-300 rounded;
+  @apply w-full p-2 border border-neutral-300 rounded;
 }
