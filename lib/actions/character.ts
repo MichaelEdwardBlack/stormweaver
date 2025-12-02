@@ -105,7 +105,7 @@ export async function updateName(characterId: string, name: string) {
 
 export async function getSidebarSections(characterId: string) {
   const session = await auth();
-  if (!session) throw new Error("Unauthorized");
+  if (!session) redirect("/auth/login");
   const character = await prisma.character.findFirst({
     where: { id: characterId, userId: session.user.id },
     include: {
@@ -114,26 +114,26 @@ export async function getSidebarSections(characterId: string) {
       skills: true,
       talents: true,
       paths: true,
+      story: true,
     },
   });
   if (!character) throw new Error("Character not found!");
+  const hasStartingPath = character.paths.findIndex((path) => path.isStartingPath) !== -1;
+  const characterIntellect = character.attributes.find((attribute) => attribute.attribute === "intellect")?.value ?? 0;
   const sections = [
     {
       name: "Origin",
       path: "origin",
-      icon: GiCharacter,
       children: [
-        { name: "Ancestry", path: "ancestry", icon: LuUsers, showComplete: !!character.ancestry },
+        { name: "Ancestry", path: "ancestry", showComplete: !!character.ancestry },
         {
           name: "Culture",
           path: "culture",
-          icon: LuLayers,
           showComplete: character.expertises.filter((e) => e.isOrigin).length >= 2,
         },
         {
           name: "Name",
           path: "name",
-          icon: PiIdentificationCard,
           showWarning: character.name.length < 2,
           showComplete: character.name.length >= 2,
         },
@@ -142,73 +142,68 @@ export async function getSidebarSections(characterId: string) {
     {
       name: "Path & Talents",
       path: "path",
-      icon: GiHorizonRoad,
       children: [
         {
           name: "Starting Path",
           path: "starting",
-          icon: PiTreeStructure,
-          showComplete: character.paths.findIndex((path) => path.isStartingPath) !== -1,
+          showComplete: hasStartingPath,
         },
         {
           name: "Attributes",
           path: "attributes",
-          icon: IoIosStats,
           showComplete:
             character.attributes.reduce((totalPointsSpent, attribute) => totalPointsSpent + attribute.value, 0) >= 12,
+          hide: !hasStartingPath,
         },
         {
           name: "Skills",
           path: "skills",
-          icon: GiSkills,
           showComplete: character.skills.reduce((totalPointsSpent, skill) => totalPointsSpent + skill.rank, 0) >= 5,
+          hide: !hasStartingPath,
         },
         {
           name: "Expertise - from Intelligence",
           path: "expertise",
-          icon: GiSmart,
-          showComplete:
-            character.expertises.filter((e) => !e.isOrigin).length >=
-            (character.attributes.find((attribute) => attribute.attribute === "intellect")?.value ?? 0),
+          showComplete: character.expertises.filter((e) => !e.isOrigin).length >= characterIntellect,
+          hide: !hasStartingPath || characterIntellect === 0,
         },
         {
           name: "Bonus Ancestry Talent",
           path: "bonus",
-          icon: LuBadgePlus,
           showComplete: character.talents.filter((talent) => talent.isAncestryTalent).length >= 1,
+          hide: !hasStartingPath,
         },
       ],
     },
     {
       name: "Equipment",
       path: "equipment",
-      icon: GiAnvilImpact,
       children: [
-        { name: "Starting Kit", path: "kit", icon: GiLightBackpack },
-        { name: "Weapons", path: "weapons", icon: LuSword },
-        { name: "Armor", path: "armor", icon: GiChestArmor },
+        { name: "Starting Kit", path: "kit", showComplete: !!character.startingKit },
+        { name: "Weapons", path: "weapons" },
+        { name: "Armor", path: "armor" },
       ],
     },
     {
       name: "Story",
       path: "story",
-      icon: GiScrollQuill,
       children: [
-        { name: "Background", path: "background", icon: LuLayers },
-        { name: "Goals", path: "goals", icon: LuBadge },
+        { name: "Background", path: "background" },
+        { name: "Goals", path: "goals" },
       ],
     },
     {
       name: "Advancement",
       path: "advancement",
-      icon: GiProgression,
       children: [
-        { name: "Level", path: "level", icon: FaLevelUpAlt },
-        { name: "Attributes", path: "attributes", icon: IoIosStats },
-        { name: "Skills", path: "skills", icon: GiSkills },
-        { name: "Expertise - from Intelligence", path: "expertise", icon: GiSmart },
-        { name: "Bonus Ancestry Talent", path: "bonus", icon: LuBadgePlus },
+        { name: "Level", path: "level" },
+        { name: "Attributes", path: "attributes", hide: character.level < 2 },
+        { name: "Skills", path: "skills", hide: character.level < 2 },
+        { name: "Expertise - from Intelligence", path: "expertise", hide: character.level < 2 },
+        { name: "Bonus Ancestry Talent", path: "bonus", hide: character.level < 2 },
       ],
     },
   ];
+
+  return sections;
 }

@@ -59,7 +59,7 @@ export default async function DashboardPage() {
       </AnimatedCardGrid>
 
       {/* Character List */}
-      <h2 className="mt-12 text-2xl font-semibold text-black dark:text-white">Your Characters</h2>
+      <h2 className="mt-12 mb-4 text-2xl font-semibold text-black dark:text-white">Your Characters</h2>
 
       {characters.length === 0 ? (
         <p className="italic text-neutral-400">You haven't created any characters yet.</p>
@@ -71,7 +71,9 @@ export default async function DashboardPage() {
               href={`/characters/${c.id}`}
               className="block p-5 transition border rounded-lg shadow-md border-white/10 bg-white/5 hover:bg-white/10 dark:bg-neutral-900/40 dark:hover:bg-neutral-900/60 backdrop-blur-md"
             >
-              <h3 className="text-xl font-bold text-primary-200">{c.name}</h3>
+              <h3 className="text-xl font-bold dark:text-primary-200 text-primary-800">
+                {c.name !== "" ? c.name : "Unnamed"}
+              </h3>
               <p className="text-sm dark:text-neutral-300 text-neutral-500">
                 {c.ancestry} • Level {c.level}
               </p>

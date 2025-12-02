@@ -42,6 +42,7 @@ export type CharacterMinAggregateOutputType = {
   createdAt: Date | null
   updatedAt: Date | null
   ancestry: $Enums.Ancestry | null
+  startingKit: string | null
   userId: string | null
 }
 
@@ -53,6 +54,7 @@ export type CharacterMaxAggregateOutputType = {
   createdAt: Date | null
   updatedAt: Date | null
   ancestry: $Enums.Ancestry | null
+  startingKit: string | null
   userId: string | null
 }
 
@@ -64,6 +66,7 @@ export type CharacterCountAggregateOutputType = {
   createdAt: number
   updatedAt: number
   ancestry: number
+  startingKit: number
   userId: number
   _all: number
 }
@@ -85,6 +88,7 @@ export type CharacterMinAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   ancestry?: true
+  startingKit?: true
   userId?: true
 }
 
@@ -96,6 +100,7 @@ export type CharacterMaxAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   ancestry?: true
+  startingKit?: true
   userId?: true
 }
 
@@ -107,6 +112,7 @@ export type CharacterCountAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   ancestry?: true
+  startingKit?: true
   userId?: true
   _all?: true
 }
@@ -205,6 +211,7 @@ export type CharacterGroupByOutputType = {
   createdAt: Date
   updatedAt: Date
   ancestry: $Enums.Ancestry | null
+  startingKit: string | null
   userId: string
   _count: CharacterCountAggregateOutputType | null
   _avg: CharacterAvgAggregateOutputType | null
@@ -239,6 +246,7 @@ export type CharacterWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Character"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Character"> | Date | string
   ancestry?: Prisma.EnumAncestryNullableFilter<"Character"> | $Enums.Ancestry | null
+  startingKit?: Prisma.StringNullableFilter<"Character"> | string | null
   userId?: Prisma.StringFilter<"Character"> | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   attributes?: Prisma.CharacterAttributeListRelationFilter
@@ -258,6 +266,7 @@ export type CharacterOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   ancestry?: Prisma.SortOrderInput | Prisma.SortOrder
+  startingKit?: Prisma.SortOrderInput | Prisma.SortOrder
   userId?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   attributes?: Prisma.CharacterAttributeOrderByRelationAggregateInput
@@ -280,6 +289,7 @@ export type CharacterWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Character"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Character"> | Date | string
   ancestry?: Prisma.EnumAncestryNullableFilter<"Character"> | $Enums.Ancestry | null
+  startingKit?: Prisma.StringNullableFilter<"Character"> | string | null
   userId?: Prisma.StringFilter<"Character"> | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   attributes?: Prisma.CharacterAttributeListRelationFilter
@@ -299,6 +309,7 @@ export type CharacterOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   ancestry?: Prisma.SortOrderInput | Prisma.SortOrder
+  startingKit?: Prisma.SortOrderInput | Prisma.SortOrder
   userId?: Prisma.SortOrder
   _count?: Prisma.CharacterCountOrderByAggregateInput
   _avg?: Prisma.CharacterAvgOrderByAggregateInput
@@ -318,6 +329,7 @@ export type CharacterScalarWhereWithAggregatesInput = {
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Character"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Character"> | Date | string
   ancestry?: Prisma.EnumAncestryNullableWithAggregatesFilter<"Character"> | $Enums.Ancestry | null
+  startingKit?: Prisma.StringNullableWithAggregatesFilter<"Character"> | string | null
   userId?: Prisma.StringWithAggregatesFilter<"Character"> | string
 }
 
@@ -329,6 +341,7 @@ export type CharacterCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
+  startingKit?: string | null
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   attributes?: Prisma.CharacterAttributeCreateNestedManyWithoutCharacterInput
   expertises?: Prisma.CharacterExpertiseCreateNestedManyWithoutCharacterInput
@@ -347,6 +360,7 @@ export type CharacterUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
+  startingKit?: string | null
   userId: string
   attributes?: Prisma.CharacterAttributeUncheckedCreateNestedManyWithoutCharacterInput
   expertises?: Prisma.CharacterExpertiseUncheckedCreateNestedManyWithoutCharacterInput
@@ -365,6 +379,7 @@ export type CharacterUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
+  startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   attributes?: Prisma.CharacterAttributeUpdateManyWithoutCharacterNestedInput
   expertises?: Prisma.CharacterExpertiseUpdateManyWithoutCharacterNestedInput
@@ -383,6 +398,7 @@ export type CharacterUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
+  startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   attributes?: Prisma.CharacterAttributeUncheckedUpdateManyWithoutCharacterNestedInput
   expertises?: Prisma.CharacterExpertiseUncheckedUpdateManyWithoutCharacterNestedInput
@@ -401,6 +417,7 @@ export type CharacterCreateManyInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
+  startingKit?: string | null
   userId: string
 }
 
@@ -412,6 +429,7 @@ export type CharacterUpdateManyMutationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
+  startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type CharacterUncheckedUpdateManyInput = {
@@ -422,6 +440,7 @@ export type CharacterUncheckedUpdateManyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
+  startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -443,6 +462,7 @@ export type CharacterCountOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   ancestry?: Prisma.SortOrder
+  startingKit?: Prisma.SortOrder
   userId?: Prisma.SortOrder
 }
 
@@ -458,6 +478,7 @@ export type CharacterMaxOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   ancestry?: Prisma.SortOrder
+  startingKit?: Prisma.SortOrder
   userId?: Prisma.SortOrder
 }
 
@@ -469,6 +490,7 @@ export type CharacterMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   ancestry?: Prisma.SortOrder
+  startingKit?: Prisma.SortOrder
   userId?: Prisma.SortOrder
 }
 
@@ -645,6 +667,7 @@ export type CharacterCreateWithoutUserInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
+  startingKit?: string | null
   attributes?: Prisma.CharacterAttributeCreateNestedManyWithoutCharacterInput
   expertises?: Prisma.CharacterExpertiseCreateNestedManyWithoutCharacterInput
   equipment?: Prisma.CharacterItemCreateNestedManyWithoutCharacterInput
@@ -662,6 +685,7 @@ export type CharacterUncheckedCreateWithoutUserInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
+  startingKit?: string | null
   attributes?: Prisma.CharacterAttributeUncheckedCreateNestedManyWithoutCharacterInput
   expertises?: Prisma.CharacterExpertiseUncheckedCreateNestedManyWithoutCharacterInput
   equipment?: Prisma.CharacterItemUncheckedCreateNestedManyWithoutCharacterInput
@@ -708,6 +732,7 @@ export type CharacterScalarWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Character"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Character"> | Date | string
   ancestry?: Prisma.EnumAncestryNullableFilter<"Character"> | $Enums.Ancestry | null
+  startingKit?: Prisma.StringNullableFilter<"Character"> | string | null
   userId?: Prisma.StringFilter<"Character"> | string
 }
 
@@ -719,6 +744,7 @@ export type CharacterCreateWithoutAttributesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
+  startingKit?: string | null
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   expertises?: Prisma.CharacterExpertiseCreateNestedManyWithoutCharacterInput
   equipment?: Prisma.CharacterItemCreateNestedManyWithoutCharacterInput
@@ -736,6 +762,7 @@ export type CharacterUncheckedCreateWithoutAttributesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
+  startingKit?: string | null
   userId: string
   expertises?: Prisma.CharacterExpertiseUncheckedCreateNestedManyWithoutCharacterInput
   equipment?: Prisma.CharacterItemUncheckedCreateNestedManyWithoutCharacterInput
@@ -769,6 +796,7 @@ export type CharacterUpdateWithoutAttributesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
+  startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   expertises?: Prisma.CharacterExpertiseUpdateManyWithoutCharacterNestedInput
   equipment?: Prisma.CharacterItemUpdateManyWithoutCharacterNestedInput
@@ -786,6 +814,7 @@ export type CharacterUncheckedUpdateWithoutAttributesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
+  startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   expertises?: Prisma.CharacterExpertiseUncheckedUpdateManyWithoutCharacterNestedInput
   equipment?: Prisma.CharacterItemUncheckedUpdateManyWithoutCharacterNestedInput
@@ -803,6 +832,7 @@ export type CharacterCreateWithoutSkillsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
+  startingKit?: string | null
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   attributes?: Prisma.CharacterAttributeCreateNestedManyWithoutCharacterInput
   expertises?: Prisma.CharacterExpertiseCreateNestedManyWithoutCharacterInput
@@ -820,6 +850,7 @@ export type CharacterUncheckedCreateWithoutSkillsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
+  startingKit?: string | null
   userId: string
   attributes?: Prisma.CharacterAttributeUncheckedCreateNestedManyWithoutCharacterInput
   expertises?: Prisma.CharacterExpertiseUncheckedCreateNestedManyWithoutCharacterInput
@@ -853,6 +884,7 @@ export type CharacterUpdateWithoutSkillsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
+  startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   attributes?: Prisma.CharacterAttributeUpdateManyWithoutCharacterNestedInput
   expertises?: Prisma.CharacterExpertiseUpdateManyWithoutCharacterNestedInput
@@ -870,6 +902,7 @@ export type CharacterUncheckedUpdateWithoutSkillsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
+  startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   attributes?: Prisma.CharacterAttributeUncheckedUpdateManyWithoutCharacterNestedInput
   expertises?: Prisma.CharacterExpertiseUncheckedUpdateManyWithoutCharacterNestedInput
@@ -887,6 +920,7 @@ export type CharacterCreateWithoutTalentsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
+  startingKit?: string | null
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   attributes?: Prisma.CharacterAttributeCreateNestedManyWithoutCharacterInput
   expertises?: Prisma.CharacterExpertiseCreateNestedManyWithoutCharacterInput
@@ -904,6 +938,7 @@ export type CharacterUncheckedCreateWithoutTalentsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
+  startingKit?: string | null
   userId: string
   attributes?: Prisma.CharacterAttributeUncheckedCreateNestedManyWithoutCharacterInput
   expertises?: Prisma.CharacterExpertiseUncheckedCreateNestedManyWithoutCharacterInput
@@ -937,6 +972,7 @@ export type CharacterUpdateWithoutTalentsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
+  startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   attributes?: Prisma.CharacterAttributeUpdateManyWithoutCharacterNestedInput
   expertises?: Prisma.CharacterExpertiseUpdateManyWithoutCharacterNestedInput
@@ -954,6 +990,7 @@ export type CharacterUncheckedUpdateWithoutTalentsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
+  startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   attributes?: Prisma.CharacterAttributeUncheckedUpdateManyWithoutCharacterNestedInput
   expertises?: Prisma.CharacterExpertiseUncheckedUpdateManyWithoutCharacterNestedInput
@@ -971,6 +1008,7 @@ export type CharacterCreateWithoutEquipmentInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
+  startingKit?: string | null
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   attributes?: Prisma.CharacterAttributeCreateNestedManyWithoutCharacterInput
   expertises?: Prisma.CharacterExpertiseCreateNestedManyWithoutCharacterInput
@@ -988,6 +1026,7 @@ export type CharacterUncheckedCreateWithoutEquipmentInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
+  startingKit?: string | null
   userId: string
   attributes?: Prisma.CharacterAttributeUncheckedCreateNestedManyWithoutCharacterInput
   expertises?: Prisma.CharacterExpertiseUncheckedCreateNestedManyWithoutCharacterInput
@@ -1021,6 +1060,7 @@ export type CharacterUpdateWithoutEquipmentInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
+  startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   attributes?: Prisma.CharacterAttributeUpdateManyWithoutCharacterNestedInput
   expertises?: Prisma.CharacterExpertiseUpdateManyWithoutCharacterNestedInput
@@ -1038,6 +1078,7 @@ export type CharacterUncheckedUpdateWithoutEquipmentInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
+  startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   attributes?: Prisma.CharacterAttributeUncheckedUpdateManyWithoutCharacterNestedInput
   expertises?: Prisma.CharacterExpertiseUncheckedUpdateManyWithoutCharacterNestedInput
@@ -1055,6 +1096,7 @@ export type CharacterCreateWithoutPathsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
+  startingKit?: string | null
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   attributes?: Prisma.CharacterAttributeCreateNestedManyWithoutCharacterInput
   expertises?: Prisma.CharacterExpertiseCreateNestedManyWithoutCharacterInput
@@ -1072,6 +1114,7 @@ export type CharacterUncheckedCreateWithoutPathsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
+  startingKit?: string | null
   userId: string
   attributes?: Prisma.CharacterAttributeUncheckedCreateNestedManyWithoutCharacterInput
   expertises?: Prisma.CharacterExpertiseUncheckedCreateNestedManyWithoutCharacterInput
@@ -1105,6 +1148,7 @@ export type CharacterUpdateWithoutPathsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
+  startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   attributes?: Prisma.CharacterAttributeUpdateManyWithoutCharacterNestedInput
   expertises?: Prisma.CharacterExpertiseUpdateManyWithoutCharacterNestedInput
@@ -1122,6 +1166,7 @@ export type CharacterUncheckedUpdateWithoutPathsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
+  startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   attributes?: Prisma.CharacterAttributeUncheckedUpdateManyWithoutCharacterNestedInput
   expertises?: Prisma.CharacterExpertiseUncheckedUpdateManyWithoutCharacterNestedInput
@@ -1139,6 +1184,7 @@ export type CharacterCreateWithoutExpertisesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
+  startingKit?: string | null
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   attributes?: Prisma.CharacterAttributeCreateNestedManyWithoutCharacterInput
   equipment?: Prisma.CharacterItemCreateNestedManyWithoutCharacterInput
@@ -1156,6 +1202,7 @@ export type CharacterUncheckedCreateWithoutExpertisesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
+  startingKit?: string | null
   userId: string
   attributes?: Prisma.CharacterAttributeUncheckedCreateNestedManyWithoutCharacterInput
   equipment?: Prisma.CharacterItemUncheckedCreateNestedManyWithoutCharacterInput
@@ -1189,6 +1236,7 @@ export type CharacterUpdateWithoutExpertisesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
+  startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   attributes?: Prisma.CharacterAttributeUpdateManyWithoutCharacterNestedInput
   equipment?: Prisma.CharacterItemUpdateManyWithoutCharacterNestedInput
@@ -1206,6 +1254,7 @@ export type CharacterUncheckedUpdateWithoutExpertisesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
+  startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   attributes?: Prisma.CharacterAttributeUncheckedUpdateManyWithoutCharacterNestedInput
   equipment?: Prisma.CharacterItemUncheckedUpdateManyWithoutCharacterNestedInput
@@ -1223,6 +1272,7 @@ export type CharacterCreateWithoutStoryInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
+  startingKit?: string | null
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   attributes?: Prisma.CharacterAttributeCreateNestedManyWithoutCharacterInput
   expertises?: Prisma.CharacterExpertiseCreateNestedManyWithoutCharacterInput
@@ -1240,6 +1290,7 @@ export type CharacterUncheckedCreateWithoutStoryInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
+  startingKit?: string | null
   userId: string
   attributes?: Prisma.CharacterAttributeUncheckedCreateNestedManyWithoutCharacterInput
   expertises?: Prisma.CharacterExpertiseUncheckedCreateNestedManyWithoutCharacterInput
@@ -1273,6 +1324,7 @@ export type CharacterUpdateWithoutStoryInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
+  startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   attributes?: Prisma.CharacterAttributeUpdateManyWithoutCharacterNestedInput
   expertises?: Prisma.CharacterExpertiseUpdateManyWithoutCharacterNestedInput
@@ -1290,6 +1342,7 @@ export type CharacterUncheckedUpdateWithoutStoryInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
+  startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   attributes?: Prisma.CharacterAttributeUncheckedUpdateManyWithoutCharacterNestedInput
   expertises?: Prisma.CharacterExpertiseUncheckedUpdateManyWithoutCharacterNestedInput
@@ -1307,6 +1360,7 @@ export type CharacterCreateManyUserInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
+  startingKit?: string | null
 }
 
 export type CharacterUpdateWithoutUserInput = {
@@ -1317,6 +1371,7 @@ export type CharacterUpdateWithoutUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
+  startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   attributes?: Prisma.CharacterAttributeUpdateManyWithoutCharacterNestedInput
   expertises?: Prisma.CharacterExpertiseUpdateManyWithoutCharacterNestedInput
   equipment?: Prisma.CharacterItemUpdateManyWithoutCharacterNestedInput
@@ -1334,6 +1389,7 @@ export type CharacterUncheckedUpdateWithoutUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
+  startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   attributes?: Prisma.CharacterAttributeUncheckedUpdateManyWithoutCharacterNestedInput
   expertises?: Prisma.CharacterExpertiseUncheckedUpdateManyWithoutCharacterNestedInput
   equipment?: Prisma.CharacterItemUncheckedUpdateManyWithoutCharacterNestedInput
@@ -1351,6 +1407,7 @@ export type CharacterUncheckedUpdateManyWithoutUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
+  startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -1437,6 +1494,7 @@ export type CharacterSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   createdAt?: boolean
   updatedAt?: boolean
   ancestry?: boolean
+  startingKit?: boolean
   userId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   attributes?: boolean | Prisma.Character$attributesArgs<ExtArgs>
@@ -1457,6 +1515,7 @@ export type CharacterSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   createdAt?: boolean
   updatedAt?: boolean
   ancestry?: boolean
+  startingKit?: boolean
   userId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["character"]>
@@ -1469,6 +1528,7 @@ export type CharacterSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   createdAt?: boolean
   updatedAt?: boolean
   ancestry?: boolean
+  startingKit?: boolean
   userId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["character"]>
@@ -1481,10 +1541,11 @@ export type CharacterSelectScalar = {
   createdAt?: boolean
   updatedAt?: boolean
   ancestry?: boolean
+  startingKit?: boolean
   userId?: boolean
 }
 
-export type CharacterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "level" | "visibility" | "createdAt" | "updatedAt" | "ancestry" | "userId", ExtArgs["result"]["character"]>
+export type CharacterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "level" | "visibility" | "createdAt" | "updatedAt" | "ancestry" | "startingKit" | "userId", ExtArgs["result"]["character"]>
 export type CharacterInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   attributes?: boolean | Prisma.Character$attributesArgs<ExtArgs>
@@ -1523,6 +1584,7 @@ export type $CharacterPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     createdAt: Date
     updatedAt: Date
     ancestry: $Enums.Ancestry | null
+    startingKit: string | null
     userId: string
   }, ExtArgs["result"]["character"]>
   composites: {}
@@ -1962,6 +2024,7 @@ export interface CharacterFieldRefs {
   readonly createdAt: Prisma.FieldRef<"Character", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Character", 'DateTime'>
   readonly ancestry: Prisma.FieldRef<"Character", 'Ancestry'>
+  readonly startingKit: Prisma.FieldRef<"Character", 'String'>
   readonly userId: Prisma.FieldRef<"Character", 'String'>
 }
     

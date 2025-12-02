@@ -24,9 +24,7 @@ export async function loginUser(state: LoginFormState, formData: FormData) {
     await signIn("credentials", formData);
   } catch (e: any) {
     if (isRedirectError(e)) {
-      console.log("isRedirectError");
     } else {
-      console.log("error", e);
       return {
         errors: {
           password: ["Invalid credentials"],

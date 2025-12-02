@@ -1,9 +1,9 @@
 "use client";
-import { Sidebar } from "./Sidebar";
+import { Section, Sidebar } from "./Sidebar";
 import { useState } from "react";
 import { LuPanelLeftOpen } from "react-icons/lu";
 
-export const MobileSidebar = () => {
+export const MobileSidebar = ({ sections }: { sections: Section[] }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -17,7 +17,7 @@ export const MobileSidebar = () => {
       </button>
 
       {/* Sidebar Drawer */}
-      {open && <Sidebar mobile onClose={() => setOpen(false)} />}
+      {open && <Sidebar sections={sections} mobile onClose={() => setOpen(false)} />}
     </>
   );
 };

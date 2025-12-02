@@ -162,6 +162,7 @@ export const CharacterScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   ancestry: 'ancestry',
+  startingKit: 'startingKit',
   userId: 'userId'
 } as const
 

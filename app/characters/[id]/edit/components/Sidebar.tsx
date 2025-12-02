@@ -6,81 +6,28 @@ import { useParams, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-import {
-  GiAnvilImpact,
-  GiCharacter,
-  GiChestArmor,
-  GiHorizonRoad,
-  GiLightBackpack,
-  GiProgression,
-  GiScrollQuill,
-  GiSmart,
-} from "react-icons/gi";
-import { LuBadgePlus, LuPanelLeftClose, LuPanelLeftOpen } from "react-icons/lu";
-import { PiIdentificationCard, PiTreeStructure } from "react-icons/pi";
+import { LuBadgeCheck, LuPanelLeftClose, LuPanelLeftOpen } from "react-icons/lu";
 import { LuChevronDown } from "react-icons/lu";
-import { IoIosStats } from "react-icons/io";
-import { GiSkills } from "react-icons/gi";
-import { LuBadge, LuLayers, LuUsers, LuSword } from "react-icons/lu";
-import { FaLevelUpAlt } from "react-icons/fa";
+import { SidebarIcons } from "@/lib/utils/iconMapper";
 
-const sections = [
-  {
-    name: "Origin",
-    path: "origin",
-    icon: <GiCharacter />,
-    children: [
-      { name: "Ancestry", path: "ancestry", icon: <LuUsers /> },
-      { name: "Culture", path: "culture", icon: <LuLayers /> },
-      { name: "Name", path: "name", icon: <PiIdentificationCard /> },
-    ],
-  },
-  {
-    name: "Path & Talents",
-    path: "path",
-    icon: <GiHorizonRoad />,
-    children: [
-      { name: "Starting Path", path: "starting", icon: <PiTreeStructure /> },
-      { name: "Attributes", path: "attributes", icon: <IoIosStats /> },
-      { name: "Skills", path: "skills", icon: <GiSkills /> },
-      { name: "Expertise - from Intelligence", path: "expertise", icon: <GiSmart /> },
-      { name: "Bonus Ancestry Talent", path: "bonus", icon: <LuBadgePlus /> },
-    ],
-  },
-  {
-    name: "Equipment",
-    path: "equipment",
-    icon: <GiAnvilImpact />,
-    children: [
-      { name: "Starting Kit", path: "kit", icon: <GiLightBackpack /> },
-      { name: "Weapons", path: "weapons", icon: <LuSword /> },
-      { name: "Armor", path: "armor", icon: <GiChestArmor /> },
-    ],
-  },
-  {
-    name: "Story",
-    path: "story",
-    icon: <GiScrollQuill />,
-    children: [
-      { name: "Background", path: "background", icon: <LuLayers /> },
-      { name: "Goals", path: "goals", icon: <LuBadge /> },
-    ],
-  },
-  {
-    name: "Advancement",
-    path: "advancement",
-    icon: <GiProgression />,
-    children: [
-      { name: "Level", path: "level", icon: <FaLevelUpAlt /> },
-      { name: "Attributes", path: "attributes", icon: <IoIosStats /> },
-      { name: "Skills", path: "skills", icon: <GiSkills /> },
-      { name: "Expertise - from Intelligence", path: "expertise", icon: <GiSmart /> },
-      { name: "Bonus Ancestry Talent", path: "bonus", icon: <LuBadgePlus /> },
-    ],
-  },
-];
+export type Section = {
+  name: string;
+  path: string;
+  showComplete?: boolean;
+  showWarning?: boolean;
+  hide?: boolean;
+  children?: Section[];
+};
 
-export const Sidebar = ({ mobile = false, onClose }: { mobile?: boolean; onClose?: () => void }) => {
+export const Sidebar = ({
+  mobile = false,
+  onClose,
+  sections,
+}: {
+  mobile?: boolean;
+  onClose?: () => void;
+  sections: Section[];
+}) => {
   const pathname = usePathname();
   const params = useParams();
 
@@ -94,7 +41,7 @@ export const Sidebar = ({ mobile = false, onClose }: { mobile?: boolean; onClose
   // auto-expand parent group if pathname matches a child route
   useEffect(() => {
     sections.forEach((section) => {
-      const activeChild = section.children.some((child) => pathname?.includes(child.path));
+      const activeChild = section.children?.some((child) => pathname?.includes(child.path));
 
       if (activeChild) {
         setOpenSections((prev) => ({ ...prev, [section.path]: true }));
@@ -134,13 +81,17 @@ export const Sidebar = ({ mobile = false, onClose }: { mobile?: boolean; onClose
                   )}
                 >
                   {/* Parent Icon */}
-                  <span className="text-xl">{sec.icon}</span>
+                  <span className="text-xl">{SidebarIcons[sec.path]}</span>
 
                   {/* Label only shown if not collapsed */}
                   {!collapsed && (
                     <>
                       <span className="flex-1 ml-3 text-left">{sec.name}</span>
-
+                      {sec.children?.findIndex((child) => child.showComplete === false) === -1 && (
+                        <span className="mr-2 text-success">
+                          <LuBadgeCheck />
+                        </span>
+                      )}
                       <motion.span animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
                         <LuChevronDown />
                       </motion.span>
@@ -166,29 +117,40 @@ export const Sidebar = ({ mobile = false, onClose }: { mobile?: boolean; onClose
                             : "space-y-1 border-l border-neutral-400/30 pl-3"
                         )}
                       >
-                        {sec.children.map((child) => {
-                          const childPath = `/characters/${params.id}/edit/${sec.path}/${child.path}`;
-                          const isActiveChild = pathname === childPath;
+                        {sec.children
+                          ?.filter((child) => !child.hide)
+                          .map((child) => {
+                            const childPath = `/characters/${params.id}/edit/${sec.path}/${child.path}`;
+                            const isActiveChild = pathname === childPath;
 
-                          return (
-                            <Link
-                              key={child.path}
-                              href={childPath}
-                              className={cn(
-                                "flex items-center transition rounded-md",
-                                collapsed ? "justify-center p-2 text-xl" : "px-2 py-1 text-sm",
-                                isActiveChild
-                                  ? "text-primary-500 font-semibold"
-                                  : "dark:text-neutral-400 text-neutral-600 hover:bg-neutral-300/40 hover:text-black dark:hover:bg-neutral-700/40 dark:hover:text-white"
-                              )}
-                              onClick={() => mobile && onClose?.()}
-                            >
-                              <span className="text-lg">{child.icon}</span>
+                            return (
+                              <Link
+                                key={child.path}
+                                href={childPath}
+                                className={cn(
+                                  "flex items-center transition rounded-md",
+                                  collapsed ? "justify-center p-2 text-xl" : "px-2 py-1 text-sm",
+                                  isActiveChild
+                                    ? "text-primary-500 font-semibold"
+                                    : "dark:text-neutral-400 text-neutral-600 hover:bg-neutral-300/40 hover:text-black dark:hover:bg-neutral-700/40 dark:hover:text-white"
+                                )}
+                                onClick={() => mobile && onClose?.()}
+                              >
+                                <span className="text-lg">{SidebarIcons[child.path]}</span>
 
-                              {!collapsed && <span className="ml-2">{child.name}</span>}
-                            </Link>
-                          );
-                        })}
+                                {!collapsed && (
+                                  <>
+                                    <span className="ml-2">{child.name}</span>
+                                    {child.showComplete && (
+                                      <span className="ml-auto mr-1 text-success">
+                                        <LuBadgeCheck />
+                                      </span>
+                                    )}
+                                  </>
+                                )}
+                              </Link>
+                            );
+                          })}
                       </div>
                     </motion.div>
                   )}
