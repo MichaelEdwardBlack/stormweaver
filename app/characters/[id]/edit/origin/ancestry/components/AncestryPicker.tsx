@@ -6,16 +6,15 @@ import { HumanDescription } from "./HumanDescription";
 import { SingerDescription } from "./SingerDescription";
 import { Ancestry } from "@/lib/generated/prisma/enums";
 import { updateAncestry } from "@/lib/actions/character";
+import { useCharacter } from "@/services/CharacterProvider";
 
-interface Props {
-  characterId: string;
-  ancestry?: Ancestry | null;
-}
-
-export function AncestryPicker({ characterId, ancestry }: Props) {
+export function AncestryPicker() {
+  const character = useCharacter().character;
+  const characterId = character.id;
+  const ancestry = character.ancestry;
   const [optimisticAncestry, setAncestry] = useOptimistic(
     ancestry,
-    (currentAncestry, newAncestry: Ancestry | null | undefined) => {
+    (_currentAncestry, newAncestry: Ancestry | null) => {
       return newAncestry;
     }
   );

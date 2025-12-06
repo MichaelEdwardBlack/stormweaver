@@ -1,17 +1,10 @@
 import { auth } from "@/lib/auth";
-import { ExpertiseType } from "@/lib/generated/prisma/enums";
-import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import { CulturePicker } from "./CulturePicker";
 
-export default async function CulturePage({ params }: { params: Promise<{ id: string }> }) {
+export default async function CulturePage() {
   const session = await auth();
   if (!session) redirect("/auth/login");
-  const { id } = await params;
-  const culturalExperises = await prisma.characterExpertise.findMany({
-    where: { characterId: id, type: ExpertiseType.cultural, isOrigin: true },
-  });
-  const selectedNames = culturalExperises.map((expertise) => expertise.name);
   return (
     <div className="flex flex-col gap-3">
       <div className="font-bold text-lg">Select 2 Cultural Expertises</div>
@@ -31,7 +24,7 @@ export default async function CulturePage({ params }: { params: Promise<{ id: st
           High Society expertise.
         </p>
       </div>
-      <CulturePicker selectedCultures={selectedNames} characterId={id} />
+      <CulturePicker />
     </div>
   );
 }

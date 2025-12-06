@@ -22,6 +22,7 @@ import { IoIosStats } from "react-icons/io";
 import { GiSkills } from "react-icons/gi";
 import { LuBadge, LuLayers, LuUsers, LuSword } from "react-icons/lu";
 import { FaLevelUpAlt } from "react-icons/fa";
+import { CharacterGetPayload } from "../generated/prisma/models";
 
 export async function deleteCharacter(id: string) {
   const session = await auth();
@@ -38,6 +39,7 @@ export async function updateAncestry(characterId: string, ancestry: Ancestry) {
   const session = await auth();
   if (!session) throw new Error("Unauthorized");
 
+  console.log("updating ancestry", ancestry);
   const character = await prisma.character.update({
     where: { id: characterId, userId: session.user.id },
     data: {
@@ -103,7 +105,17 @@ export async function updateName(characterId: string, name: string) {
   return response;
 }
 
-export async function getSidebarSections(characterId: string) {
+export type FullCharacter = CharacterGetPayload<{
+  include: {
+    expertises: true;
+    attributes: true;
+    skills: true;
+    talents: true;
+    paths: true;
+    story: true;
+  };
+}>;
+export async function getFullCharacter(characterId: string): Promise<FullCharacter> {
   const session = await auth();
   if (!session) redirect("/auth/login");
   const character = await prisma.character.findFirst({
@@ -118,92 +130,5 @@ export async function getSidebarSections(characterId: string) {
     },
   });
   if (!character) throw new Error("Character not found!");
-  const hasStartingPath = character.paths.findIndex((path) => path.isStartingPath) !== -1;
-  const characterIntellect = character.attributes.find((attribute) => attribute.attribute === "intellect")?.value ?? 0;
-  const sections = [
-    {
-      name: "Origin",
-      path: "origin",
-      children: [
-        { name: "Ancestry", path: "ancestry", showComplete: !!character.ancestry },
-        {
-          name: "Culture",
-          path: "culture",
-          showComplete: character.expertises.filter((e) => e.isOrigin).length >= 2,
-        },
-        {
-          name: "Name",
-          path: "name",
-          showWarning: character.name.length < 2,
-          showComplete: character.name.length >= 2,
-        },
-      ],
-    },
-    {
-      name: "Path & Talents",
-      path: "path",
-      children: [
-        {
-          name: "Starting Path",
-          path: "starting",
-          showComplete: hasStartingPath,
-        },
-        {
-          name: "Attributes",
-          path: "attributes",
-          showComplete:
-            character.attributes.reduce((totalPointsSpent, attribute) => totalPointsSpent + attribute.value, 0) >= 12,
-          hide: !hasStartingPath,
-        },
-        {
-          name: "Skills",
-          path: "skills",
-          showComplete: character.skills.reduce((totalPointsSpent, skill) => totalPointsSpent + skill.rank, 0) >= 5,
-          hide: !hasStartingPath,
-        },
-        {
-          name: "Expertise - from Intelligence",
-          path: "expertise",
-          showComplete: character.expertises.filter((e) => !e.isOrigin).length >= characterIntellect,
-          hide: !hasStartingPath || characterIntellect === 0,
-        },
-        {
-          name: "Bonus Ancestry Talent",
-          path: "bonus",
-          showComplete: character.talents.filter((talent) => talent.isAncestryTalent).length >= 1,
-          hide: !hasStartingPath,
-        },
-      ],
-    },
-    {
-      name: "Equipment",
-      path: "equipment",
-      children: [
-        { name: "Starting Kit", path: "kit", showComplete: !!character.startingKit },
-        { name: "Weapons", path: "weapons" },
-        { name: "Armor", path: "armor" },
-      ],
-    },
-    {
-      name: "Story",
-      path: "story",
-      children: [
-        { name: "Background", path: "background" },
-        { name: "Goals", path: "goals" },
-      ],
-    },
-    {
-      name: "Advancement",
-      path: "advancement",
-      children: [
-        { name: "Level", path: "level" },
-        { name: "Attributes", path: "attributes", hide: character.level < 2 },
-        { name: "Skills", path: "skills", hide: character.level < 2 },
-        { name: "Expertise - from Intelligence", path: "expertise", hide: character.level < 2 },
-        { name: "Bonus Ancestry Talent", path: "bonus", hide: character.level < 2 },
-      ],
-    },
-  ];
-
-  return sections;
+  return character;
 }

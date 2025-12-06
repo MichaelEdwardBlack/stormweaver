@@ -9,14 +9,13 @@ import { FaDiceD20 } from "react-icons/fa6";
 import { cn } from "@/lib/utils/styles";
 import { GiFemale, GiMale } from "react-icons/gi";
 import { MotionButton } from "@/components/ui/buttons/MotionButton";
+import { useCharacter } from "@/services/CharacterProvider";
 
-interface Props {
-  characterId: string;
-  characterName: string;
-  characterCulture: string[];
-}
-
-export function NameInput({ characterId, characterName, characterCulture }: Props) {
+export function NameInput() {
+  const character = useCharacter().character;
+  const characterId = character.id;
+  const characterName = character.name;
+  const characterCulture = character.expertises.filter((e) => e.isOrigin && e.type === "cultural").map((c) => c.name);
   const [name, setName] = useState(characterName);
   const [rolling, setRolling] = useState(false);
   const [gender, setGender] = useState<"male" | "female" | "unisex">("unisex");

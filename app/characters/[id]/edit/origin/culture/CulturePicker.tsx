@@ -2,13 +2,13 @@
 import { ExpandableCard } from "@/components/ui/cards/ExpandableCard";
 import { toggleOriginCulture } from "@/lib/actions/character";
 import { CulturalInfo } from "@/lib/data/culture";
+import { useCharacter } from "@/services/CharacterProvider";
 import { startTransition, useOptimistic } from "react";
 
-type Props = {
-  characterId: string;
-  selectedCultures: string[];
-};
-export const CulturePicker = ({ characterId, selectedCultures }: Props) => {
+export const CulturePicker = () => {
+  const character = useCharacter().character;
+  const characterId = character.id;
+  const selectedCultures = character.expertises.filter((e) => e.isOrigin && e.type === "cultural").map((e) => e.name);
   const [optimisticCultures, setOptimisticCultures] = useOptimistic(
     selectedCultures,
     (currentState: string[], cultureName: string) => {
