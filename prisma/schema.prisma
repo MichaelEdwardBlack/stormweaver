@@ -92,7 +92,7 @@ model CharacterAttribute {
   characterId String
   attribute   Attribute
   value       Int       @default(0)
-  character   Character @relation(fields: [characterId], references: [id])
+  character   Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
 
   @@unique([characterId, attribute])
 }
@@ -102,7 +102,7 @@ model CharacterSkill {
   skill       Skill
   characterId String
   rank        Int       @default(0)
-  character   Character @relation(fields: [characterId], references: [id])
+  character   Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
 
   @@unique([characterId, skill])
 }
@@ -125,7 +125,7 @@ model TalentRequirement {
   talentId   String
   requiredId String
   required   Talent @relation("RequiredTalents", fields: [requiredId], references: [id])
-  talent     Talent @relation(fields: [talentId], references: [id])
+  talent     Talent @relation(fields: [talentId], references: [id], onDelete: Cascade)
 }
 
 model SkillRequirement {
@@ -133,7 +133,7 @@ model SkillRequirement {
   talentId String
   skillId  String
   minRank  Int
-  talent   Talent @relation(fields: [talentId], references: [id])
+  talent   Talent @relation(fields: [talentId], references: [id], onDelete: Cascade)
 }
 
 model OtherRequirement {
@@ -141,7 +141,7 @@ model OtherRequirement {
   talentId String
   key      String
   value    String?
-  talent   Talent  @relation(fields: [talentId], references: [id])
+  talent   Talent  @relation(fields: [talentId], references: [id], onDelete: Cascade)
 }
 
 model CharacterTalent {
@@ -150,7 +150,7 @@ model CharacterTalent {
   applyModifiers   Boolean   @default(true)
   talentId         String
   characterId      String
-  character        Character @relation(fields: [characterId], references: [id])
+  character        Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
   talent           Talent    @relation(fields: [talentId], references: [id])
 
   @@unique([characterId, talentId])
@@ -174,7 +174,7 @@ model CharacterItem {
   characterId String
   equipped    Boolean      @default(false)
   itemId      String
-  character   Character    @relation(fields: [characterId], references: [id])
+  character   Character    @relation(fields: [characterId], references: [id], onDelete: Cascade)
   item        ItemTemplate @relation(fields: [itemId], references: [id])
 }
 
@@ -187,7 +187,7 @@ model CharacterPath {
   isRadiant      Boolean
   isSinger       Boolean
   isStartingPath Boolean
-  character      Character @relation(fields: [characterId], references: [id])
+  character      Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
 }
 
 model CharacterExpertise {
@@ -196,7 +196,7 @@ model CharacterExpertise {
   type        ExpertiseType
   isOrigin    Boolean
   characterId String
-  character   Character     @relation(fields: [characterId], references: [id])
+  character   Character     @relation(fields: [characterId], references: [id], onDelete: Cascade)
 }
 
 model CharacterStory {
@@ -212,7 +212,7 @@ model CharacterStory {
   other                String
   characterId          String          @unique
   goals                CharacterGoal[]
-  character            Character       @relation(fields: [characterId], references: [id])
+  character            Character       @relation(fields: [characterId], references: [id], onDelete: Cascade)
 }
 
 model CharacterGoal {
@@ -220,7 +220,7 @@ model CharacterGoal {
   description String
   progress    Int            @default(0)
   storyId     String
-  story       CharacterStory @relation(fields: [storyId], references: [id])
+  story       CharacterStory @relation(fields: [storyId], references: [id], onDelete: Cascade)
 }
 
 model Modifier {

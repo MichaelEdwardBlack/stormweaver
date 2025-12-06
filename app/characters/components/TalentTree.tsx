@@ -1,10 +1,11 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { FaChevronDown } from "react-icons/fa";
 import { PathInfo } from "@/lib/data/paths";
 import { TalentTreeId, TalentTrees } from "@/lib/data/tree";
 import { categorizeTalentNode, getSmartPath } from "@/lib/utils/tree";
 import { TalentNodeCard } from "./TalentNodeCard";
+import { cn } from "@/lib/utils/styles";
 
 type TalentTreeProps = {
   pathId: TalentTreeId;
@@ -33,9 +34,9 @@ export const TalentTree = ({ pathId, readonly, isStacked = true, asAncestry = fa
         isStacked,
       });
       if (isStacked) {
-        categorizedNode.x += 0.5;
+        categorizedNode.x += 0.6;
       } else {
-        categorizedNode.x += 2.5;
+        categorizedNode.x += 2.6;
       }
       return categorizedNode;
     }),
@@ -57,8 +58,15 @@ export const TalentTree = ({ pathId, readonly, isStacked = true, asAncestry = fa
   }, [isCollapsed, pathId, isStacked]);
 
   return (
-    <div className="max-w-full scrollbar-thin">
-      <div className={`z-0 relative w-full overflow-y-hidden overflow-x-scroll`} style={{ height: height }}>
+    <div className="scrollbar-thin flex shrink justify-center">
+      <div
+        className={cn(
+          "z-0 relative overflow-y-hidden overflow-x-auto w-full",
+          pathId === "singer" && "max-w-[900px]",
+          isStacked ? "max-w-[630px]" : "max-w-[1820px]"
+        )}
+        style={{ height: height }}
+      >
         {tree.nodes.map((node) => {
           const isSubclass = node.isSubclass;
           const subIndex = node.subclassIndex;
@@ -110,7 +118,15 @@ export const TalentTree = ({ pathId, readonly, isStacked = true, asAncestry = fa
             </motion.div>
           );
         })}
-        <svg className="w-full overflow-visible pointer-events-none -z-10">
+        {/* this div is purely to fix spacing issues */}
+        <div
+          className={cn(
+            "absolute h-1 w-1 bg-transparent",
+            isStacked ? "left-[620px]" : "left-[1820px]",
+            pathId === "singer" && "left-[900px]"
+          )}
+        />
+        <svg className="overflow-visible pointer-events-none -z-10">
           {tree.edges.map((edge, i) => {
             if (edge.invisible) return;
             const from = tree.nodes.find((n) => n.id === edge.from)!;
