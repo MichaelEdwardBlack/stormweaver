@@ -108,40 +108,17 @@ model CharacterSkill {
 }
 
 model Talent {
-  id                 String              @id @default(cuid())
-  name               String
-  description        String
-  actionCost         ActionCost
-  characterTalents   CharacterTalent[]
-  modifierSource     ModifierSource?
-  requiredOther      OtherRequirement[]
-  requiredSkills     SkillRequirement[]
-  talentRequirements TalentRequirement[] @relation("RequiredTalents")
-  requiredTalents    TalentRequirement[]
-}
-
-model TalentRequirement {
-  id         Int    @id @default(autoincrement())
-  talentId   String
-  requiredId String
-  required   Talent @relation("RequiredTalents", fields: [requiredId], references: [id])
-  talent     Talent @relation(fields: [talentId], references: [id], onDelete: Cascade)
-}
-
-model SkillRequirement {
-  id       Int    @id @default(autoincrement())
-  talentId String
-  skillId  String
-  minRank  Int
-  talent   Talent @relation(fields: [talentId], references: [id], onDelete: Cascade)
-}
-
-model OtherRequirement {
-  id       Int     @id @default(autoincrement())
-  talentId String
-  key      String
-  value    String?
-  talent   Talent  @relation(fields: [talentId], references: [id], onDelete: Cascade)
+  id                String            @id @default(cuid())
+  name              String
+  description       String
+  actionCost        ActionCost
+  characterTalents  CharacterTalent[]
+  modifierSource    ModifierSource?
+  requiredOther     String[]
+  requiredSkillId   String?
+  requiredSkillRank Int?
+  requiredTalents   String[]
+  requiredLevel     Int?
 }
 
 model CharacterTalent {

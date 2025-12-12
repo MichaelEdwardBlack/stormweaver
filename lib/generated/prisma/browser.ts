@@ -63,21 +63,6 @@ export type CharacterSkill = Prisma.CharacterSkillModel
  */
 export type Talent = Prisma.TalentModel
 /**
- * Model TalentRequirement
- * 
- */
-export type TalentRequirement = Prisma.TalentRequirementModel
-/**
- * Model SkillRequirement
- * 
- */
-export type SkillRequirement = Prisma.SkillRequirementModel
-/**
- * Model OtherRequirement
- * 
- */
-export type OtherRequirement = Prisma.OtherRequirementModel
-/**
  * Model CharacterTalent
  * 
  */

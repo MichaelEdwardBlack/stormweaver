@@ -5,241 +5,145 @@ import {
   ActionCost,
   ItemType,
   ItemAcquisition,
-  Attribute,
-  Skill,
 } from "@/lib/generated/prisma/client";
 import { prisma } from "@/lib/prisma";
+import { ActionType, TalentNode, TalentTrees } from "./../lib/data/tree";
+import { LightAndHeavyWeapons, SpecialtyWeapons } from "@/lib/data/weapons";
+import { Armor } from "@/lib/data/armor";
+
+const ActionMapper: Record<ActionType, ActionCost> = {
+  "1 Action": ActionCost.ONE_ACTION,
+  "2 Actions": ActionCost.TWO_ACTIONS,
+  "3 Actions": ActionCost.THREE_ACTIONS,
+  "Free Action": ActionCost.FREE_ACTION,
+  Reaction: ActionCost.REACTION,
+  "Special Activation": ActionCost.SPECIAL_ACTION,
+  "Always Active": ActionCost.ALWAYS_ACTIVE,
+};
+const allTalents = Object.values(TalentTrees).reduce((nodes: TalentNode[], tree) => [...nodes, ...tree.nodes], []);
+const allWeapons = LightAndHeavyWeapons.concat(SpecialtyWeapons);
 
 async function main() {
   console.log("🌱 Seeding database...");
-
-  // -------------------------------------------------------
-  // 1. Create a User
-  // -------------------------------------------------------
-  const user = await prisma.user.create({
-    data: {
-      email: "demo@example.com",
-      passwordHash: "hashed_password",
-      name: "Demo User",
-      settings: {
+  allTalents.forEach(async (node) => {
+    if (!node.isSubclass && !!node.actionCost) {
+      const { id, name, description } = node;
+      const actionCost: ActionCost = ActionMapper[node.actionCost];
+      await prisma.talent.upsert({
+        where: { id },
+        update: {},
         create: {
-          diceColor: "yellow",
-          diceTextColor: "black",
-          treeView: "broad",
+          id,
+          name,
+          description: description ?? "",
+          actionCost,
+          requiredTalents: node.requirements?.talents ?? [],
+          requiredOther: node.requirements?.other ?? [],
+          requiredLevel: node.requirements?.level,
+          requiredSkillId: node.requirements?.skill?.id,
+          requiredSkillRank: node.requirements?.skill?.min,
         },
-      },
-    },
+      });
+    }
   });
-
-  console.log("User created:", user.email);
-
-  // -------------------------------------------------------
-  // 2. Create a Character
-  // -------------------------------------------------------
-  const character = await prisma.character.create({
-    data: {
-      name: "Kalak Sonin",
-      userId: user.id,
-      level: 1,
-      visibility: "owner",
-    },
-  });
-
-  console.log("Character created:", character.name);
-
-  // -------------------------------------------------------
-  // 3. Create Attributes
-  // -------------------------------------------------------
-  const attributes = Object.values(Attribute).map((attr) => ({
-    characterId: character.id,
-    attribute: attr,
-    value: 1,
-  }));
-
-  await prisma.characterAttribute.createMany({ data: attributes });
-
-  // -------------------------------------------------------
-  // 4. Create Skills
-  // -------------------------------------------------------
-  const skills = Object.values(Skill).map((skill) => ({
-    characterId: character.id,
-    skill: skill,
-    rank: 0,
-  }));
-
-  await prisma.characterSkill.createMany({ data: skills });
-
-  console.log("Attributes & Skills created");
-
-  // -------------------------------------------------------
-  // 5. TALENTS — Definitions with modifiers
-  // -------------------------------------------------------
-
-  // ⭐ Example talent: "Keen Mind" → +2 Intellect
-  const opportunist = await prisma.talent.create({
-    data: {
-      id: "opportunist",
-      name: "Opportunist",
-      description: "Once per round, you can reroll your plot die",
-      actionCost: ActionCost.SPECIAL_ACTION,
-    },
-  });
-
-  const watchfulEye = await prisma.talent.upsert({
-    where: { id: "watchful_eye" },
-    update: {},
-    create: {
-      id: "watchful_eye",
-      name: "Watchful Eye",
-      description: "Use Opportunist on the plot die of a willing ally within 20 feet.",
-      actionCost: ActionCost.REACTION,
-      requiredSkills: {
-        create: [
-          {
-            skillId: "deduction",
-            minRank: 1,
-          },
-        ],
-      },
-      requiredTalents: {
-        create: [
-          {
-            requiredId: "opportunist",
-          },
-        ],
-      },
-    },
-  });
-
-  // const composed = await prisma.talent.upsert({
-  //   where: { id: "composed" },
-  //   update: {},
-  //   create: {
-  //     id: "composed",
-  //     name: "Composed",
-  //     description: "Increase your max and current focus by your tier.",
-  //     actionCost: ActionCost.ALWAYS_ACTIVE,
-  //     modifierSource: {
-  //       create: {
-  //         type: SourceType.TALENT,
-  //         modifiers: {
-  //           create: {
-  //             targetType: ModifierTargetType.FOCUS,
-  //             operator: ModifierOperator.TIER_SCALING,
-  //             value: 1,
-  //           },
-  //         },
-  //       },
-  //     },
-  //   },
-  // });
-
   console.log("Talents created");
 
   // -------------------------------------------------------
-  // 6. Assign talents to character
-  // -------------------------------------------------------
-  await prisma.characterTalent.createMany({
-    data: [
-      {
-        characterId: character.id,
-        talentId: opportunist.id,
-        applyModifiers: true,
-        isAncestryTalent: false,
-      },
-      {
-        characterId: character.id,
-        talentId: watchfulEye.id,
-        applyModifiers: true,
-        isAncestryTalent: false,
-      },
-    ],
-  });
-
-  console.log("Character talents added");
-
-  // -------------------------------------------------------
-  // 7. ITEM TEMPLATES — Definitions with modifiers
+  // ITEM TEMPLATES — Definitions with modifiers
   // -------------------------------------------------------
 
-  // ⭐ Example Item: Longsword (1d8 slashing)
-  const longsword = await prisma.itemTemplate.create({
-    data: {
-      name: "Longsword",
-      type: ItemType.weapon,
-      price: 60,
-      weight: 3,
-      acquisition: ItemAcquisition.purchase,
-      modifierSource: {
-        create: {
-          type: SourceType.ITEM,
-          modifiers: {
-            create: [
-              {
-                targetType: ModifierTargetType.DAMAGE_DICE,
-                diceValue: "1d8",
-                operator: ModifierOperator.OVERRIDE,
-              },
-              {
-                targetType: ModifierTargetType.DAMAGE_TYPE,
-                damageType: "keen",
-                operator: ModifierOperator.OVERRIDE,
-              },
-            ],
-          },
-        },
-      },
-    },
-  });
+  allWeapons.forEach(async (weapon) => {
+    const id = weapon.name.toLowerCase().replaceAll(" ", "_");
+    const { name, weight, price } = weapon;
+    const acquisition =
+      price === Number.POSITIVE_INFINITY
+        ? name === "Shardblade (Radiant)"
+          ? ItemAcquisition.talent
+          : ItemAcquisition.reward
+        : ItemAcquisition.purchase;
 
-  // ⭐ Example Item: Shield (+2 armor deflect)
-  const chain = await prisma.itemTemplate.upsert({
-    where: { id: "chain" },
-    update: {},
-    create: {
-      id: "chain",
-      name: "Chain",
-      type: ItemType.armor,
-      price: 80,
-      weight: 25,
-      acquisition: ItemAcquisition.purchase,
-      modifierSource: {
-        create: {
-          type: SourceType.ITEM,
-          modifiers: {
-            create: {
-              targetType: ModifierTargetType.ARMOR_DEFLECT,
-              operator: ModifierOperator.ADD,
-              value: 2,
+    await prisma.itemTemplate.upsert({
+      where: { id },
+      update: {},
+      create: {
+        id,
+        name,
+        type: ItemType.weapon,
+        // description: "",
+        price: acquisition === ItemAcquisition.purchase ? price : null,
+        acquisition,
+        weight,
+        modifierSource: {
+          create: {
+            type: SourceType.ITEM,
+            modifiers: {
+              create: [
+                {
+                  targetType: ModifierTargetType.DAMAGE_DICE,
+                  operator: ModifierOperator.OVERRIDE,
+                  diceValue: weapon.damage.value,
+                },
+                {
+                  targetType: ModifierTargetType.DAMAGE_TYPE,
+                  operator: ModifierOperator.OVERRIDE,
+                  damageType: weapon.damage.type,
+                },
+              ],
             },
           },
         },
       },
-    },
+    });
   });
+  console.log("Weapon templates created");
 
-  console.log("Item templates created");
+  Armor.forEach(async (armor) => {
+    const id = armor.name.toLowerCase().replaceAll(" ", "_");
+    const { name, weight, price } = armor;
+    const acquisition =
+      price === "Reward only"
+        ? ItemAcquisition.reward
+        : price === "Talent only"
+        ? ItemAcquisition.talent
+        : ItemAcquisition.purchase;
 
-  // -------------------------------------------------------
-  // 8. Give starting items to character
-  // -------------------------------------------------------
-  await prisma.characterItem.createMany({
-    data: [
-      { characterId: character.id, itemId: longsword.id, equipped: true },
-      { characterId: character.id, itemId: chain.id, equipped: true },
-    ],
+    await prisma.itemTemplate.upsert({
+      where: { id },
+      update: {},
+      create: {
+        id,
+        name,
+        type: ItemType.armor,
+        // description: "",
+        price: typeof price === "string" ? null : price,
+        acquisition,
+        weight,
+        modifierSource: {
+          create: {
+            type: SourceType.ITEM,
+            modifiers: {
+              create: {
+                targetType: ModifierTargetType.ARMOR_DEFLECT,
+                operator: ModifierOperator.ADD,
+                value: armor.deflectValue,
+              },
+            },
+          },
+        },
+      },
+    });
   });
-
-  console.log("Character starting items added");
+  console.log("Armor templates created");
 
   console.log("🌱 Seed complete!");
 }
 
 main()
-  .catch((e) => {
-    console.error("Seed error:", e);
-    process.exit(1);
+  .then(async () => {
+    // await prisma.$disconnect();
   })
-  .finally(async () => {
+  .catch(async (e) => {
+    console.error(e);
     await prisma.$disconnect();
+    process.exit(1);
   });

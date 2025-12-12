@@ -9,9 +9,9 @@ export const StartingPathPicker = () => {
   const [path, setPath] = useState<TalentTreeId | null>(null);
   return (
     <div className="relative">
-      <div>Select a Heroic Path</div>
+      <h1>Select a Heroic Path</h1>
       <HeroGrid onSelect={(path) => setPath(path)} selectedPath={path} />
-      {path && <HeroicPath pathId={path} />}
+      {path && <HeroicPath pathId={path} showMulticlassOptions={false} />}
     </div>
   );
 };

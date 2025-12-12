@@ -20,8 +20,20 @@ export type TalentModel = runtime.Types.Result.DefaultSelection<Prisma.$TalentPa
 
 export type AggregateTalent = {
   _count: TalentCountAggregateOutputType | null
+  _avg: TalentAvgAggregateOutputType | null
+  _sum: TalentSumAggregateOutputType | null
   _min: TalentMinAggregateOutputType | null
   _max: TalentMaxAggregateOutputType | null
+}
+
+export type TalentAvgAggregateOutputType = {
+  requiredSkillRank: number | null
+  requiredLevel: number | null
+}
+
+export type TalentSumAggregateOutputType = {
+  requiredSkillRank: number | null
+  requiredLevel: number | null
 }
 
 export type TalentMinAggregateOutputType = {
@@ -29,6 +41,9 @@ export type TalentMinAggregateOutputType = {
   name: string | null
   description: string | null
   actionCost: $Enums.ActionCost | null
+  requiredSkillId: string | null
+  requiredSkillRank: number | null
+  requiredLevel: number | null
 }
 
 export type TalentMaxAggregateOutputType = {
@@ -36,6 +51,9 @@ export type TalentMaxAggregateOutputType = {
   name: string | null
   description: string | null
   actionCost: $Enums.ActionCost | null
+  requiredSkillId: string | null
+  requiredSkillRank: number | null
+  requiredLevel: number | null
 }
 
 export type TalentCountAggregateOutputType = {
@@ -43,15 +61,33 @@ export type TalentCountAggregateOutputType = {
   name: number
   description: number
   actionCost: number
+  requiredOther: number
+  requiredSkillId: number
+  requiredSkillRank: number
+  requiredTalents: number
+  requiredLevel: number
   _all: number
 }
 
+
+export type TalentAvgAggregateInputType = {
+  requiredSkillRank?: true
+  requiredLevel?: true
+}
+
+export type TalentSumAggregateInputType = {
+  requiredSkillRank?: true
+  requiredLevel?: true
+}
 
 export type TalentMinAggregateInputType = {
   id?: true
   name?: true
   description?: true
   actionCost?: true
+  requiredSkillId?: true
+  requiredSkillRank?: true
+  requiredLevel?: true
 }
 
 export type TalentMaxAggregateInputType = {
@@ -59,6 +95,9 @@ export type TalentMaxAggregateInputType = {
   name?: true
   description?: true
   actionCost?: true
+  requiredSkillId?: true
+  requiredSkillRank?: true
+  requiredLevel?: true
 }
 
 export type TalentCountAggregateInputType = {
@@ -66,6 +105,11 @@ export type TalentCountAggregateInputType = {
   name?: true
   description?: true
   actionCost?: true
+  requiredOther?: true
+  requiredSkillId?: true
+  requiredSkillRank?: true
+  requiredTalents?: true
+  requiredLevel?: true
   _all?: true
 }
 
@@ -107,6 +151,18 @@ export type TalentAggregateArgs<ExtArgs extends runtime.Types.Extensions.Interna
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: TalentAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: TalentSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: TalentMinAggregateInputType
@@ -137,6 +193,8 @@ export type TalentGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   _count?: TalentCountAggregateInputType | true
+  _avg?: TalentAvgAggregateInputType
+  _sum?: TalentSumAggregateInputType
   _min?: TalentMinAggregateInputType
   _max?: TalentMaxAggregateInputType
 }
@@ -146,7 +204,14 @@ export type TalentGroupByOutputType = {
   name: string
   description: string
   actionCost: $Enums.ActionCost
+  requiredOther: string[]
+  requiredSkillId: string | null
+  requiredSkillRank: number | null
+  requiredTalents: string[]
+  requiredLevel: number | null
   _count: TalentCountAggregateOutputType | null
+  _avg: TalentAvgAggregateOutputType | null
+  _sum: TalentSumAggregateOutputType | null
   _min: TalentMinAggregateOutputType | null
   _max: TalentMaxAggregateOutputType | null
 }
@@ -174,12 +239,13 @@ export type TalentWhereInput = {
   name?: Prisma.StringFilter<"Talent"> | string
   description?: Prisma.StringFilter<"Talent"> | string
   actionCost?: Prisma.EnumActionCostFilter<"Talent"> | $Enums.ActionCost
+  requiredOther?: Prisma.StringNullableListFilter<"Talent">
+  requiredSkillId?: Prisma.StringNullableFilter<"Talent"> | string | null
+  requiredSkillRank?: Prisma.IntNullableFilter<"Talent"> | number | null
+  requiredTalents?: Prisma.StringNullableListFilter<"Talent">
+  requiredLevel?: Prisma.IntNullableFilter<"Talent"> | number | null
   characterTalents?: Prisma.CharacterTalentListRelationFilter
   modifierSource?: Prisma.XOR<Prisma.ModifierSourceNullableScalarRelationFilter, Prisma.ModifierSourceWhereInput> | null
-  requiredOther?: Prisma.OtherRequirementListRelationFilter
-  requiredSkills?: Prisma.SkillRequirementListRelationFilter
-  talentRequirements?: Prisma.TalentRequirementListRelationFilter
-  requiredTalents?: Prisma.TalentRequirementListRelationFilter
 }
 
 export type TalentOrderByWithRelationInput = {
@@ -187,12 +253,13 @@ export type TalentOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
   actionCost?: Prisma.SortOrder
+  requiredOther?: Prisma.SortOrder
+  requiredSkillId?: Prisma.SortOrderInput | Prisma.SortOrder
+  requiredSkillRank?: Prisma.SortOrderInput | Prisma.SortOrder
+  requiredTalents?: Prisma.SortOrder
+  requiredLevel?: Prisma.SortOrderInput | Prisma.SortOrder
   characterTalents?: Prisma.CharacterTalentOrderByRelationAggregateInput
   modifierSource?: Prisma.ModifierSourceOrderByWithRelationInput
-  requiredOther?: Prisma.OtherRequirementOrderByRelationAggregateInput
-  requiredSkills?: Prisma.SkillRequirementOrderByRelationAggregateInput
-  talentRequirements?: Prisma.TalentRequirementOrderByRelationAggregateInput
-  requiredTalents?: Prisma.TalentRequirementOrderByRelationAggregateInput
 }
 
 export type TalentWhereUniqueInput = Prisma.AtLeast<{
@@ -203,12 +270,13 @@ export type TalentWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"Talent"> | string
   description?: Prisma.StringFilter<"Talent"> | string
   actionCost?: Prisma.EnumActionCostFilter<"Talent"> | $Enums.ActionCost
+  requiredOther?: Prisma.StringNullableListFilter<"Talent">
+  requiredSkillId?: Prisma.StringNullableFilter<"Talent"> | string | null
+  requiredSkillRank?: Prisma.IntNullableFilter<"Talent"> | number | null
+  requiredTalents?: Prisma.StringNullableListFilter<"Talent">
+  requiredLevel?: Prisma.IntNullableFilter<"Talent"> | number | null
   characterTalents?: Prisma.CharacterTalentListRelationFilter
   modifierSource?: Prisma.XOR<Prisma.ModifierSourceNullableScalarRelationFilter, Prisma.ModifierSourceWhereInput> | null
-  requiredOther?: Prisma.OtherRequirementListRelationFilter
-  requiredSkills?: Prisma.SkillRequirementListRelationFilter
-  talentRequirements?: Prisma.TalentRequirementListRelationFilter
-  requiredTalents?: Prisma.TalentRequirementListRelationFilter
 }, "id">
 
 export type TalentOrderByWithAggregationInput = {
@@ -216,9 +284,16 @@ export type TalentOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
   actionCost?: Prisma.SortOrder
+  requiredOther?: Prisma.SortOrder
+  requiredSkillId?: Prisma.SortOrderInput | Prisma.SortOrder
+  requiredSkillRank?: Prisma.SortOrderInput | Prisma.SortOrder
+  requiredTalents?: Prisma.SortOrder
+  requiredLevel?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.TalentCountOrderByAggregateInput
+  _avg?: Prisma.TalentAvgOrderByAggregateInput
   _max?: Prisma.TalentMaxOrderByAggregateInput
   _min?: Prisma.TalentMinOrderByAggregateInput
+  _sum?: Prisma.TalentSumOrderByAggregateInput
 }
 
 export type TalentScalarWhereWithAggregatesInput = {
@@ -229,6 +304,11 @@ export type TalentScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"Talent"> | string
   description?: Prisma.StringWithAggregatesFilter<"Talent"> | string
   actionCost?: Prisma.EnumActionCostWithAggregatesFilter<"Talent"> | $Enums.ActionCost
+  requiredOther?: Prisma.StringNullableListFilter<"Talent">
+  requiredSkillId?: Prisma.StringNullableWithAggregatesFilter<"Talent"> | string | null
+  requiredSkillRank?: Prisma.IntNullableWithAggregatesFilter<"Talent"> | number | null
+  requiredTalents?: Prisma.StringNullableListFilter<"Talent">
+  requiredLevel?: Prisma.IntNullableWithAggregatesFilter<"Talent"> | number | null
 }
 
 export type TalentCreateInput = {
@@ -236,12 +316,13 @@ export type TalentCreateInput = {
   name: string
   description: string
   actionCost: $Enums.ActionCost
+  requiredOther?: Prisma.TalentCreaterequiredOtherInput | string[]
+  requiredSkillId?: string | null
+  requiredSkillRank?: number | null
+  requiredTalents?: Prisma.TalentCreaterequiredTalentsInput | string[]
+  requiredLevel?: number | null
   characterTalents?: Prisma.CharacterTalentCreateNestedManyWithoutTalentInput
   modifierSource?: Prisma.ModifierSourceCreateNestedOneWithoutTalentInput
-  requiredOther?: Prisma.OtherRequirementCreateNestedManyWithoutTalentInput
-  requiredSkills?: Prisma.SkillRequirementCreateNestedManyWithoutTalentInput
-  talentRequirements?: Prisma.TalentRequirementCreateNestedManyWithoutRequiredInput
-  requiredTalents?: Prisma.TalentRequirementCreateNestedManyWithoutTalentInput
 }
 
 export type TalentUncheckedCreateInput = {
@@ -249,12 +330,13 @@ export type TalentUncheckedCreateInput = {
   name: string
   description: string
   actionCost: $Enums.ActionCost
+  requiredOther?: Prisma.TalentCreaterequiredOtherInput | string[]
+  requiredSkillId?: string | null
+  requiredSkillRank?: number | null
+  requiredTalents?: Prisma.TalentCreaterequiredTalentsInput | string[]
+  requiredLevel?: number | null
   characterTalents?: Prisma.CharacterTalentUncheckedCreateNestedManyWithoutTalentInput
   modifierSource?: Prisma.ModifierSourceUncheckedCreateNestedOneWithoutTalentInput
-  requiredOther?: Prisma.OtherRequirementUncheckedCreateNestedManyWithoutTalentInput
-  requiredSkills?: Prisma.SkillRequirementUncheckedCreateNestedManyWithoutTalentInput
-  talentRequirements?: Prisma.TalentRequirementUncheckedCreateNestedManyWithoutRequiredInput
-  requiredTalents?: Prisma.TalentRequirementUncheckedCreateNestedManyWithoutTalentInput
 }
 
 export type TalentUpdateInput = {
@@ -262,12 +344,13 @@ export type TalentUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   actionCost?: Prisma.EnumActionCostFieldUpdateOperationsInput | $Enums.ActionCost
+  requiredOther?: Prisma.TalentUpdaterequiredOtherInput | string[]
+  requiredSkillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiredSkillRank?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requiredTalents?: Prisma.TalentUpdaterequiredTalentsInput | string[]
+  requiredLevel?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   characterTalents?: Prisma.CharacterTalentUpdateManyWithoutTalentNestedInput
   modifierSource?: Prisma.ModifierSourceUpdateOneWithoutTalentNestedInput
-  requiredOther?: Prisma.OtherRequirementUpdateManyWithoutTalentNestedInput
-  requiredSkills?: Prisma.SkillRequirementUpdateManyWithoutTalentNestedInput
-  talentRequirements?: Prisma.TalentRequirementUpdateManyWithoutRequiredNestedInput
-  requiredTalents?: Prisma.TalentRequirementUpdateManyWithoutTalentNestedInput
 }
 
 export type TalentUncheckedUpdateInput = {
@@ -275,12 +358,13 @@ export type TalentUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   actionCost?: Prisma.EnumActionCostFieldUpdateOperationsInput | $Enums.ActionCost
+  requiredOther?: Prisma.TalentUpdaterequiredOtherInput | string[]
+  requiredSkillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiredSkillRank?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requiredTalents?: Prisma.TalentUpdaterequiredTalentsInput | string[]
+  requiredLevel?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   characterTalents?: Prisma.CharacterTalentUncheckedUpdateManyWithoutTalentNestedInput
   modifierSource?: Prisma.ModifierSourceUncheckedUpdateOneWithoutTalentNestedInput
-  requiredOther?: Prisma.OtherRequirementUncheckedUpdateManyWithoutTalentNestedInput
-  requiredSkills?: Prisma.SkillRequirementUncheckedUpdateManyWithoutTalentNestedInput
-  talentRequirements?: Prisma.TalentRequirementUncheckedUpdateManyWithoutRequiredNestedInput
-  requiredTalents?: Prisma.TalentRequirementUncheckedUpdateManyWithoutTalentNestedInput
 }
 
 export type TalentCreateManyInput = {
@@ -288,6 +372,11 @@ export type TalentCreateManyInput = {
   name: string
   description: string
   actionCost: $Enums.ActionCost
+  requiredOther?: Prisma.TalentCreaterequiredOtherInput | string[]
+  requiredSkillId?: string | null
+  requiredSkillRank?: number | null
+  requiredTalents?: Prisma.TalentCreaterequiredTalentsInput | string[]
+  requiredLevel?: number | null
 }
 
 export type TalentUpdateManyMutationInput = {
@@ -295,6 +384,11 @@ export type TalentUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   actionCost?: Prisma.EnumActionCostFieldUpdateOperationsInput | $Enums.ActionCost
+  requiredOther?: Prisma.TalentUpdaterequiredOtherInput | string[]
+  requiredSkillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiredSkillRank?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requiredTalents?: Prisma.TalentUpdaterequiredTalentsInput | string[]
+  requiredLevel?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type TalentUncheckedUpdateManyInput = {
@@ -302,6 +396,19 @@ export type TalentUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   actionCost?: Prisma.EnumActionCostFieldUpdateOperationsInput | $Enums.ActionCost
+  requiredOther?: Prisma.TalentUpdaterequiredOtherInput | string[]
+  requiredSkillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiredSkillRank?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requiredTalents?: Prisma.TalentUpdaterequiredTalentsInput | string[]
+  requiredLevel?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+}
+
+export type StringNullableListFilter<$PrismaModel = never> = {
+  equals?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
+  has?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
+  hasEvery?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  hasSome?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  isEmpty?: boolean
 }
 
 export type TalentCountOrderByAggregateInput = {
@@ -309,6 +416,16 @@ export type TalentCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
   actionCost?: Prisma.SortOrder
+  requiredOther?: Prisma.SortOrder
+  requiredSkillId?: Prisma.SortOrder
+  requiredSkillRank?: Prisma.SortOrder
+  requiredTalents?: Prisma.SortOrder
+  requiredLevel?: Prisma.SortOrder
+}
+
+export type TalentAvgOrderByAggregateInput = {
+  requiredSkillRank?: Prisma.SortOrder
+  requiredLevel?: Prisma.SortOrder
 }
 
 export type TalentMaxOrderByAggregateInput = {
@@ -316,6 +433,9 @@ export type TalentMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
   actionCost?: Prisma.SortOrder
+  requiredSkillId?: Prisma.SortOrder
+  requiredSkillRank?: Prisma.SortOrder
+  requiredLevel?: Prisma.SortOrder
 }
 
 export type TalentMinOrderByAggregateInput = {
@@ -323,6 +443,14 @@ export type TalentMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
   actionCost?: Prisma.SortOrder
+  requiredSkillId?: Prisma.SortOrder
+  requiredSkillRank?: Prisma.SortOrder
+  requiredLevel?: Prisma.SortOrder
+}
+
+export type TalentSumOrderByAggregateInput = {
+  requiredSkillRank?: Prisma.SortOrder
+  requiredLevel?: Prisma.SortOrder
 }
 
 export type TalentScalarRelationFilter = {
@@ -335,64 +463,26 @@ export type TalentNullableScalarRelationFilter = {
   isNot?: Prisma.TalentWhereInput | null
 }
 
+export type TalentCreaterequiredOtherInput = {
+  set: string[]
+}
+
+export type TalentCreaterequiredTalentsInput = {
+  set: string[]
+}
+
 export type EnumActionCostFieldUpdateOperationsInput = {
   set?: $Enums.ActionCost
 }
 
-export type TalentCreateNestedOneWithoutTalentRequirementsInput = {
-  create?: Prisma.XOR<Prisma.TalentCreateWithoutTalentRequirementsInput, Prisma.TalentUncheckedCreateWithoutTalentRequirementsInput>
-  connectOrCreate?: Prisma.TalentCreateOrConnectWithoutTalentRequirementsInput
-  connect?: Prisma.TalentWhereUniqueInput
+export type TalentUpdaterequiredOtherInput = {
+  set?: string[]
+  push?: string | string[]
 }
 
-export type TalentCreateNestedOneWithoutRequiredTalentsInput = {
-  create?: Prisma.XOR<Prisma.TalentCreateWithoutRequiredTalentsInput, Prisma.TalentUncheckedCreateWithoutRequiredTalentsInput>
-  connectOrCreate?: Prisma.TalentCreateOrConnectWithoutRequiredTalentsInput
-  connect?: Prisma.TalentWhereUniqueInput
-}
-
-export type TalentUpdateOneRequiredWithoutTalentRequirementsNestedInput = {
-  create?: Prisma.XOR<Prisma.TalentCreateWithoutTalentRequirementsInput, Prisma.TalentUncheckedCreateWithoutTalentRequirementsInput>
-  connectOrCreate?: Prisma.TalentCreateOrConnectWithoutTalentRequirementsInput
-  upsert?: Prisma.TalentUpsertWithoutTalentRequirementsInput
-  connect?: Prisma.TalentWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.TalentUpdateToOneWithWhereWithoutTalentRequirementsInput, Prisma.TalentUpdateWithoutTalentRequirementsInput>, Prisma.TalentUncheckedUpdateWithoutTalentRequirementsInput>
-}
-
-export type TalentUpdateOneRequiredWithoutRequiredTalentsNestedInput = {
-  create?: Prisma.XOR<Prisma.TalentCreateWithoutRequiredTalentsInput, Prisma.TalentUncheckedCreateWithoutRequiredTalentsInput>
-  connectOrCreate?: Prisma.TalentCreateOrConnectWithoutRequiredTalentsInput
-  upsert?: Prisma.TalentUpsertWithoutRequiredTalentsInput
-  connect?: Prisma.TalentWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.TalentUpdateToOneWithWhereWithoutRequiredTalentsInput, Prisma.TalentUpdateWithoutRequiredTalentsInput>, Prisma.TalentUncheckedUpdateWithoutRequiredTalentsInput>
-}
-
-export type TalentCreateNestedOneWithoutRequiredSkillsInput = {
-  create?: Prisma.XOR<Prisma.TalentCreateWithoutRequiredSkillsInput, Prisma.TalentUncheckedCreateWithoutRequiredSkillsInput>
-  connectOrCreate?: Prisma.TalentCreateOrConnectWithoutRequiredSkillsInput
-  connect?: Prisma.TalentWhereUniqueInput
-}
-
-export type TalentUpdateOneRequiredWithoutRequiredSkillsNestedInput = {
-  create?: Prisma.XOR<Prisma.TalentCreateWithoutRequiredSkillsInput, Prisma.TalentUncheckedCreateWithoutRequiredSkillsInput>
-  connectOrCreate?: Prisma.TalentCreateOrConnectWithoutRequiredSkillsInput
-  upsert?: Prisma.TalentUpsertWithoutRequiredSkillsInput
-  connect?: Prisma.TalentWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.TalentUpdateToOneWithWhereWithoutRequiredSkillsInput, Prisma.TalentUpdateWithoutRequiredSkillsInput>, Prisma.TalentUncheckedUpdateWithoutRequiredSkillsInput>
-}
-
-export type TalentCreateNestedOneWithoutRequiredOtherInput = {
-  create?: Prisma.XOR<Prisma.TalentCreateWithoutRequiredOtherInput, Prisma.TalentUncheckedCreateWithoutRequiredOtherInput>
-  connectOrCreate?: Prisma.TalentCreateOrConnectWithoutRequiredOtherInput
-  connect?: Prisma.TalentWhereUniqueInput
-}
-
-export type TalentUpdateOneRequiredWithoutRequiredOtherNestedInput = {
-  create?: Prisma.XOR<Prisma.TalentCreateWithoutRequiredOtherInput, Prisma.TalentUncheckedCreateWithoutRequiredOtherInput>
-  connectOrCreate?: Prisma.TalentCreateOrConnectWithoutRequiredOtherInput
-  upsert?: Prisma.TalentUpsertWithoutRequiredOtherInput
-  connect?: Prisma.TalentWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.TalentUpdateToOneWithWhereWithoutRequiredOtherInput, Prisma.TalentUpdateWithoutRequiredOtherInput>, Prisma.TalentUncheckedUpdateWithoutRequiredOtherInput>
+export type TalentUpdaterequiredTalentsInput = {
+  set?: string[]
+  push?: string | string[]
 }
 
 export type TalentCreateNestedOneWithoutCharacterTalentsInput = {
@@ -425,272 +515,17 @@ export type TalentUpdateOneWithoutModifierSourceNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.TalentUpdateToOneWithWhereWithoutModifierSourceInput, Prisma.TalentUpdateWithoutModifierSourceInput>, Prisma.TalentUncheckedUpdateWithoutModifierSourceInput>
 }
 
-export type TalentCreateWithoutTalentRequirementsInput = {
-  id?: string
-  name: string
-  description: string
-  actionCost: $Enums.ActionCost
-  characterTalents?: Prisma.CharacterTalentCreateNestedManyWithoutTalentInput
-  modifierSource?: Prisma.ModifierSourceCreateNestedOneWithoutTalentInput
-  requiredOther?: Prisma.OtherRequirementCreateNestedManyWithoutTalentInput
-  requiredSkills?: Prisma.SkillRequirementCreateNestedManyWithoutTalentInput
-  requiredTalents?: Prisma.TalentRequirementCreateNestedManyWithoutTalentInput
-}
-
-export type TalentUncheckedCreateWithoutTalentRequirementsInput = {
-  id?: string
-  name: string
-  description: string
-  actionCost: $Enums.ActionCost
-  characterTalents?: Prisma.CharacterTalentUncheckedCreateNestedManyWithoutTalentInput
-  modifierSource?: Prisma.ModifierSourceUncheckedCreateNestedOneWithoutTalentInput
-  requiredOther?: Prisma.OtherRequirementUncheckedCreateNestedManyWithoutTalentInput
-  requiredSkills?: Prisma.SkillRequirementUncheckedCreateNestedManyWithoutTalentInput
-  requiredTalents?: Prisma.TalentRequirementUncheckedCreateNestedManyWithoutTalentInput
-}
-
-export type TalentCreateOrConnectWithoutTalentRequirementsInput = {
-  where: Prisma.TalentWhereUniqueInput
-  create: Prisma.XOR<Prisma.TalentCreateWithoutTalentRequirementsInput, Prisma.TalentUncheckedCreateWithoutTalentRequirementsInput>
-}
-
-export type TalentCreateWithoutRequiredTalentsInput = {
-  id?: string
-  name: string
-  description: string
-  actionCost: $Enums.ActionCost
-  characterTalents?: Prisma.CharacterTalentCreateNestedManyWithoutTalentInput
-  modifierSource?: Prisma.ModifierSourceCreateNestedOneWithoutTalentInput
-  requiredOther?: Prisma.OtherRequirementCreateNestedManyWithoutTalentInput
-  requiredSkills?: Prisma.SkillRequirementCreateNestedManyWithoutTalentInput
-  talentRequirements?: Prisma.TalentRequirementCreateNestedManyWithoutRequiredInput
-}
-
-export type TalentUncheckedCreateWithoutRequiredTalentsInput = {
-  id?: string
-  name: string
-  description: string
-  actionCost: $Enums.ActionCost
-  characterTalents?: Prisma.CharacterTalentUncheckedCreateNestedManyWithoutTalentInput
-  modifierSource?: Prisma.ModifierSourceUncheckedCreateNestedOneWithoutTalentInput
-  requiredOther?: Prisma.OtherRequirementUncheckedCreateNestedManyWithoutTalentInput
-  requiredSkills?: Prisma.SkillRequirementUncheckedCreateNestedManyWithoutTalentInput
-  talentRequirements?: Prisma.TalentRequirementUncheckedCreateNestedManyWithoutRequiredInput
-}
-
-export type TalentCreateOrConnectWithoutRequiredTalentsInput = {
-  where: Prisma.TalentWhereUniqueInput
-  create: Prisma.XOR<Prisma.TalentCreateWithoutRequiredTalentsInput, Prisma.TalentUncheckedCreateWithoutRequiredTalentsInput>
-}
-
-export type TalentUpsertWithoutTalentRequirementsInput = {
-  update: Prisma.XOR<Prisma.TalentUpdateWithoutTalentRequirementsInput, Prisma.TalentUncheckedUpdateWithoutTalentRequirementsInput>
-  create: Prisma.XOR<Prisma.TalentCreateWithoutTalentRequirementsInput, Prisma.TalentUncheckedCreateWithoutTalentRequirementsInput>
-  where?: Prisma.TalentWhereInput
-}
-
-export type TalentUpdateToOneWithWhereWithoutTalentRequirementsInput = {
-  where?: Prisma.TalentWhereInput
-  data: Prisma.XOR<Prisma.TalentUpdateWithoutTalentRequirementsInput, Prisma.TalentUncheckedUpdateWithoutTalentRequirementsInput>
-}
-
-export type TalentUpdateWithoutTalentRequirementsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  actionCost?: Prisma.EnumActionCostFieldUpdateOperationsInput | $Enums.ActionCost
-  characterTalents?: Prisma.CharacterTalentUpdateManyWithoutTalentNestedInput
-  modifierSource?: Prisma.ModifierSourceUpdateOneWithoutTalentNestedInput
-  requiredOther?: Prisma.OtherRequirementUpdateManyWithoutTalentNestedInput
-  requiredSkills?: Prisma.SkillRequirementUpdateManyWithoutTalentNestedInput
-  requiredTalents?: Prisma.TalentRequirementUpdateManyWithoutTalentNestedInput
-}
-
-export type TalentUncheckedUpdateWithoutTalentRequirementsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  actionCost?: Prisma.EnumActionCostFieldUpdateOperationsInput | $Enums.ActionCost
-  characterTalents?: Prisma.CharacterTalentUncheckedUpdateManyWithoutTalentNestedInput
-  modifierSource?: Prisma.ModifierSourceUncheckedUpdateOneWithoutTalentNestedInput
-  requiredOther?: Prisma.OtherRequirementUncheckedUpdateManyWithoutTalentNestedInput
-  requiredSkills?: Prisma.SkillRequirementUncheckedUpdateManyWithoutTalentNestedInput
-  requiredTalents?: Prisma.TalentRequirementUncheckedUpdateManyWithoutTalentNestedInput
-}
-
-export type TalentUpsertWithoutRequiredTalentsInput = {
-  update: Prisma.XOR<Prisma.TalentUpdateWithoutRequiredTalentsInput, Prisma.TalentUncheckedUpdateWithoutRequiredTalentsInput>
-  create: Prisma.XOR<Prisma.TalentCreateWithoutRequiredTalentsInput, Prisma.TalentUncheckedCreateWithoutRequiredTalentsInput>
-  where?: Prisma.TalentWhereInput
-}
-
-export type TalentUpdateToOneWithWhereWithoutRequiredTalentsInput = {
-  where?: Prisma.TalentWhereInput
-  data: Prisma.XOR<Prisma.TalentUpdateWithoutRequiredTalentsInput, Prisma.TalentUncheckedUpdateWithoutRequiredTalentsInput>
-}
-
-export type TalentUpdateWithoutRequiredTalentsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  actionCost?: Prisma.EnumActionCostFieldUpdateOperationsInput | $Enums.ActionCost
-  characterTalents?: Prisma.CharacterTalentUpdateManyWithoutTalentNestedInput
-  modifierSource?: Prisma.ModifierSourceUpdateOneWithoutTalentNestedInput
-  requiredOther?: Prisma.OtherRequirementUpdateManyWithoutTalentNestedInput
-  requiredSkills?: Prisma.SkillRequirementUpdateManyWithoutTalentNestedInput
-  talentRequirements?: Prisma.TalentRequirementUpdateManyWithoutRequiredNestedInput
-}
-
-export type TalentUncheckedUpdateWithoutRequiredTalentsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  actionCost?: Prisma.EnumActionCostFieldUpdateOperationsInput | $Enums.ActionCost
-  characterTalents?: Prisma.CharacterTalentUncheckedUpdateManyWithoutTalentNestedInput
-  modifierSource?: Prisma.ModifierSourceUncheckedUpdateOneWithoutTalentNestedInput
-  requiredOther?: Prisma.OtherRequirementUncheckedUpdateManyWithoutTalentNestedInput
-  requiredSkills?: Prisma.SkillRequirementUncheckedUpdateManyWithoutTalentNestedInput
-  talentRequirements?: Prisma.TalentRequirementUncheckedUpdateManyWithoutRequiredNestedInput
-}
-
-export type TalentCreateWithoutRequiredSkillsInput = {
-  id?: string
-  name: string
-  description: string
-  actionCost: $Enums.ActionCost
-  characterTalents?: Prisma.CharacterTalentCreateNestedManyWithoutTalentInput
-  modifierSource?: Prisma.ModifierSourceCreateNestedOneWithoutTalentInput
-  requiredOther?: Prisma.OtherRequirementCreateNestedManyWithoutTalentInput
-  talentRequirements?: Prisma.TalentRequirementCreateNestedManyWithoutRequiredInput
-  requiredTalents?: Prisma.TalentRequirementCreateNestedManyWithoutTalentInput
-}
-
-export type TalentUncheckedCreateWithoutRequiredSkillsInput = {
-  id?: string
-  name: string
-  description: string
-  actionCost: $Enums.ActionCost
-  characterTalents?: Prisma.CharacterTalentUncheckedCreateNestedManyWithoutTalentInput
-  modifierSource?: Prisma.ModifierSourceUncheckedCreateNestedOneWithoutTalentInput
-  requiredOther?: Prisma.OtherRequirementUncheckedCreateNestedManyWithoutTalentInput
-  talentRequirements?: Prisma.TalentRequirementUncheckedCreateNestedManyWithoutRequiredInput
-  requiredTalents?: Prisma.TalentRequirementUncheckedCreateNestedManyWithoutTalentInput
-}
-
-export type TalentCreateOrConnectWithoutRequiredSkillsInput = {
-  where: Prisma.TalentWhereUniqueInput
-  create: Prisma.XOR<Prisma.TalentCreateWithoutRequiredSkillsInput, Prisma.TalentUncheckedCreateWithoutRequiredSkillsInput>
-}
-
-export type TalentUpsertWithoutRequiredSkillsInput = {
-  update: Prisma.XOR<Prisma.TalentUpdateWithoutRequiredSkillsInput, Prisma.TalentUncheckedUpdateWithoutRequiredSkillsInput>
-  create: Prisma.XOR<Prisma.TalentCreateWithoutRequiredSkillsInput, Prisma.TalentUncheckedCreateWithoutRequiredSkillsInput>
-  where?: Prisma.TalentWhereInput
-}
-
-export type TalentUpdateToOneWithWhereWithoutRequiredSkillsInput = {
-  where?: Prisma.TalentWhereInput
-  data: Prisma.XOR<Prisma.TalentUpdateWithoutRequiredSkillsInput, Prisma.TalentUncheckedUpdateWithoutRequiredSkillsInput>
-}
-
-export type TalentUpdateWithoutRequiredSkillsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  actionCost?: Prisma.EnumActionCostFieldUpdateOperationsInput | $Enums.ActionCost
-  characterTalents?: Prisma.CharacterTalentUpdateManyWithoutTalentNestedInput
-  modifierSource?: Prisma.ModifierSourceUpdateOneWithoutTalentNestedInput
-  requiredOther?: Prisma.OtherRequirementUpdateManyWithoutTalentNestedInput
-  talentRequirements?: Prisma.TalentRequirementUpdateManyWithoutRequiredNestedInput
-  requiredTalents?: Prisma.TalentRequirementUpdateManyWithoutTalentNestedInput
-}
-
-export type TalentUncheckedUpdateWithoutRequiredSkillsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  actionCost?: Prisma.EnumActionCostFieldUpdateOperationsInput | $Enums.ActionCost
-  characterTalents?: Prisma.CharacterTalentUncheckedUpdateManyWithoutTalentNestedInput
-  modifierSource?: Prisma.ModifierSourceUncheckedUpdateOneWithoutTalentNestedInput
-  requiredOther?: Prisma.OtherRequirementUncheckedUpdateManyWithoutTalentNestedInput
-  talentRequirements?: Prisma.TalentRequirementUncheckedUpdateManyWithoutRequiredNestedInput
-  requiredTalents?: Prisma.TalentRequirementUncheckedUpdateManyWithoutTalentNestedInput
-}
-
-export type TalentCreateWithoutRequiredOtherInput = {
-  id?: string
-  name: string
-  description: string
-  actionCost: $Enums.ActionCost
-  characterTalents?: Prisma.CharacterTalentCreateNestedManyWithoutTalentInput
-  modifierSource?: Prisma.ModifierSourceCreateNestedOneWithoutTalentInput
-  requiredSkills?: Prisma.SkillRequirementCreateNestedManyWithoutTalentInput
-  talentRequirements?: Prisma.TalentRequirementCreateNestedManyWithoutRequiredInput
-  requiredTalents?: Prisma.TalentRequirementCreateNestedManyWithoutTalentInput
-}
-
-export type TalentUncheckedCreateWithoutRequiredOtherInput = {
-  id?: string
-  name: string
-  description: string
-  actionCost: $Enums.ActionCost
-  characterTalents?: Prisma.CharacterTalentUncheckedCreateNestedManyWithoutTalentInput
-  modifierSource?: Prisma.ModifierSourceUncheckedCreateNestedOneWithoutTalentInput
-  requiredSkills?: Prisma.SkillRequirementUncheckedCreateNestedManyWithoutTalentInput
-  talentRequirements?: Prisma.TalentRequirementUncheckedCreateNestedManyWithoutRequiredInput
-  requiredTalents?: Prisma.TalentRequirementUncheckedCreateNestedManyWithoutTalentInput
-}
-
-export type TalentCreateOrConnectWithoutRequiredOtherInput = {
-  where: Prisma.TalentWhereUniqueInput
-  create: Prisma.XOR<Prisma.TalentCreateWithoutRequiredOtherInput, Prisma.TalentUncheckedCreateWithoutRequiredOtherInput>
-}
-
-export type TalentUpsertWithoutRequiredOtherInput = {
-  update: Prisma.XOR<Prisma.TalentUpdateWithoutRequiredOtherInput, Prisma.TalentUncheckedUpdateWithoutRequiredOtherInput>
-  create: Prisma.XOR<Prisma.TalentCreateWithoutRequiredOtherInput, Prisma.TalentUncheckedCreateWithoutRequiredOtherInput>
-  where?: Prisma.TalentWhereInput
-}
-
-export type TalentUpdateToOneWithWhereWithoutRequiredOtherInput = {
-  where?: Prisma.TalentWhereInput
-  data: Prisma.XOR<Prisma.TalentUpdateWithoutRequiredOtherInput, Prisma.TalentUncheckedUpdateWithoutRequiredOtherInput>
-}
-
-export type TalentUpdateWithoutRequiredOtherInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  actionCost?: Prisma.EnumActionCostFieldUpdateOperationsInput | $Enums.ActionCost
-  characterTalents?: Prisma.CharacterTalentUpdateManyWithoutTalentNestedInput
-  modifierSource?: Prisma.ModifierSourceUpdateOneWithoutTalentNestedInput
-  requiredSkills?: Prisma.SkillRequirementUpdateManyWithoutTalentNestedInput
-  talentRequirements?: Prisma.TalentRequirementUpdateManyWithoutRequiredNestedInput
-  requiredTalents?: Prisma.TalentRequirementUpdateManyWithoutTalentNestedInput
-}
-
-export type TalentUncheckedUpdateWithoutRequiredOtherInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  actionCost?: Prisma.EnumActionCostFieldUpdateOperationsInput | $Enums.ActionCost
-  characterTalents?: Prisma.CharacterTalentUncheckedUpdateManyWithoutTalentNestedInput
-  modifierSource?: Prisma.ModifierSourceUncheckedUpdateOneWithoutTalentNestedInput
-  requiredSkills?: Prisma.SkillRequirementUncheckedUpdateManyWithoutTalentNestedInput
-  talentRequirements?: Prisma.TalentRequirementUncheckedUpdateManyWithoutRequiredNestedInput
-  requiredTalents?: Prisma.TalentRequirementUncheckedUpdateManyWithoutTalentNestedInput
-}
-
 export type TalentCreateWithoutCharacterTalentsInput = {
   id?: string
   name: string
   description: string
   actionCost: $Enums.ActionCost
+  requiredOther?: Prisma.TalentCreaterequiredOtherInput | string[]
+  requiredSkillId?: string | null
+  requiredSkillRank?: number | null
+  requiredTalents?: Prisma.TalentCreaterequiredTalentsInput | string[]
+  requiredLevel?: number | null
   modifierSource?: Prisma.ModifierSourceCreateNestedOneWithoutTalentInput
-  requiredOther?: Prisma.OtherRequirementCreateNestedManyWithoutTalentInput
-  requiredSkills?: Prisma.SkillRequirementCreateNestedManyWithoutTalentInput
-  talentRequirements?: Prisma.TalentRequirementCreateNestedManyWithoutRequiredInput
-  requiredTalents?: Prisma.TalentRequirementCreateNestedManyWithoutTalentInput
 }
 
 export type TalentUncheckedCreateWithoutCharacterTalentsInput = {
@@ -698,11 +533,12 @@ export type TalentUncheckedCreateWithoutCharacterTalentsInput = {
   name: string
   description: string
   actionCost: $Enums.ActionCost
+  requiredOther?: Prisma.TalentCreaterequiredOtherInput | string[]
+  requiredSkillId?: string | null
+  requiredSkillRank?: number | null
+  requiredTalents?: Prisma.TalentCreaterequiredTalentsInput | string[]
+  requiredLevel?: number | null
   modifierSource?: Prisma.ModifierSourceUncheckedCreateNestedOneWithoutTalentInput
-  requiredOther?: Prisma.OtherRequirementUncheckedCreateNestedManyWithoutTalentInput
-  requiredSkills?: Prisma.SkillRequirementUncheckedCreateNestedManyWithoutTalentInput
-  talentRequirements?: Prisma.TalentRequirementUncheckedCreateNestedManyWithoutRequiredInput
-  requiredTalents?: Prisma.TalentRequirementUncheckedCreateNestedManyWithoutTalentInput
 }
 
 export type TalentCreateOrConnectWithoutCharacterTalentsInput = {
@@ -726,11 +562,12 @@ export type TalentUpdateWithoutCharacterTalentsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   actionCost?: Prisma.EnumActionCostFieldUpdateOperationsInput | $Enums.ActionCost
+  requiredOther?: Prisma.TalentUpdaterequiredOtherInput | string[]
+  requiredSkillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiredSkillRank?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requiredTalents?: Prisma.TalentUpdaterequiredTalentsInput | string[]
+  requiredLevel?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   modifierSource?: Prisma.ModifierSourceUpdateOneWithoutTalentNestedInput
-  requiredOther?: Prisma.OtherRequirementUpdateManyWithoutTalentNestedInput
-  requiredSkills?: Prisma.SkillRequirementUpdateManyWithoutTalentNestedInput
-  talentRequirements?: Prisma.TalentRequirementUpdateManyWithoutRequiredNestedInput
-  requiredTalents?: Prisma.TalentRequirementUpdateManyWithoutTalentNestedInput
 }
 
 export type TalentUncheckedUpdateWithoutCharacterTalentsInput = {
@@ -738,11 +575,12 @@ export type TalentUncheckedUpdateWithoutCharacterTalentsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   actionCost?: Prisma.EnumActionCostFieldUpdateOperationsInput | $Enums.ActionCost
+  requiredOther?: Prisma.TalentUpdaterequiredOtherInput | string[]
+  requiredSkillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiredSkillRank?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requiredTalents?: Prisma.TalentUpdaterequiredTalentsInput | string[]
+  requiredLevel?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   modifierSource?: Prisma.ModifierSourceUncheckedUpdateOneWithoutTalentNestedInput
-  requiredOther?: Prisma.OtherRequirementUncheckedUpdateManyWithoutTalentNestedInput
-  requiredSkills?: Prisma.SkillRequirementUncheckedUpdateManyWithoutTalentNestedInput
-  talentRequirements?: Prisma.TalentRequirementUncheckedUpdateManyWithoutRequiredNestedInput
-  requiredTalents?: Prisma.TalentRequirementUncheckedUpdateManyWithoutTalentNestedInput
 }
 
 export type TalentCreateWithoutModifierSourceInput = {
@@ -750,11 +588,12 @@ export type TalentCreateWithoutModifierSourceInput = {
   name: string
   description: string
   actionCost: $Enums.ActionCost
+  requiredOther?: Prisma.TalentCreaterequiredOtherInput | string[]
+  requiredSkillId?: string | null
+  requiredSkillRank?: number | null
+  requiredTalents?: Prisma.TalentCreaterequiredTalentsInput | string[]
+  requiredLevel?: number | null
   characterTalents?: Prisma.CharacterTalentCreateNestedManyWithoutTalentInput
-  requiredOther?: Prisma.OtherRequirementCreateNestedManyWithoutTalentInput
-  requiredSkills?: Prisma.SkillRequirementCreateNestedManyWithoutTalentInput
-  talentRequirements?: Prisma.TalentRequirementCreateNestedManyWithoutRequiredInput
-  requiredTalents?: Prisma.TalentRequirementCreateNestedManyWithoutTalentInput
 }
 
 export type TalentUncheckedCreateWithoutModifierSourceInput = {
@@ -762,11 +601,12 @@ export type TalentUncheckedCreateWithoutModifierSourceInput = {
   name: string
   description: string
   actionCost: $Enums.ActionCost
+  requiredOther?: Prisma.TalentCreaterequiredOtherInput | string[]
+  requiredSkillId?: string | null
+  requiredSkillRank?: number | null
+  requiredTalents?: Prisma.TalentCreaterequiredTalentsInput | string[]
+  requiredLevel?: number | null
   characterTalents?: Prisma.CharacterTalentUncheckedCreateNestedManyWithoutTalentInput
-  requiredOther?: Prisma.OtherRequirementUncheckedCreateNestedManyWithoutTalentInput
-  requiredSkills?: Prisma.SkillRequirementUncheckedCreateNestedManyWithoutTalentInput
-  talentRequirements?: Prisma.TalentRequirementUncheckedCreateNestedManyWithoutRequiredInput
-  requiredTalents?: Prisma.TalentRequirementUncheckedCreateNestedManyWithoutTalentInput
 }
 
 export type TalentCreateOrConnectWithoutModifierSourceInput = {
@@ -790,11 +630,12 @@ export type TalentUpdateWithoutModifierSourceInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   actionCost?: Prisma.EnumActionCostFieldUpdateOperationsInput | $Enums.ActionCost
+  requiredOther?: Prisma.TalentUpdaterequiredOtherInput | string[]
+  requiredSkillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiredSkillRank?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requiredTalents?: Prisma.TalentUpdaterequiredTalentsInput | string[]
+  requiredLevel?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   characterTalents?: Prisma.CharacterTalentUpdateManyWithoutTalentNestedInput
-  requiredOther?: Prisma.OtherRequirementUpdateManyWithoutTalentNestedInput
-  requiredSkills?: Prisma.SkillRequirementUpdateManyWithoutTalentNestedInput
-  talentRequirements?: Prisma.TalentRequirementUpdateManyWithoutRequiredNestedInput
-  requiredTalents?: Prisma.TalentRequirementUpdateManyWithoutTalentNestedInput
 }
 
 export type TalentUncheckedUpdateWithoutModifierSourceInput = {
@@ -802,11 +643,12 @@ export type TalentUncheckedUpdateWithoutModifierSourceInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   actionCost?: Prisma.EnumActionCostFieldUpdateOperationsInput | $Enums.ActionCost
+  requiredOther?: Prisma.TalentUpdaterequiredOtherInput | string[]
+  requiredSkillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requiredSkillRank?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requiredTalents?: Prisma.TalentUpdaterequiredTalentsInput | string[]
+  requiredLevel?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   characterTalents?: Prisma.CharacterTalentUncheckedUpdateManyWithoutTalentNestedInput
-  requiredOther?: Prisma.OtherRequirementUncheckedUpdateManyWithoutTalentNestedInput
-  requiredSkills?: Prisma.SkillRequirementUncheckedUpdateManyWithoutTalentNestedInput
-  talentRequirements?: Prisma.TalentRequirementUncheckedUpdateManyWithoutRequiredNestedInput
-  requiredTalents?: Prisma.TalentRequirementUncheckedUpdateManyWithoutTalentNestedInput
 }
 
 
@@ -816,18 +658,10 @@ export type TalentUncheckedUpdateWithoutModifierSourceInput = {
 
 export type TalentCountOutputType = {
   characterTalents: number
-  requiredOther: number
-  requiredSkills: number
-  talentRequirements: number
-  requiredTalents: number
 }
 
 export type TalentCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   characterTalents?: boolean | TalentCountOutputTypeCountCharacterTalentsArgs
-  requiredOther?: boolean | TalentCountOutputTypeCountRequiredOtherArgs
-  requiredSkills?: boolean | TalentCountOutputTypeCountRequiredSkillsArgs
-  talentRequirements?: boolean | TalentCountOutputTypeCountTalentRequirementsArgs
-  requiredTalents?: boolean | TalentCountOutputTypeCountRequiredTalentsArgs
 }
 
 /**
@@ -847,46 +681,19 @@ export type TalentCountOutputTypeCountCharacterTalentsArgs<ExtArgs extends runti
   where?: Prisma.CharacterTalentWhereInput
 }
 
-/**
- * TalentCountOutputType without action
- */
-export type TalentCountOutputTypeCountRequiredOtherArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.OtherRequirementWhereInput
-}
-
-/**
- * TalentCountOutputType without action
- */
-export type TalentCountOutputTypeCountRequiredSkillsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.SkillRequirementWhereInput
-}
-
-/**
- * TalentCountOutputType without action
- */
-export type TalentCountOutputTypeCountTalentRequirementsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.TalentRequirementWhereInput
-}
-
-/**
- * TalentCountOutputType without action
- */
-export type TalentCountOutputTypeCountRequiredTalentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.TalentRequirementWhereInput
-}
-
 
 export type TalentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
   description?: boolean
   actionCost?: boolean
+  requiredOther?: boolean
+  requiredSkillId?: boolean
+  requiredSkillRank?: boolean
+  requiredTalents?: boolean
+  requiredLevel?: boolean
   characterTalents?: boolean | Prisma.Talent$characterTalentsArgs<ExtArgs>
   modifierSource?: boolean | Prisma.Talent$modifierSourceArgs<ExtArgs>
-  requiredOther?: boolean | Prisma.Talent$requiredOtherArgs<ExtArgs>
-  requiredSkills?: boolean | Prisma.Talent$requiredSkillsArgs<ExtArgs>
-  talentRequirements?: boolean | Prisma.Talent$talentRequirementsArgs<ExtArgs>
-  requiredTalents?: boolean | Prisma.Talent$requiredTalentsArgs<ExtArgs>
   _count?: boolean | Prisma.TalentCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["talent"]>
 
@@ -895,6 +702,11 @@ export type TalentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   name?: boolean
   description?: boolean
   actionCost?: boolean
+  requiredOther?: boolean
+  requiredSkillId?: boolean
+  requiredSkillRank?: boolean
+  requiredTalents?: boolean
+  requiredLevel?: boolean
 }, ExtArgs["result"]["talent"]>
 
 export type TalentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -902,6 +714,11 @@ export type TalentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   name?: boolean
   description?: boolean
   actionCost?: boolean
+  requiredOther?: boolean
+  requiredSkillId?: boolean
+  requiredSkillRank?: boolean
+  requiredTalents?: boolean
+  requiredLevel?: boolean
 }, ExtArgs["result"]["talent"]>
 
 export type TalentSelectScalar = {
@@ -909,16 +726,17 @@ export type TalentSelectScalar = {
   name?: boolean
   description?: boolean
   actionCost?: boolean
+  requiredOther?: boolean
+  requiredSkillId?: boolean
+  requiredSkillRank?: boolean
+  requiredTalents?: boolean
+  requiredLevel?: boolean
 }
 
-export type TalentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "actionCost", ExtArgs["result"]["talent"]>
+export type TalentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "actionCost" | "requiredOther" | "requiredSkillId" | "requiredSkillRank" | "requiredTalents" | "requiredLevel", ExtArgs["result"]["talent"]>
 export type TalentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   characterTalents?: boolean | Prisma.Talent$characterTalentsArgs<ExtArgs>
   modifierSource?: boolean | Prisma.Talent$modifierSourceArgs<ExtArgs>
-  requiredOther?: boolean | Prisma.Talent$requiredOtherArgs<ExtArgs>
-  requiredSkills?: boolean | Prisma.Talent$requiredSkillsArgs<ExtArgs>
-  talentRequirements?: boolean | Prisma.Talent$talentRequirementsArgs<ExtArgs>
-  requiredTalents?: boolean | Prisma.Talent$requiredTalentsArgs<ExtArgs>
   _count?: boolean | Prisma.TalentCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type TalentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -929,16 +747,17 @@ export type $TalentPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   objects: {
     characterTalents: Prisma.$CharacterTalentPayload<ExtArgs>[]
     modifierSource: Prisma.$ModifierSourcePayload<ExtArgs> | null
-    requiredOther: Prisma.$OtherRequirementPayload<ExtArgs>[]
-    requiredSkills: Prisma.$SkillRequirementPayload<ExtArgs>[]
-    talentRequirements: Prisma.$TalentRequirementPayload<ExtArgs>[]
-    requiredTalents: Prisma.$TalentRequirementPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
     description: string
     actionCost: $Enums.ActionCost
+    requiredOther: string[]
+    requiredSkillId: string | null
+    requiredSkillRank: number | null
+    requiredTalents: string[]
+    requiredLevel: number | null
   }, ExtArgs["result"]["talent"]>
   composites: {}
 }
@@ -1335,10 +1154,6 @@ export interface Prisma__TalentClient<T, Null = never, ExtArgs extends runtime.T
   readonly [Symbol.toStringTag]: "PrismaPromise"
   characterTalents<T extends Prisma.Talent$characterTalentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Talent$characterTalentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CharacterTalentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   modifierSource<T extends Prisma.Talent$modifierSourceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Talent$modifierSourceArgs<ExtArgs>>): Prisma.Prisma__ModifierSourceClient<runtime.Types.Result.GetResult<Prisma.$ModifierSourcePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  requiredOther<T extends Prisma.Talent$requiredOtherArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Talent$requiredOtherArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OtherRequirementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  requiredSkills<T extends Prisma.Talent$requiredSkillsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Talent$requiredSkillsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SkillRequirementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  talentRequirements<T extends Prisma.Talent$talentRequirementsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Talent$talentRequirementsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TalentRequirementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  requiredTalents<T extends Prisma.Talent$requiredTalentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Talent$requiredTalentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TalentRequirementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1372,6 +1187,11 @@ export interface TalentFieldRefs {
   readonly name: Prisma.FieldRef<"Talent", 'String'>
   readonly description: Prisma.FieldRef<"Talent", 'String'>
   readonly actionCost: Prisma.FieldRef<"Talent", 'ActionCost'>
+  readonly requiredOther: Prisma.FieldRef<"Talent", 'String[]'>
+  readonly requiredSkillId: Prisma.FieldRef<"Talent", 'String'>
+  readonly requiredSkillRank: Prisma.FieldRef<"Talent", 'Int'>
+  readonly requiredTalents: Prisma.FieldRef<"Talent", 'String[]'>
+  readonly requiredLevel: Prisma.FieldRef<"Talent", 'Int'>
 }
     
 
@@ -1800,102 +1620,6 @@ export type Talent$modifierSourceArgs<ExtArgs extends runtime.Types.Extensions.I
    */
   include?: Prisma.ModifierSourceInclude<ExtArgs> | null
   where?: Prisma.ModifierSourceWhereInput
-}
-
-/**
- * Talent.requiredOther
- */
-export type Talent$requiredOtherArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the OtherRequirement
-   */
-  select?: Prisma.OtherRequirementSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the OtherRequirement
-   */
-  omit?: Prisma.OtherRequirementOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.OtherRequirementInclude<ExtArgs> | null
-  where?: Prisma.OtherRequirementWhereInput
-  orderBy?: Prisma.OtherRequirementOrderByWithRelationInput | Prisma.OtherRequirementOrderByWithRelationInput[]
-  cursor?: Prisma.OtherRequirementWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.OtherRequirementScalarFieldEnum | Prisma.OtherRequirementScalarFieldEnum[]
-}
-
-/**
- * Talent.requiredSkills
- */
-export type Talent$requiredSkillsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the SkillRequirement
-   */
-  select?: Prisma.SkillRequirementSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the SkillRequirement
-   */
-  omit?: Prisma.SkillRequirementOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.SkillRequirementInclude<ExtArgs> | null
-  where?: Prisma.SkillRequirementWhereInput
-  orderBy?: Prisma.SkillRequirementOrderByWithRelationInput | Prisma.SkillRequirementOrderByWithRelationInput[]
-  cursor?: Prisma.SkillRequirementWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.SkillRequirementScalarFieldEnum | Prisma.SkillRequirementScalarFieldEnum[]
-}
-
-/**
- * Talent.talentRequirements
- */
-export type Talent$talentRequirementsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the TalentRequirement
-   */
-  select?: Prisma.TalentRequirementSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the TalentRequirement
-   */
-  omit?: Prisma.TalentRequirementOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.TalentRequirementInclude<ExtArgs> | null
-  where?: Prisma.TalentRequirementWhereInput
-  orderBy?: Prisma.TalentRequirementOrderByWithRelationInput | Prisma.TalentRequirementOrderByWithRelationInput[]
-  cursor?: Prisma.TalentRequirementWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.TalentRequirementScalarFieldEnum | Prisma.TalentRequirementScalarFieldEnum[]
-}
-
-/**
- * Talent.requiredTalents
- */
-export type Talent$requiredTalentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the TalentRequirement
-   */
-  select?: Prisma.TalentRequirementSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the TalentRequirement
-   */
-  omit?: Prisma.TalentRequirementOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.TalentRequirementInclude<ExtArgs> | null
-  where?: Prisma.TalentRequirementWhereInput
-  orderBy?: Prisma.TalentRequirementOrderByWithRelationInput | Prisma.TalentRequirementOrderByWithRelationInput[]
-  cursor?: Prisma.TalentRequirementWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.TalentRequirementScalarFieldEnum | Prisma.TalentRequirementScalarFieldEnum[]
 }
 
 /**

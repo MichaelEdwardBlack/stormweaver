@@ -60,9 +60,6 @@ export const ModelName = {
   CharacterAttribute: 'CharacterAttribute',
   CharacterSkill: 'CharacterSkill',
   Talent: 'Talent',
-  TalentRequirement: 'TalentRequirement',
-  SkillRequirement: 'SkillRequirement',
-  OtherRequirement: 'OtherRequirement',
   CharacterTalent: 'CharacterTalent',
   ItemTemplate: 'ItemTemplate',
   CharacterItem: 'CharacterItem',
@@ -193,39 +190,15 @@ export const TalentScalarFieldEnum = {
   id: 'id',
   name: 'name',
   description: 'description',
-  actionCost: 'actionCost'
+  actionCost: 'actionCost',
+  requiredOther: 'requiredOther',
+  requiredSkillId: 'requiredSkillId',
+  requiredSkillRank: 'requiredSkillRank',
+  requiredTalents: 'requiredTalents',
+  requiredLevel: 'requiredLevel'
 } as const
 
 export type TalentScalarFieldEnum = (typeof TalentScalarFieldEnum)[keyof typeof TalentScalarFieldEnum]
-
-
-export const TalentRequirementScalarFieldEnum = {
-  id: 'id',
-  talentId: 'talentId',
-  requiredId: 'requiredId'
-} as const
-
-export type TalentRequirementScalarFieldEnum = (typeof TalentRequirementScalarFieldEnum)[keyof typeof TalentRequirementScalarFieldEnum]
-
-
-export const SkillRequirementScalarFieldEnum = {
-  id: 'id',
-  talentId: 'talentId',
-  skillId: 'skillId',
-  minRank: 'minRank'
-} as const
-
-export type SkillRequirementScalarFieldEnum = (typeof SkillRequirementScalarFieldEnum)[keyof typeof SkillRequirementScalarFieldEnum]
-
-
-export const OtherRequirementScalarFieldEnum = {
-  id: 'id',
-  talentId: 'talentId',
-  key: 'key',
-  value: 'value'
-} as const
-
-export type OtherRequirementScalarFieldEnum = (typeof OtherRequirementScalarFieldEnum)[keyof typeof OtherRequirementScalarFieldEnum]
 
 
 export const CharacterTalentScalarFieldEnum = {

@@ -53,3 +53,8 @@ export const calculateMaxModifierPerAttribute = (level: number) => {
 export const calculateMaxAncestryTalents = (level: number, isSinger: boolean) => {
   return Math.floor(level / 5) + (isSinger ? 2 : 1);
 };
+
+export const calculateAvailablePoints = (level: number, isSinger: boolean, unlockedTalents: number) => {
+  const total = calculateMaxTalents(level, isSinger);
+  return total - unlockedTalents;
+};

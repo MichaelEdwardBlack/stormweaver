@@ -393,9 +393,6 @@ export const ModelName = {
   CharacterAttribute: 'CharacterAttribute',
   CharacterSkill: 'CharacterSkill',
   Talent: 'Talent',
-  TalentRequirement: 'TalentRequirement',
-  SkillRequirement: 'SkillRequirement',
-  OtherRequirement: 'OtherRequirement',
   CharacterTalent: 'CharacterTalent',
   ItemTemplate: 'ItemTemplate',
   CharacterItem: 'CharacterItem',
@@ -420,7 +417,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "account" | "session" | "user" | "userSettings" | "verificationToken" | "character" | "characterAttribute" | "characterSkill" | "talent" | "talentRequirement" | "skillRequirement" | "otherRequirement" | "characterTalent" | "itemTemplate" | "characterItem" | "characterPath" | "characterExpertise" | "characterStory" | "characterGoal" | "modifier" | "modifierSource"
+    modelProps: "account" | "session" | "user" | "userSettings" | "verificationToken" | "character" | "characterAttribute" | "characterSkill" | "talent" | "characterTalent" | "itemTemplate" | "characterItem" | "characterPath" | "characterExpertise" | "characterStory" | "characterGoal" | "modifier" | "modifierSource"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1087,228 +1084,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.TalentCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.TalentCountAggregateOutputType> | number
-        }
-      }
-    }
-    TalentRequirement: {
-      payload: Prisma.$TalentRequirementPayload<ExtArgs>
-      fields: Prisma.TalentRequirementFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.TalentRequirementFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TalentRequirementPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.TalentRequirementFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TalentRequirementPayload>
-        }
-        findFirst: {
-          args: Prisma.TalentRequirementFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TalentRequirementPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.TalentRequirementFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TalentRequirementPayload>
-        }
-        findMany: {
-          args: Prisma.TalentRequirementFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TalentRequirementPayload>[]
-        }
-        create: {
-          args: Prisma.TalentRequirementCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TalentRequirementPayload>
-        }
-        createMany: {
-          args: Prisma.TalentRequirementCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.TalentRequirementCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TalentRequirementPayload>[]
-        }
-        delete: {
-          args: Prisma.TalentRequirementDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TalentRequirementPayload>
-        }
-        update: {
-          args: Prisma.TalentRequirementUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TalentRequirementPayload>
-        }
-        deleteMany: {
-          args: Prisma.TalentRequirementDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.TalentRequirementUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.TalentRequirementUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TalentRequirementPayload>[]
-        }
-        upsert: {
-          args: Prisma.TalentRequirementUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TalentRequirementPayload>
-        }
-        aggregate: {
-          args: Prisma.TalentRequirementAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateTalentRequirement>
-        }
-        groupBy: {
-          args: Prisma.TalentRequirementGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.TalentRequirementGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.TalentRequirementCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.TalentRequirementCountAggregateOutputType> | number
-        }
-      }
-    }
-    SkillRequirement: {
-      payload: Prisma.$SkillRequirementPayload<ExtArgs>
-      fields: Prisma.SkillRequirementFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.SkillRequirementFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SkillRequirementPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.SkillRequirementFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SkillRequirementPayload>
-        }
-        findFirst: {
-          args: Prisma.SkillRequirementFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SkillRequirementPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.SkillRequirementFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SkillRequirementPayload>
-        }
-        findMany: {
-          args: Prisma.SkillRequirementFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SkillRequirementPayload>[]
-        }
-        create: {
-          args: Prisma.SkillRequirementCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SkillRequirementPayload>
-        }
-        createMany: {
-          args: Prisma.SkillRequirementCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.SkillRequirementCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SkillRequirementPayload>[]
-        }
-        delete: {
-          args: Prisma.SkillRequirementDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SkillRequirementPayload>
-        }
-        update: {
-          args: Prisma.SkillRequirementUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SkillRequirementPayload>
-        }
-        deleteMany: {
-          args: Prisma.SkillRequirementDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.SkillRequirementUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.SkillRequirementUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SkillRequirementPayload>[]
-        }
-        upsert: {
-          args: Prisma.SkillRequirementUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SkillRequirementPayload>
-        }
-        aggregate: {
-          args: Prisma.SkillRequirementAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateSkillRequirement>
-        }
-        groupBy: {
-          args: Prisma.SkillRequirementGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.SkillRequirementGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.SkillRequirementCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.SkillRequirementCountAggregateOutputType> | number
-        }
-      }
-    }
-    OtherRequirement: {
-      payload: Prisma.$OtherRequirementPayload<ExtArgs>
-      fields: Prisma.OtherRequirementFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.OtherRequirementFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OtherRequirementPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.OtherRequirementFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OtherRequirementPayload>
-        }
-        findFirst: {
-          args: Prisma.OtherRequirementFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OtherRequirementPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.OtherRequirementFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OtherRequirementPayload>
-        }
-        findMany: {
-          args: Prisma.OtherRequirementFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OtherRequirementPayload>[]
-        }
-        create: {
-          args: Prisma.OtherRequirementCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OtherRequirementPayload>
-        }
-        createMany: {
-          args: Prisma.OtherRequirementCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.OtherRequirementCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OtherRequirementPayload>[]
-        }
-        delete: {
-          args: Prisma.OtherRequirementDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OtherRequirementPayload>
-        }
-        update: {
-          args: Prisma.OtherRequirementUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OtherRequirementPayload>
-        }
-        deleteMany: {
-          args: Prisma.OtherRequirementDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.OtherRequirementUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.OtherRequirementUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OtherRequirementPayload>[]
-        }
-        upsert: {
-          args: Prisma.OtherRequirementUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$OtherRequirementPayload>
-        }
-        aggregate: {
-          args: Prisma.OtherRequirementAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateOtherRequirement>
-        }
-        groupBy: {
-          args: Prisma.OtherRequirementGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.OtherRequirementGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.OtherRequirementCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.OtherRequirementCountAggregateOutputType> | number
         }
       }
     }
@@ -2120,39 +1895,15 @@ export const TalentScalarFieldEnum = {
   id: 'id',
   name: 'name',
   description: 'description',
-  actionCost: 'actionCost'
+  actionCost: 'actionCost',
+  requiredOther: 'requiredOther',
+  requiredSkillId: 'requiredSkillId',
+  requiredSkillRank: 'requiredSkillRank',
+  requiredTalents: 'requiredTalents',
+  requiredLevel: 'requiredLevel'
 } as const
 
 export type TalentScalarFieldEnum = (typeof TalentScalarFieldEnum)[keyof typeof TalentScalarFieldEnum]
-
-
-export const TalentRequirementScalarFieldEnum = {
-  id: 'id',
-  talentId: 'talentId',
-  requiredId: 'requiredId'
-} as const
-
-export type TalentRequirementScalarFieldEnum = (typeof TalentRequirementScalarFieldEnum)[keyof typeof TalentRequirementScalarFieldEnum]
-
-
-export const SkillRequirementScalarFieldEnum = {
-  id: 'id',
-  talentId: 'talentId',
-  skillId: 'skillId',
-  minRank: 'minRank'
-} as const
-
-export type SkillRequirementScalarFieldEnum = (typeof SkillRequirementScalarFieldEnum)[keyof typeof SkillRequirementScalarFieldEnum]
-
-
-export const OtherRequirementScalarFieldEnum = {
-  id: 'id',
-  talentId: 'talentId',
-  key: 'key',
-  value: 'value'
-} as const
-
-export type OtherRequirementScalarFieldEnum = (typeof OtherRequirementScalarFieldEnum)[keyof typeof OtherRequirementScalarFieldEnum]
 
 
 export const CharacterTalentScalarFieldEnum = {
@@ -2645,9 +2396,6 @@ export type GlobalOmitConfig = {
   characterAttribute?: Prisma.CharacterAttributeOmit
   characterSkill?: Prisma.CharacterSkillOmit
   talent?: Prisma.TalentOmit
-  talentRequirement?: Prisma.TalentRequirementOmit
-  skillRequirement?: Prisma.SkillRequirementOmit
-  otherRequirement?: Prisma.OtherRequirementOmit
   characterTalent?: Prisma.CharacterTalentOmit
   itemTemplate?: Prisma.ItemTemplateOmit
   characterItem?: Prisma.CharacterItemOmit

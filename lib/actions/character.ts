@@ -3,7 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import { Ancestry, ExpertiseType } from "../generated/prisma/enums";
+import { Ancestry, ExpertiseType, Path } from "../generated/prisma/enums";
 import { revalidatePath } from "next/cache";
 import {
   GiAnvilImpact,
@@ -39,7 +39,6 @@ export async function updateAncestry(characterId: string, ancestry: Ancestry) {
   const session = await auth();
   if (!session) throw new Error("Unauthorized");
 
-  console.log("updating ancestry", ancestry);
   const character = await prisma.character.update({
     where: { id: characterId, userId: session.user.id },
     data: {
@@ -131,4 +130,52 @@ export async function getFullCharacter(characterId: string): Promise<FullCharact
   });
   if (!character) throw new Error("Character not found!");
   return character;
+}
+
+export async function addCharacterPath(characterId: string, path: Path, isStartingPath = false) {
+  const session = await auth();
+  if (!session) redirect("/auth/login");
+  const isHeroic =
+    path === "agent" ||
+    path === "envoy" ||
+    path === "hunter" ||
+    path === "leader" ||
+    path === "scholar" ||
+    path === "warrior";
+  const isRadiant =
+    path === "dustbringer" ||
+    path === "edgedancer" ||
+    path === "elsecaller" ||
+    path === "lightweaver" ||
+    path === "skybreaker" ||
+    path === "stoneward" ||
+    path === "truthwatcher" ||
+    path === "willshaper" ||
+    path === "windrunner";
+
+  const result = await prisma.characterPath.create({
+    data: {
+      path,
+      characterId,
+      level: 1,
+      isHeroic,
+      isRadiant,
+      isSinger: path === "singer",
+      isStartingPath,
+    },
+  });
+
+  return result;
+}
+
+export async function unlockCharacterTalent(characterId: string, talentId: string, isAncestryTalent = false) {
+  const session = await auth();
+  if (!session) redirect("/auth/login");
+  const result = await prisma.characterTalent.create({
+    data: {
+      isAncestryTalent,
+      talentId,
+      characterId,
+    },
+  });
 }
