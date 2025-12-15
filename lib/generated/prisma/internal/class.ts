@@ -17,8 +17,8 @@ import type * as Prisma from "./prismaNamespace"
 
 const config: runtime.GetPrismaClientConfig = {
   "previewFeatures": [],
-  "clientVersion": "7.1.0",
-  "engineVersion": "ab635e6b9d606fa5c8fb8b1a7f909c3c3c1c98ba",
+  "clientVersion": "7.0.1",
+  "engineVersion": "f09f2815f091dbba658cdcd2264306d88bb5bda6",
   "activeProvider": "postgresql",
   "inlineSchema": "generator client {\n  provider = \"prisma-client\"\n  output   = \"../lib/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel Account {\n  userId            String\n  type              String\n  provider          String\n  providerAccountId String\n  refresh_token     String?\n  access_token      String?\n  expires_at        Int?\n  token_type        String?\n  scope             String?\n  id_token          String?\n  session_state     String?\n  createdAt         DateTime @default(now())\n  updatedAt         DateTime @updatedAt\n  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@id([provider, providerAccountId])\n}\n\nmodel Session {\n  sessionToken String   @unique\n  userId       String\n  expires      DateTime\n  createdAt    DateTime @default(now())\n  updatedAt    DateTime @updatedAt\n  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n}\n\nmodel User {\n  id            String        @id @default(cuid())\n  email         String        @unique\n  emailVerified DateTime?\n  passwordHash  String?\n  name          String?\n  image         String?\n  createdAt     DateTime      @default(now())\n  updatedAt     DateTime      @updatedAt\n  accounts      Account[]\n  characters    Character[]\n  sessions      Session[]\n  settings      UserSettings?\n}\n\nmodel UserSettings {\n  id            String   @id @default(uuid())\n  userId        String   @unique\n  diceTextColor String   @default(\"black\")\n  diceColor     String   @default(\"yellow\")\n  treeView      TreeView\n  user          User     @relation(fields: [userId], references: [id])\n}\n\nmodel VerificationToken {\n  identifier String\n  token      String\n  expires    DateTime\n\n  @@id([identifier, token])\n}\n\nmodel Character {\n  id          String               @id @default(cuid())\n  name        String\n  level       Int                  @default(1)\n  visibility  Visibility           @default(owner)\n  createdAt   DateTime             @default(now())\n  updatedAt   DateTime             @updatedAt\n  ancestry    Ancestry?\n  startingKit String?\n  userId      String\n  user        User                 @relation(fields: [userId], references: [id])\n  attributes  CharacterAttribute[]\n  expertises  CharacterExpertise[]\n  equipment   CharacterItem[]\n  paths       CharacterPath[]\n  skills      CharacterSkill[]\n  story       CharacterStory?\n  talents     CharacterTalent[]\n}\n\nmodel CharacterAttribute {\n  id          String    @id @default(cuid())\n  characterId String\n  attribute   Attribute\n  value       Int       @default(0)\n  character   Character @relation(fields: [characterId], references: [id], onDelete: Cascade)\n\n  @@unique([characterId, attribute])\n}\n\nmodel CharacterSkill {\n  id          String    @id @default(cuid())\n  skill       Skill\n  characterId String\n  rank        Int       @default(0)\n  character   Character @relation(fields: [characterId], references: [id], onDelete: Cascade)\n\n  @@unique([characterId, skill])\n}\n\nmodel Talent {\n  id                String            @id @default(cuid())\n  name              String\n  description       String\n  actionCost        ActionCost\n  characterTalents  CharacterTalent[]\n  modifierSource    ModifierSource?\n  requiredOther     String[]\n  requiredSkillId   String?\n  requiredSkillRank Int?\n  requiredTalents   String[]\n  requiredLevel     Int?\n}\n\nmodel CharacterTalent {\n  id               String    @id @default(cuid())\n  isAncestryTalent Boolean   @default(false)\n  applyModifiers   Boolean   @default(true)\n  talentId         String\n  characterId      String\n  character        Character @relation(fields: [characterId], references: [id], onDelete: Cascade)\n  talent           Talent    @relation(fields: [talentId], references: [id])\n\n  @@unique([characterId, talentId])\n}\n\nmodel ItemTemplate {\n  id             String          @id @default(cuid())\n  name           String\n  type           ItemType\n  description    String?\n  price          Int?\n  acquisition    ItemAcquisition @default(purchase)\n  weight         Float\n  acquireNote    String?\n  characterItems CharacterItem[]\n  modifierSource ModifierSource?\n}\n\nmodel CharacterItem {\n  id          String       @id @default(cuid())\n  characterId String\n  equipped    Boolean      @default(false)\n  itemId      String\n  character   Character    @relation(fields: [characterId], references: [id], onDelete: Cascade)\n  item        ItemTemplate @relation(fields: [itemId], references: [id])\n}\n\nmodel CharacterPath {\n  id             String    @id @default(cuid())\n  path           Path\n  characterId    String\n  level          Int\n  isHeroic       Boolean\n  isRadiant      Boolean\n  isSinger       Boolean\n  isStartingPath Boolean\n  character      Character @relation(fields: [characterId], references: [id], onDelete: Cascade)\n}\n\nmodel CharacterExpertise {\n  id          String        @id @default(cuid())\n  name        String\n  type        ExpertiseType\n  isOrigin    Boolean\n  characterId String\n  character   Character     @relation(fields: [characterId], references: [id], onDelete: Cascade)\n}\n\nmodel CharacterStory {\n  id                   String          @id @default(cuid())\n  purpose              String\n  obstacle             String\n  occupation           String\n  relationships        String\n  loyalties            String\n  personality          String\n  appearance           String\n  possibleRadiantOrder String\n  other                String\n  characterId          String          @unique\n  goals                CharacterGoal[]\n  character            Character       @relation(fields: [characterId], references: [id], onDelete: Cascade)\n}\n\nmodel CharacterGoal {\n  id          String         @id @default(cuid())\n  description String\n  progress    Int            @default(0)\n  storyId     String\n  story       CharacterStory @relation(fields: [storyId], references: [id], onDelete: Cascade)\n}\n\nmodel Modifier {\n  id         String             @id @default(cuid())\n  sourceId   String\n  targetType ModifierTargetType\n  targetKey  String?\n  operator   ModifierOperator\n  value      Int?\n  diceValue  String?\n  damageType String?\n  createdAt  DateTime           @default(now())\n  source     ModifierSource     @relation(fields: [sourceId], references: [id])\n}\n\nmodel ModifierSource {\n  id        String        @id @default(cuid())\n  type      SourceType\n  itemId    String?       @unique\n  talentId  String?       @unique\n  modifiers Modifier[]\n  item      ItemTemplate? @relation(fields: [itemId], references: [id], onDelete: Cascade)\n  talent    Talent?       @relation(fields: [talentId], references: [id], onDelete: Cascade)\n}\n\nenum TreeView {\n  broad\n  tall\n}\n\nenum Ancestry {\n  Human\n  Singer\n}\n\nenum Visibility {\n  owner\n  shared\n  public\n}\n\nenum Attribute {\n  strength\n  speed\n  intellect\n  willpower\n  awareness\n  presence\n}\n\nenum Skill {\n  athletics\n  heavyWeaponry\n  agility\n  lightWeaponry\n  stealth\n  thievery\n  crafting\n  deduction\n  lore\n  medicine\n  discipline\n  intimidation\n  insight\n  perception\n  survival\n  deception\n  leadership\n  persuasion\n  abrasion\n  adhesion\n  cohesion\n  division\n  gravitation\n  illumination\n  progression\n  tension\n  transformation\n  transportation\n}\n\nenum ActionCost {\n  ONE_ACTION\n  TWO_ACTIONS\n  THREE_ACTIONS\n  FREE_ACTION\n  ALWAYS_ACTIVE\n  SPECIAL_ACTION\n  REACTION\n}\n\nenum ItemType {\n  weapon\n  armor\n  consumable\n  tool\n  misc\n}\n\nenum ItemAcquisition {\n  purchase\n  talent\n  reward\n  startingKit\n}\n\nenum Path {\n  agent\n  envoy\n  hunter\n  leader\n  scholar\n  warrior\n  singer\n  dustbringer\n  edgedancer\n  elsecaller\n  lightweaver\n  skybreaker\n  stoneward\n  truthwatcher\n  willshaper\n  windrunner\n}\n\nenum ExpertiseType {\n  armor\n  cultural\n  utility\n  specialty\n  weapon\n}\n\nenum ModifierTargetType {\n  ATTRIBUTE\n  SKILL\n  EXPERTISE\n  ARMOR_DEFLECT\n  DAMAGE_DICE\n  DAMAGE_TYPE\n  FOCUS\n  INVESTITURE\n  PHYSICAL_DEFENSE\n  COGNITIVE_DEFENSE\n  SPIRITUAL_DEFENSE\n  HEALTH\n}\n\nenum ModifierOperator {\n  ADD\n  MULTIPLY\n  OVERRIDE\n  DIE_STEP\n  TIER_SCALING\n  LEVEL_SCALING\n}\n\nenum SourceType {\n  ITEM\n  TALENT\n}\n",
   "runtimeDataModel": {
@@ -62,7 +62,7 @@ export interface PrismaClientConstructor {
    * const accounts = await prisma.account.findMany()
    * ```
    * 
-   * Read more in our [docs](https://pris.ly/d/client).
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
    */
 
   new <
@@ -84,7 +84,7 @@ export interface PrismaClientConstructor {
  * const accounts = await prisma.account.findMany()
  * ```
  * 
- * Read more in our [docs](https://pris.ly/d/client).
+ * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
  */
 
 export interface PrismaClient<
@@ -113,7 +113,7 @@ export interface PrismaClient<
    * const result = await prisma.$executeRaw`UPDATE User SET cool = ${true} WHERE email = ${'user@email.com'};`
    * ```
    *
-   * Read more in our [docs](https://pris.ly/d/raw-queries).
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
   $executeRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<number>;
 
@@ -125,7 +125,7 @@ export interface PrismaClient<
    * const result = await prisma.$executeRawUnsafe('UPDATE User SET cool = $1 WHERE email = $2 ;', true, 'user@email.com')
    * ```
    *
-   * Read more in our [docs](https://pris.ly/d/raw-queries).
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
   $executeRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<number>;
 
@@ -136,7 +136,7 @@ export interface PrismaClient<
    * const result = await prisma.$queryRaw`SELECT * FROM User WHERE id = ${1} OR email = ${'user@email.com'};`
    * ```
    *
-   * Read more in our [docs](https://pris.ly/d/raw-queries).
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
   $queryRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<T>;
 
@@ -148,7 +148,7 @@ export interface PrismaClient<
    * const result = await prisma.$queryRawUnsafe('SELECT * FROM User WHERE id = $1 OR email = $2;', 1, 'user@email.com')
    * ```
    *
-   * Read more in our [docs](https://pris.ly/d/raw-queries).
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
   $queryRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<T>;
 

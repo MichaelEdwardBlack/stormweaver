@@ -1,3 +1,4 @@
+import { Path } from "../generated/prisma/enums";
 import type { AttributeId } from "./attributes";
 import type { SkillId } from "./skills";
 
@@ -13,7 +14,7 @@ export type RadiantPathId =
   | "truthwatcher"
   | "willshaper"
   | "windrunner";
-export type TalentTreeId = HeroicPathId | RadiantPathId | SingerPathId;
+export type TalentTreeId = Path;
 export type TalentId = string;
 
 // Prerequisites for unlocking a talent

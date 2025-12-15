@@ -1,5 +1,9 @@
 import { StartingPathPicker } from "./StartingPathPicker";
 
-export default async function StartingPathPage() {
-  return <StartingPathPicker />;
+export default function StartingPathPage() {
+  return (
+    <div>
+      <StartingPathPicker />
+    </div>
+  );
 }

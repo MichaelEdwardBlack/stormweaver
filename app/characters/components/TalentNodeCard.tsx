@@ -6,8 +6,9 @@ type TalentNodeCardProps = {
   talent: TalentNode;
   readonly?: boolean;
   asAncestryTalent?: boolean;
+  onSelect?: (talent: TalentNode) => void;
 };
-export const TalentNodeCard = ({ talent, readonly, asAncestryTalent = false }: TalentNodeCardProps) => {
+export const TalentNodeCard = ({ talent, readonly, asAncestryTalent = false, onSelect }: TalentNodeCardProps) => {
   // const {
   //   isTalentUnlocked,
   //   getBlockingRequirements,
@@ -51,18 +52,18 @@ export const TalentNodeCard = ({ talent, readonly, asAncestryTalent = false }: T
   const pointsAvailable = false;
   const disabled = !pointsAvailable && ((isUnlocked && !isRefundable) || !isUnlocked);
 
-  const toggle = () => {
-    // if (readonly || !isRefundable || isBlocked) return;
-    // if (isUnlocked) {
-    //   refundTalent(talent.id);
-    // } else {
-    //   unlockTalent(talent.id);
-    //   if (asAncestryTalent) {
-    //     console.log("unlocking ancestry talent", talent.id);
-    //     unlockAncestryTalent(talent.id);
-    //   }
-    // }
-  };
+  // const toggle = () => {
+  // if (readonly || !isRefundable || isBlocked) return;
+  // if (isUnlocked) {
+  //   refundTalent(talent.id);
+  // } else {
+  //   unlockTalent(talent.id);
+  //   if (asAncestryTalent) {
+  //     console.log("unlocking ancestry talent", talent.id);
+  //     unlockAncestryTalent(talent.id);
+  //   }
+  // }
+  // };
 
   const getTooltip = () => {
     if (readonly) return "";
@@ -75,7 +76,7 @@ export const TalentNodeCard = ({ talent, readonly, asAncestryTalent = false }: T
   };
   return (
     <div
-      onClick={() => toggle()}
+      onClick={() => onSelect?.(talent)}
       title={getTooltip()}
       className={`
             border p-4 rounded-lg w-full z-10

@@ -5,23 +5,6 @@ import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { Ancestry, ExpertiseType, Path } from "../generated/prisma/enums";
 import { revalidatePath } from "next/cache";
-import {
-  GiAnvilImpact,
-  GiCharacter,
-  GiChestArmor,
-  GiHorizonRoad,
-  GiLightBackpack,
-  GiProgression,
-  GiScrollQuill,
-  GiSmart,
-} from "react-icons/gi";
-import { LuBadgePlus, LuPanelLeftClose, LuPanelLeftOpen } from "react-icons/lu";
-import { PiIdentificationCard, PiTreeStructure } from "react-icons/pi";
-import { LuChevronDown } from "react-icons/lu";
-import { IoIosStats } from "react-icons/io";
-import { GiSkills } from "react-icons/gi";
-import { LuBadge, LuLayers, LuUsers, LuSword } from "react-icons/lu";
-import { FaLevelUpAlt } from "react-icons/fa";
 import { CharacterGetPayload } from "../generated/prisma/models";
 
 export async function deleteCharacter(id: string) {
@@ -165,6 +148,7 @@ export async function addCharacterPath(characterId: string, path: Path, isStarti
     },
   });
 
+  revalidatePath(`/characters/${characterId}/edit`, "layout");
   return result;
 }
 
@@ -178,4 +162,39 @@ export async function unlockCharacterTalent(characterId: string, talentId: strin
       characterId,
     },
   });
+  revalidatePath(`/characters/${characterId}/edit`, "layout");
+}
+
+export async function changeStartingPath(characterId: string) {
+  const session = await auth();
+  if (!session) redirect("/auth/login");
+  await prisma.characterAttribute.updateMany({
+    where: { characterId },
+    data: {
+      value: 0,
+    },
+  });
+  console.log("updated attributes");
+  await prisma.characterExpertise.deleteMany({
+    where: { characterId, isOrigin: false },
+  });
+  console.log("updated expertises");
+  await prisma.characterSkill.updateMany({
+    where: { characterId },
+    data: { rank: 0 },
+  });
+  console.log("updated skills");
+  await prisma.characterTalent.deleteMany({
+    where: { characterId },
+  });
+  console.log("updated talents");
+  await prisma.characterPath.deleteMany({
+    where: { characterId },
+  });
+  console.log("updated path");
+  revalidatePath(`/characters/${characterId}/edit/path/starting`);
+  return {
+    success: true,
+    status: 200,
+  };
 }

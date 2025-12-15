@@ -1,6 +1,6 @@
 "use client";
 
-import Spinner from "@/components/Spinner";
+import { Spinner } from "@/components/Spinner";
 import { cn } from "@/lib/utils/styles";
 import { motion, type MotionProps } from "framer-motion";
 
@@ -90,7 +90,7 @@ export const Button: React.FC<ButtonProps> = ({
     <motion.button
       whileHover={{ scale: disabled ? 1 : 1.02 }}
       whileTap={{ scale: disabled ? 1 : 0.96 }}
-      transition={{ type: "spring", stiffness: 400, damping: 20 }}
+      // transition={{ type: "spring", stiffness: 400, damping: 20 }}
       className={cn(base, variantStyles, className)}
       disabled={disabled}
       {...rest}

@@ -9,7 +9,7 @@ type HeroGridProps = {
 
 export const HeroGrid = ({ onSelect, selectedPath }: HeroGridProps) => {
   return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-6">
+    <div className="grid grid-cols-2 gap-4 lg:grid-cols-3 2xl:grid-cols-6">
       <HeroCard path="agent" onClick={() => onSelect("agent")} isSelected={selectedPath === "agent"} />
       <HeroCard path="envoy" onClick={() => onSelect("envoy")} isSelected={selectedPath === "envoy"} />
       <HeroCard path="hunter" onClick={() => onSelect("hunter")} isSelected={selectedPath === "hunter"} />

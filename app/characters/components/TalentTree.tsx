@@ -1,8 +1,9 @@
+"use client";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { FaChevronDown } from "react-icons/fa";
 import { PathInfo } from "@/lib/data/paths";
-import { TalentTreeId, TalentTrees } from "@/lib/data/tree";
+import { TalentNode, TalentTreeId, TalentTrees } from "@/lib/data/tree";
 import { categorizeTalentNode, getSmartPath } from "@/lib/utils/tree";
 import { TalentNodeCard } from "./TalentNodeCard";
 import { cn } from "@/lib/utils/styles";
@@ -12,13 +13,20 @@ type TalentTreeProps = {
   readonly?: boolean;
   isStacked?: boolean;
   asAncestry?: boolean;
+  onTalentSelect?: (talent: TalentNode) => void;
 };
 
 const getBaseHeight = (pathId: TalentTreeId, isStacked: boolean) => {
   return pathId === "singer" ? 1000 : isStacked ? 2900 : 1100;
 };
 
-export const TalentTree = ({ pathId, readonly, isStacked = true, asAncestry = false }: TalentTreeProps) => {
+export const TalentTree = ({
+  pathId,
+  readonly,
+  isStacked = true,
+  asAncestry = false,
+  onTalentSelect,
+}: TalentTreeProps) => {
   const [isCollapsed, setIsCollapsed] = useState<boolean[]>([false, false, false]);
   const [height, setHeight] = useState(getBaseHeight(pathId, isStacked));
   const keyTalenId = PathInfo[pathId].keyTalent.id;
@@ -58,7 +66,7 @@ export const TalentTree = ({ pathId, readonly, isStacked = true, asAncestry = fa
   }, [isCollapsed, pathId, isStacked]);
 
   return (
-    <div className="scrollbar-thin flex shrink justify-center">
+    <div className="scrollbar-thin flex justify-center">
       <div
         className={cn(
           "z-0 relative overflow-y-hidden overflow-x-auto w-full",
@@ -110,7 +118,12 @@ export const TalentTree = ({ pathId, readonly, isStacked = true, asAncestry = fa
                       exit={{ opacity: 0, scale: 0.8 }}
                       transition={{ duration: 0.25 }}
                     >
-                      <TalentNodeCard talent={node} readonly={readonly} asAncestryTalent={asAncestry} />
+                      <TalentNodeCard
+                        talent={node}
+                        readonly={readonly}
+                        asAncestryTalent={asAncestry}
+                        onSelect={onTalentSelect}
+                      />
                     </motion.div>
                   )}
                 </AnimatePresence>

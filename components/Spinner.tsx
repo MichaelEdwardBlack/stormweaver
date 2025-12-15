@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-export default function Spinner({ size = 24, thickness = 3 }) {
+export function Spinner({ size = 24, thickness = 3 }) {
   const radius = size / 2 - thickness;
   const circumference = 2 * Math.PI * radius;
 
