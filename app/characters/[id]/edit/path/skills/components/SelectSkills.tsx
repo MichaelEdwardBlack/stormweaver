@@ -1,79 +1,148 @@
+"use client";
 import { PathInfo } from "@/lib/data/paths";
 import { RecommendedBanner } from "@/components/ui/RecommendedBanner";
 import { useCharacter } from "@/services/CharacterProvider";
+import { Attribute, Skill } from "@/lib/generated/prisma/enums";
+import { startTransition, useOptimistic } from "react";
+import { updateSkill } from "@/lib/actions/character";
+import { allBaseSkills } from "@/lib/data/skills";
+import { useModal } from "@/services/ModalProvider";
+import { RemoveStartingSkillWarningModal } from "./RemoveStartingSkillWarningModal";
 
 type SelectSkillsProps = {
   maxRankPerSkill: number;
   maxTotalRanks: number;
 };
 
+type SkillData = {
+  skill: Skill;
+  attribute: Attribute;
+  rank: number;
+  description: string;
+};
+
 export const SelectSkills = ({ maxRankPerSkill, maxTotalRanks }: SelectSkillsProps) => {
+  const { openModal } = useModal();
   const character = useCharacter().character;
   const paths = character.paths.map((path) => path.path);
-  const skills = character.skills;
-  const physicalSkills = skills.filter((skill) => skill.)
-  // const { getRank, getModifier, increaseRank, decreaseRank, getTotalRanks, getSkillsByCategory } = useSkills();
-  const { physicalSkills, cognitiveSkills, spiritualSkills } = getSkillsByCategory();
+  const dbSkills = character.skills;
+  const skillInfo = allBaseSkills;
+  const skills: SkillData[] = skillInfo.map((skill) => {
+    const dbSkill = dbSkills.find((s) => s.skill === skill.skill);
+    return {
+      skill: skill.skill,
+      attribute: skill.attribute,
+      rank: dbSkill ? dbSkill.rank : 0,
+      description: skill.description,
+    };
+  });
+  const [optimisticSkills, setOptimisticSkills] = useOptimistic(
+    skills,
+    (previous, next: { skill: Skill; value: number }) => {
+      const newSkills: SkillData[] = [];
+      for (let i = 0; i < previous.length; i++) {
+        if (next.skill === previous[i].skill) {
+          newSkills.push({ ...previous[i], rank: next.value });
+        } else {
+          newSkills.push(previous[i]);
+        }
+      }
+      return newSkills;
+    }
+  );
+  const attributeModifiers: Record<Attribute, number> = {
+    strength: 0,
+    speed: 0,
+    intellect: 0,
+    willpower: 0,
+    awareness: 0,
+    presence: 0,
+  };
+  character.attributes.forEach((attr) => {
+    attributeModifiers[attr.attribute] = attr.value;
+  });
+  const totalRanks = optimisticSkills.map((skill) => skill.rank).reduce((prev, curr) => prev + curr, 0);
+  const physicalSkills = optimisticSkills.filter(
+    (skill) => skill.attribute === "strength" || skill.attribute === "speed"
+  );
+  const cognitiveSkills = optimisticSkills.filter(
+    (skill) => skill.attribute === "intellect" || skill.attribute === "willpower"
+  );
+  const spiritualSkills = optimisticSkills.filter(
+    (skill) => skill.attribute === "awareness" || skill.attribute === "presence"
+  );
   const startingPathRankId = PathInfo[paths[0]]?.startingPathSkill ?? "";
   const recommendedSkills = paths.flatMap((path) => PathInfo[path].recommendedSkills ?? []);
-  const canIncrease = (skillId: string) => {
-    const currentRank = getRank(skillId);
+  const canIncrease = (skill: SkillData) => {
+    const currentRank = skill.rank;
     // Check if we've hit the per-skill limit
     if (currentRank >= maxRankPerSkill) return false;
     // Check if we've hit the total ranks limit
-    if (getTotalRanks() >= maxTotalRanks + 1) return false; // +1 to account for starting path skill
+    if (totalRanks >= maxTotalRanks) return false;
     return true;
   };
 
-  const renderSkillGroup = (title: string, skills: Skill[]) => (
+  const renderSkillGroup = (title: string, skills: SkillData[]) => (
     <div className="flex flex-col gap-2">
       <div className="mt-4 font-bold text-lg">{title}</div>
-      {skills.map((skill) => (
-        <div key={skill.name} className="relative items-center grid grid-cols-12 p-4 border rounded-lg">
-          {recommendedSkills.includes(skill.id) && <RecommendedBanner />}
+      {skills.map((skill, index) => (
+        <div key={index} className="relative items-center grid grid-cols-12 p-4 border rounded-lg">
+          {recommendedSkills.includes(skill.skill) && <RecommendedBanner />}
           <div className="flex flex-col col-span-4 md:col-span-2 lg:col-span-2">
-            <div className="font-semibold">{skill.name}</div>
+            <div className="font-semibold capitalize">{skill.skill}</div>
             <div className="text-gray-400 text-sm capitalize">{skill.attribute}</div>
           </div>
           <div className="col-span-6 md:col-span-8 lg:col-span-7 text-gray-400 text-sm italic">{skill.description}</div>
           <div className="col-span-1 md:col-span-1 lg:col-span-1 text-center">
-            {getModifier(skill.id) >= 0 ? "+" : ""}
-            {getModifier(skill.id)}
+            {attributeModifiers[skill.attribute] >= 0 ? "+" : ""}
+            {attributeModifiers[skill.attribute]}
           </div>
           <div className="flex lg:flex-row flex-col-reverse items-center gap-1 col-span-1 md:col-span-1 lg:col-span-2">
             {[1, 2, 3, 4, 5].map((rank) => (
               <div key={rank} className="group relative">
                 <button
                   onClick={() => {
-                    const currentRank = getRank(skill.id);
+                    const currentRank = skill.rank;
                     if (rank === currentRank) {
                       // If clicking the current rank, decrease it by one
-                      if (rank === 1 && skill.id === startingPathRankId) {
-                        // but do not decrease starting path skill without removing the path
+                      if (rank === 1 && skill.skill === startingPathRankId) {
+                        openModal({
+                          title: "Warning",
+                          content: <RemoveStartingSkillWarningModal />,
+                          size: "sm",
+                        });
                       } else {
-                        decreaseRank(skill.id);
+                        startTransition(() => setOptimisticSkills({ skill: skill.skill, value: rank - 1 }));
+                        updateSkill(character.id, skill, rank - 1);
                       }
                     } else if (rank < currentRank) {
-                      // Decreasing is always allowed
-                      while (getRank(skill.id) > rank) decreaseRank(skill.id);
-                    } else if (canIncrease(skill.id)) {
-                      // Only increase if allowed by constraints
-                      while (getRank(skill.id) < rank && canIncrease(skill.id)) {
-                        increaseRank(skill.id);
+                      // Decreasing is always allowed - set directly to target rank
+                      startTransition(() => setOptimisticSkills({ skill: skill.skill, value: rank }));
+                      updateSkill(character.id, skill, rank);
+                    } else if (canIncrease(skill)) {
+                      // Only increase if allowed by constraints - set directly to target rank
+                      if (rank - currentRank + totalRanks > maxTotalRanks) {
+                        const amountCanIncrease = maxTotalRanks - totalRanks;
+                        const newRank = currentRank + amountCanIncrease;
+                        startTransition(() => setOptimisticSkills({ skill: skill.skill, value: newRank }));
+                        updateSkill(character.id, skill, newRank);
+                      } else {
+                        startTransition(() => setOptimisticSkills({ skill: skill.skill, value: rank }));
+                        updateSkill(character.id, skill, rank);
                       }
                     }
                   }}
                   className={`w-4 h-4 rounded-full border transition-all duration-200 ${
-                    getRank(skill.id) >= rank
-                      ? skill.id === startingPathRankId && rank === 1
-                        ? "bg-yellow-500 border-yellow-600"
-                        : "bg-blue-500 border-blue-600"
-                      : canIncrease(skill.id) && maxRankPerSkill >= rank
-                      ? "bg-gray-50 border-gray-300 hover:border-blue-400 hover:bg-blue-100 cursor-pointer"
+                    skill.rank >= rank
+                      ? skill.skill === startingPathRankId && rank === 1
+                        ? "bg-accent-500 border-accent-600"
+                        : "bg-primary-500 border-primary-600"
+                      : canIncrease(skill) && maxRankPerSkill >= rank
+                      ? "bg-gray-50 border-gray-300 hover:border-primary-400 hover:scale-110 hover:bg-primary-100 cursor-pointer"
                       : "bg-gray-300 border-gray-400 opacity-50"
                   } peer`}
-                  aria-label={`Set ${skill.name} to rank ${rank}`}
-                  title={skill.id === startingPathRankId && rank === 1 ? "From Starting Path" : ""}
+                  aria-label={`Set ${skill.skill} to rank ${rank}`}
+                  title={skill.skill === startingPathRankId && rank === 1 ? "From Starting Path" : ""}
                 />
               </div>
             ))}

@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/buttons/Button";
-import Spinner from "@/components/Spinner";
+import { Spinner } from "@/components/Spinner";
 import { deleteCharacter } from "@/lib/actions/character";
 import { useModal } from "@/services/ModalProvider";
 import { useTransition } from "react";
