@@ -62,7 +62,9 @@ export function NameInput() {
 
   return (
     <div className="flex flex-col gap-3">
-      <label className="text-xl font-bold">Enter Your Heroe's Name:</label>
+      <label className="text-xl font-bold">
+        <h1>Enter Your Heroe's Name:</h1>
+      </label>
 
       <div className="flex items-center justify-center w-full max-w-md">
         <input

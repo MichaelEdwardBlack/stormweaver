@@ -37,7 +37,7 @@ export function AncestryPicker() {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="text-lg font-bold">Select Ancestry</div>
+      <h1 className="text-lg font-bold">Select Ancestry</h1>
       <ExpandableCard
         title="Human"
         description="Most of Roshar is divided into human-ruled nations with majority-human populations."

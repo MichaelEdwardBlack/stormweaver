@@ -8,6 +8,7 @@ import { updateSkill } from "@/lib/actions/character";
 import { allBaseSkills } from "@/lib/data/skills";
 import { useModal } from "@/services/ModalProvider";
 import { RemoveStartingSkillWarningModal } from "./RemoveStartingSkillWarningModal";
+import { Card } from "@/components/ui/cards/Card";
 
 type SelectSkillsProps = {
   maxRankPerSkill: number;
@@ -86,7 +87,7 @@ export const SelectSkills = ({ maxRankPerSkill, maxTotalRanks }: SelectSkillsPro
     <div className="flex flex-col gap-2">
       <div className="mt-4 font-bold text-lg">{title}</div>
       {skills.map((skill, index) => (
-        <div key={index} className="relative items-center grid grid-cols-12 p-4 border rounded-lg">
+        <Card key={index} className="relative items-center grid grid-cols-12">
           {recommendedSkills.includes(skill.skill) && <RecommendedBanner />}
           <div className="flex flex-col col-span-4 md:col-span-2 lg:col-span-2">
             <div className="font-semibold capitalize">{skill.skill}</div>
@@ -147,14 +148,14 @@ export const SelectSkills = ({ maxRankPerSkill, maxTotalRanks }: SelectSkillsPro
               </div>
             ))}
           </div>
-        </div>
+        </Card>
       ))}
     </div>
   );
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="font-bold text-lg">Choose Your Skills</div>
+      <h1 className="font-bold text-lg">Choose Your Skills</h1>
       <div>
         Skills represent your character's trained abilities. Each skill is linked to an attribute - your total modifier
         for a skill is its rank plus the associated attribute's value.

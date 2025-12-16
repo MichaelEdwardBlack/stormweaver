@@ -7,7 +7,7 @@ export default async function CulturePage() {
   if (!session) redirect("/auth/login");
   return (
     <div className="flex flex-col gap-3">
-      <div className="font-bold text-lg">Select 2 Cultural Expertises</div>
+      <h1 className="font-bold text-lg">Select 2 Cultural Expertises</h1>
       <div className="flex flex-col gap-3">
         <p>
           <strong>Cultural expertises</strong> pertain to regional, social, and linguistic knowledge for a nation,
