@@ -65,19 +65,37 @@ export const SelectAttributes = () => {
       {/* grid for managing attribute values */}
       <div className="items-center grid grid-cols-12 px-2 rounded font-semibold text-lg">
         <div className="hidden lg:block">Type</div>
-        <div className="col-span-6 lg:col-span-7">Attribute</div>
-        <div className="flex lg:justify-center items-center col-span-4 lg:col-span-2">Modifier</div>
-        <div className="flex justify-center items-center col-span-2">Defense</div>
+        <div className="col-span-8 md:col-span-7">Attribute</div>
+        <div className="flex justify-center items-center col-span-2 md:col-span-2">Modifier</div>
+        <div className="flex md:justify-center justify-end items-center col-span-2">
+          <span className="hidden md:block">Defense</span>
+          <span className="md:hidden">Def</span>
+        </div>
       </div>
       {Object.entries(attributes).map(([category, attrs], index) => (
         <div className="grid grid-cols-12" key={index}>
           <div
-            className="flex justify-center items-center font-semibold text-xl text-center rotate-180 cursor-default capitalize"
+            className="hidden md:flex justify-center items-center font-semibold text-xl text-center rotate-180 cursor-default capitalize"
             style={{ writingMode: "vertical-lr" }}
           >
             {category}
           </div>
-          <div className="col-span-9">
+          <div className="flex md:hidden flex-row justify-between col-span-12">
+            <h2 className="capitalize">{category}</h2>
+            <div className="relative w-10">
+              <div className="absolute inset-0">
+                <div className="flex justify-center items-center h-full text-center">
+                  <IoShieldOutline size={120} />
+                </div>
+              </div>
+              <div className="absolute inset-0">
+                <div className="flex justify-center items-center h-full font-bold text-sm lg:text-xl text-center">
+                  {attrs[0].value + attrs[1].value + 10}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="col-span-12 md:col-span-9">
             {attrs.map((attr, i) => (
               <AttributeRow
                 key={i}
@@ -91,14 +109,14 @@ export const SelectAttributes = () => {
               />
             ))}
           </div>
-          <div className="relative col-span-2">
+          <div className="relative hidden md:block md:col-span-2">
             <div className="absolute inset-0">
               <div className="flex justify-center items-center h-full text-center">
                 <IoShieldOutline size={120} />
               </div>
             </div>
             <div className="absolute inset-0">
-              <div className="flex justify-center items-center h-full font-bold text-xl text-center">
+              <div className="flex justify-center items-center h-full font-bold text-sm lg:text-xl text-center">
                 {attrs[0].value + attrs[1].value + 10}
               </div>
             </div>

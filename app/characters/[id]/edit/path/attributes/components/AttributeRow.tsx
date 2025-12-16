@@ -24,7 +24,7 @@ export const AttributeRow = ({
   const min = 0;
   return (
     <ExpandableCard
-      className="relative items-center my-2 p-4 border rounded-lg"
+      className="relative items-center my-2"
       title={attribute.name}
       description={attribute.description}
       actionLabel={
