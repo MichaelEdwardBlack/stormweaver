@@ -1,9 +1,5 @@
-import { StartingPathPicker } from "./StartingPathPicker";
+import { StartingPathPicker } from "./components/StartingPathPicker";
 
 export default function StartingPathPage() {
-  return (
-    <div>
-      <StartingPathPicker />
-    </div>
-  );
+  return <StartingPathPicker />;
 }

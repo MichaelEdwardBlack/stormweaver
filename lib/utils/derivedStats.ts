@@ -46,6 +46,11 @@ export const calculateMaxTalents = (level: number, isSinger: boolean) => {
   return level + calculateMaxAncestryTalents(level, isSinger);
 };
 
+export const calculateMaxAttributePoints = (level: number) => {
+  const basePoints = 12;
+  return basePoints + Math.min(Math.floor(level / 3), 6);
+};
+
 export const calculateMaxModifierPerAttribute = (level: number) => {
   return level <= 1 ? 3 : level <= 5 ? 4 : 5;
 };

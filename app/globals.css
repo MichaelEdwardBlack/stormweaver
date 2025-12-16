@@ -64,13 +64,13 @@
 
 .scrollbar-thin {
   scrollbar-width: thin;
-  scrollbar-color: var(--color-accent-500) var(--color-primary-50)
+  scrollbar-color: var(--color-accent-500) var(--color-primary-50);
 }
 
 @media (prefers-color-scheme: dark) {
   .scrollbar-thin {
     scrollbar-width: thin;
-    scrollbar-color: var(--color-accent-500) var(--color-primary-950)
+    scrollbar-color: var(--color-accent-500) var(--color-primary-950);
   }
 }
 
@@ -116,12 +116,12 @@ h6 {
 }
 
 table {
-  @apply w-full min-w-full overflow-hidden text-sm text-neutral-200 border border-separate shadow-md rounded-xl border-blue-900/40 from-slate-900/90 to-black/95 backdrop-blur-sm;
+  @apply w-full min-w-full overflow-hidden text-sm text-neutral-200 border border-separate shadow-md rounded-xl border-primary-900/40 from-neutral-900/90 to-black/95 backdrop-blur-sm;
   background: radial-gradient(ellipse at center, rgba(30, 40, 60, 0.9), rgba(5, 10, 20, 0.95));
 }
 
 thead {
-  @apply border-b bg-gradient-to-b from-slate-800/70 to-slate-900/80 border-blue-800/40;
+  @apply border-b bg-linear-to-b from-neutral-800/70 to-neutral-900/80 border-primary-800/40;
 }
 
 th {
@@ -129,7 +129,7 @@ th {
 }
 
 td {
-  @apply px-4 py-2 text-center border-t border-slate-700/50;
+  @apply px-4 py-2 text-center border-t border-neutral-700/50;
 }
 
 th:first-child {
@@ -162,7 +162,7 @@ tr.disabled:hover {
 }
 
 tr.selected {
-  @apply relative border shadow-inner bg-gradient-to-r from-blue-900/40 to-indigo-800/30 border-blue-500/40 shadow-blue-800/50;
+  @apply relative border shadow-inner bg-linear-to-r from-primary-900/40 to-primary-800/30 border-primary-500/40 shadow-primary-800/50;
 }
 
 tr.selected td {
@@ -170,7 +170,7 @@ tr.selected td {
 }
 
 tr.disabled:not(.selected) {
-  @apply border cursor-not-allowed opacity-40 bg-neutral-900/40 border-slate-700/40;
+  @apply border cursor-not-allowed opacity-40 bg-neutral-900/40 border-neutral-700/40;
 }
 
 tr.disabled:not(.selected) td {

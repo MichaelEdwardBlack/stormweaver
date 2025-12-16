@@ -95,7 +95,6 @@ export const ExpandableCard: React.FC<ExpandableCardProps> = ({
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
             className="mt-4 overflow-hidden"
           >
             <div className="pt-2">{children}</div>

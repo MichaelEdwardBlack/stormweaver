@@ -3,7 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import { Ancestry, ExpertiseType, Path } from "../generated/prisma/enums";
+import { Ancestry, Attribute, ExpertiseType, Path } from "../generated/prisma/enums";
 import { revalidatePath } from "next/cache";
 import { CharacterGetPayload } from "../generated/prisma/models";
 
@@ -197,4 +197,21 @@ export async function changeStartingPath(characterId: string) {
     success: true,
     status: 200,
   };
+}
+
+export async function updateAttribute(characterId: string, attribute: Attribute, value: number) {
+  const session = await auth();
+  if (!session) redirect("/auth/login");
+  await prisma.characterAttribute.upsert({
+    where: { characterId_attribute: { characterId, attribute } },
+    update: {
+      value: value,
+    },
+    create: {
+      characterId,
+      attribute,
+      value,
+    },
+  });
+  revalidatePath(`/characters/${characterId}/edit`, "layout");
 }

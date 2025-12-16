@@ -1,39 +1,39 @@
-export type AttributeId = "strength" | "speed" | "intellect" | "willpower" | "awareness" | "presence";
+import { Attribute } from "../generated/prisma/enums";
 
-export type Attribute = {
-  id: AttributeId;
+export type AttributeInfo = {
+  attribute: Attribute;
   name: string;
   description: string;
 };
 
-export const attributes: Attribute[] = [
+export const attributes: AttributeInfo[] = [
   {
-    id: "strength",
+    attribute: "strength",
     name: "Strength",
     description: "Physical power, endurance, and hardiness",
   },
   {
-    id: "speed",
+    attribute: "speed",
     name: "Speed",
     description: "Agility, reflexes, and manual dexterity",
   },
   {
-    id: "intellect",
+    attribute: "intellect",
     name: "Intellect",
     description: "Mental acuity, knowledge, and problem-solving",
   },
   {
-    id: "willpower",
+    attribute: "willpower",
     name: "Willpower",
     description: "Mental fortitude, discipline, and force of personality",
   },
   {
-    id: "awareness",
+    attribute: "awareness",
     name: "Awareness",
     description: "Perception, intuition, and situational understanding",
   },
   {
-    id: "presence",
+    attribute: "presence",
     name: "Presence",
     description: "Social influence, leadership, and charisma",
   },

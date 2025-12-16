@@ -101,6 +101,7 @@ model CharacterSkill {
   id          String    @id @default(cuid())
   skill       Skill
   characterId String
+  attribute   Attribute
   rank        Int       @default(0)
   character   Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
 

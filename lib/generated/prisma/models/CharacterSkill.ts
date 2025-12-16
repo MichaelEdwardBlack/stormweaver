@@ -38,6 +38,7 @@ export type CharacterSkillMinAggregateOutputType = {
   id: string | null
   skill: $Enums.Skill | null
   characterId: string | null
+  attribute: $Enums.Attribute | null
   rank: number | null
 }
 
@@ -45,6 +46,7 @@ export type CharacterSkillMaxAggregateOutputType = {
   id: string | null
   skill: $Enums.Skill | null
   characterId: string | null
+  attribute: $Enums.Attribute | null
   rank: number | null
 }
 
@@ -52,6 +54,7 @@ export type CharacterSkillCountAggregateOutputType = {
   id: number
   skill: number
   characterId: number
+  attribute: number
   rank: number
   _all: number
 }
@@ -69,6 +72,7 @@ export type CharacterSkillMinAggregateInputType = {
   id?: true
   skill?: true
   characterId?: true
+  attribute?: true
   rank?: true
 }
 
@@ -76,6 +80,7 @@ export type CharacterSkillMaxAggregateInputType = {
   id?: true
   skill?: true
   characterId?: true
+  attribute?: true
   rank?: true
 }
 
@@ -83,6 +88,7 @@ export type CharacterSkillCountAggregateInputType = {
   id?: true
   skill?: true
   characterId?: true
+  attribute?: true
   rank?: true
   _all?: true
 }
@@ -177,6 +183,7 @@ export type CharacterSkillGroupByOutputType = {
   id: string
   skill: $Enums.Skill
   characterId: string
+  attribute: $Enums.Attribute
   rank: number
   _count: CharacterSkillCountAggregateOutputType | null
   _avg: CharacterSkillAvgAggregateOutputType | null
@@ -207,6 +214,7 @@ export type CharacterSkillWhereInput = {
   id?: Prisma.StringFilter<"CharacterSkill"> | string
   skill?: Prisma.EnumSkillFilter<"CharacterSkill"> | $Enums.Skill
   characterId?: Prisma.StringFilter<"CharacterSkill"> | string
+  attribute?: Prisma.EnumAttributeFilter<"CharacterSkill"> | $Enums.Attribute
   rank?: Prisma.IntFilter<"CharacterSkill"> | number
   character?: Prisma.XOR<Prisma.CharacterScalarRelationFilter, Prisma.CharacterWhereInput>
 }
@@ -215,6 +223,7 @@ export type CharacterSkillOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   skill?: Prisma.SortOrder
   characterId?: Prisma.SortOrder
+  attribute?: Prisma.SortOrder
   rank?: Prisma.SortOrder
   character?: Prisma.CharacterOrderByWithRelationInput
 }
@@ -227,6 +236,7 @@ export type CharacterSkillWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.CharacterSkillWhereInput | Prisma.CharacterSkillWhereInput[]
   skill?: Prisma.EnumSkillFilter<"CharacterSkill"> | $Enums.Skill
   characterId?: Prisma.StringFilter<"CharacterSkill"> | string
+  attribute?: Prisma.EnumAttributeFilter<"CharacterSkill"> | $Enums.Attribute
   rank?: Prisma.IntFilter<"CharacterSkill"> | number
   character?: Prisma.XOR<Prisma.CharacterScalarRelationFilter, Prisma.CharacterWhereInput>
 }, "id" | "characterId_skill">
@@ -235,6 +245,7 @@ export type CharacterSkillOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   skill?: Prisma.SortOrder
   characterId?: Prisma.SortOrder
+  attribute?: Prisma.SortOrder
   rank?: Prisma.SortOrder
   _count?: Prisma.CharacterSkillCountOrderByAggregateInput
   _avg?: Prisma.CharacterSkillAvgOrderByAggregateInput
@@ -250,12 +261,14 @@ export type CharacterSkillScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"CharacterSkill"> | string
   skill?: Prisma.EnumSkillWithAggregatesFilter<"CharacterSkill"> | $Enums.Skill
   characterId?: Prisma.StringWithAggregatesFilter<"CharacterSkill"> | string
+  attribute?: Prisma.EnumAttributeWithAggregatesFilter<"CharacterSkill"> | $Enums.Attribute
   rank?: Prisma.IntWithAggregatesFilter<"CharacterSkill"> | number
 }
 
 export type CharacterSkillCreateInput = {
   id?: string
   skill: $Enums.Skill
+  attribute: $Enums.Attribute
   rank?: number
   character: Prisma.CharacterCreateNestedOneWithoutSkillsInput
 }
@@ -264,12 +277,14 @@ export type CharacterSkillUncheckedCreateInput = {
   id?: string
   skill: $Enums.Skill
   characterId: string
+  attribute: $Enums.Attribute
   rank?: number
 }
 
 export type CharacterSkillUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   skill?: Prisma.EnumSkillFieldUpdateOperationsInput | $Enums.Skill
+  attribute?: Prisma.EnumAttributeFieldUpdateOperationsInput | $Enums.Attribute
   rank?: Prisma.IntFieldUpdateOperationsInput | number
   character?: Prisma.CharacterUpdateOneRequiredWithoutSkillsNestedInput
 }
@@ -278,6 +293,7 @@ export type CharacterSkillUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   skill?: Prisma.EnumSkillFieldUpdateOperationsInput | $Enums.Skill
   characterId?: Prisma.StringFieldUpdateOperationsInput | string
+  attribute?: Prisma.EnumAttributeFieldUpdateOperationsInput | $Enums.Attribute
   rank?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -285,12 +301,14 @@ export type CharacterSkillCreateManyInput = {
   id?: string
   skill: $Enums.Skill
   characterId: string
+  attribute: $Enums.Attribute
   rank?: number
 }
 
 export type CharacterSkillUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   skill?: Prisma.EnumSkillFieldUpdateOperationsInput | $Enums.Skill
+  attribute?: Prisma.EnumAttributeFieldUpdateOperationsInput | $Enums.Attribute
   rank?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -298,6 +316,7 @@ export type CharacterSkillUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   skill?: Prisma.EnumSkillFieldUpdateOperationsInput | $Enums.Skill
   characterId?: Prisma.StringFieldUpdateOperationsInput | string
+  attribute?: Prisma.EnumAttributeFieldUpdateOperationsInput | $Enums.Attribute
   rank?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -320,6 +339,7 @@ export type CharacterSkillCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   skill?: Prisma.SortOrder
   characterId?: Prisma.SortOrder
+  attribute?: Prisma.SortOrder
   rank?: Prisma.SortOrder
 }
 
@@ -331,6 +351,7 @@ export type CharacterSkillMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   skill?: Prisma.SortOrder
   characterId?: Prisma.SortOrder
+  attribute?: Prisma.SortOrder
   rank?: Prisma.SortOrder
 }
 
@@ -338,6 +359,7 @@ export type CharacterSkillMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   skill?: Prisma.SortOrder
   characterId?: Prisma.SortOrder
+  attribute?: Prisma.SortOrder
   rank?: Prisma.SortOrder
 }
 
@@ -394,12 +416,14 @@ export type EnumSkillFieldUpdateOperationsInput = {
 export type CharacterSkillCreateWithoutCharacterInput = {
   id?: string
   skill: $Enums.Skill
+  attribute: $Enums.Attribute
   rank?: number
 }
 
 export type CharacterSkillUncheckedCreateWithoutCharacterInput = {
   id?: string
   skill: $Enums.Skill
+  attribute: $Enums.Attribute
   rank?: number
 }
 
@@ -436,30 +460,35 @@ export type CharacterSkillScalarWhereInput = {
   id?: Prisma.StringFilter<"CharacterSkill"> | string
   skill?: Prisma.EnumSkillFilter<"CharacterSkill"> | $Enums.Skill
   characterId?: Prisma.StringFilter<"CharacterSkill"> | string
+  attribute?: Prisma.EnumAttributeFilter<"CharacterSkill"> | $Enums.Attribute
   rank?: Prisma.IntFilter<"CharacterSkill"> | number
 }
 
 export type CharacterSkillCreateManyCharacterInput = {
   id?: string
   skill: $Enums.Skill
+  attribute: $Enums.Attribute
   rank?: number
 }
 
 export type CharacterSkillUpdateWithoutCharacterInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   skill?: Prisma.EnumSkillFieldUpdateOperationsInput | $Enums.Skill
+  attribute?: Prisma.EnumAttributeFieldUpdateOperationsInput | $Enums.Attribute
   rank?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type CharacterSkillUncheckedUpdateWithoutCharacterInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   skill?: Prisma.EnumSkillFieldUpdateOperationsInput | $Enums.Skill
+  attribute?: Prisma.EnumAttributeFieldUpdateOperationsInput | $Enums.Attribute
   rank?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type CharacterSkillUncheckedUpdateManyWithoutCharacterInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   skill?: Prisma.EnumSkillFieldUpdateOperationsInput | $Enums.Skill
+  attribute?: Prisma.EnumAttributeFieldUpdateOperationsInput | $Enums.Attribute
   rank?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -469,6 +498,7 @@ export type CharacterSkillSelect<ExtArgs extends runtime.Types.Extensions.Intern
   id?: boolean
   skill?: boolean
   characterId?: boolean
+  attribute?: boolean
   rank?: boolean
   character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["characterSkill"]>
@@ -477,6 +507,7 @@ export type CharacterSkillSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   id?: boolean
   skill?: boolean
   characterId?: boolean
+  attribute?: boolean
   rank?: boolean
   character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["characterSkill"]>
@@ -485,6 +516,7 @@ export type CharacterSkillSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   id?: boolean
   skill?: boolean
   characterId?: boolean
+  attribute?: boolean
   rank?: boolean
   character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["characterSkill"]>
@@ -493,10 +525,11 @@ export type CharacterSkillSelectScalar = {
   id?: boolean
   skill?: boolean
   characterId?: boolean
+  attribute?: boolean
   rank?: boolean
 }
 
-export type CharacterSkillOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "skill" | "characterId" | "rank", ExtArgs["result"]["characterSkill"]>
+export type CharacterSkillOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "skill" | "characterId" | "attribute" | "rank", ExtArgs["result"]["characterSkill"]>
 export type CharacterSkillInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   character?: boolean | Prisma.CharacterDefaultArgs<ExtArgs>
 }
@@ -516,6 +549,7 @@ export type $CharacterSkillPayload<ExtArgs extends runtime.Types.Extensions.Inte
     id: string
     skill: $Enums.Skill
     characterId: string
+    attribute: $Enums.Attribute
     rank: number
   }, ExtArgs["result"]["characterSkill"]>
   composites: {}
@@ -944,6 +978,7 @@ export interface CharacterSkillFieldRefs {
   readonly id: Prisma.FieldRef<"CharacterSkill", 'String'>
   readonly skill: Prisma.FieldRef<"CharacterSkill", 'Skill'>
   readonly characterId: Prisma.FieldRef<"CharacterSkill", 'String'>
+  readonly attribute: Prisma.FieldRef<"CharacterSkill", 'Attribute'>
   readonly rank: Prisma.FieldRef<"CharacterSkill", 'Int'>
 }
     

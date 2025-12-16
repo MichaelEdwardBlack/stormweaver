@@ -180,6 +180,7 @@ export const CharacterSkillScalarFieldEnum = {
   id: 'id',
   skill: 'skill',
   characterId: 'characterId',
+  attribute: 'attribute',
   rank: 'rank'
 } as const
 
