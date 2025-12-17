@@ -4,7 +4,7 @@ import { HeroGrid } from "@/app/characters/components/HeroGrid";
 import { TalentTree } from "@/app/characters/components/TalentTree";
 import { ToggleSlider } from "@/app/characters/components/ToggleSlider";
 import { Button } from "@/components/ui/buttons/Button";
-import { addCharacterPath, unlockCharacterTalent } from "@/lib/actions/character";
+import { addCharacterPath, unlockCharacterTalent, updateSkill } from "@/lib/actions/character";
 import { PathInfo as Info } from "@/lib/data/paths";
 import { Path } from "@/lib/generated/prisma/enums";
 import { useCharacter } from "@/services/CharacterProvider";
@@ -34,7 +34,7 @@ export const StartingPathPicker = () => {
               addCharacterPath(character.id, path, true);
               unlockCharacterTalent(character.id, pathInfo.keyTalent.id, false);
               if (pathInfo.startingPathSkill) {
-                // increaseRank(pathInfo.startingPathSkill);
+                updateSkill(character.id, pathInfo.startingPathSkill, 1);
               }
               if (character.ancestry === "Singer") {
                 addCharacterPath(character.id, "singer", false);

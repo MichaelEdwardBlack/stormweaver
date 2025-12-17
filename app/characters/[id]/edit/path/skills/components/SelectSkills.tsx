@@ -6,9 +6,8 @@ import { Attribute, Skill } from "@/lib/generated/prisma/enums";
 import { startTransition, useOptimistic } from "react";
 import { updateSkill } from "@/lib/actions/character";
 import { allBaseSkills } from "@/lib/data/skills";
-import { useModal } from "@/services/ModalProvider";
-import { RemoveStartingSkillWarningModal } from "./RemoveStartingSkillWarningModal";
 import { Card } from "@/components/ui/cards/Card";
+import { useToast } from "@/services/ToastProvider";
 
 type SelectSkillsProps = {
   maxRankPerSkill: number;
@@ -23,7 +22,7 @@ type SkillData = {
 };
 
 export const SelectSkills = ({ maxRankPerSkill, maxTotalRanks }: SelectSkillsProps) => {
-  const { openModal } = useModal();
+  const { toast } = useToast();
   const character = useCharacter().character;
   const paths = character.paths.map((path) => path.path);
   const dbSkills = character.skills;
@@ -107,10 +106,11 @@ export const SelectSkills = ({ maxRankPerSkill, maxTotalRanks }: SelectSkillsPro
                     if (rank === currentRank) {
                       // If clicking the current rank, decrease it by one
                       if (rank === 1 && skill.skill === startingPathRankId) {
-                        openModal({
-                          title: "Warning",
-                          content: <RemoveStartingSkillWarningModal />,
-                          size: "sm",
+                        toast({
+                          title: "Cannot Remove Starting Path Skill",
+                          message: "This skill is granted by your starting heroic path and cannot be removed.",
+                          variant: "error",
+                          duration: 5000,
                         });
                       } else {
                         startTransition(() => setOptimisticSkills({ skill: skill.skill, value: rank - 1 }));
