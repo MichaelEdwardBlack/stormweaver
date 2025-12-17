@@ -7,8 +7,10 @@ import { SingerDescription } from "./SingerDescription";
 import { Ancestry } from "@/lib/generated/prisma/enums";
 import { updateAncestry } from "@/lib/actions/character";
 import { useCharacter } from "@/services/CharacterProvider";
+import { useToast } from "@/services/ToastProvider";
 
 export function AncestryPicker() {
+  const { toast } = useToast();
   const character = useCharacter().character;
   const characterId = character.id;
   const ancestry = character.ancestry;
@@ -20,6 +22,15 @@ export function AncestryPicker() {
   );
   const select = async (newAncestry: Ancestry) => {
     if (newAncestry === optimisticAncestry) return;
+    if (character.paths.length > 0) {
+      toast({
+        title: "Locked",
+        message: "You cannot change ancestry after choosing your starting path",
+        variant: "error",
+        duration: 5000,
+      });
+      return;
+    }
     const previous = optimisticAncestry;
 
     // Perform optimistic update inside a transition to satisfy React
@@ -27,11 +38,15 @@ export function AncestryPicker() {
 
     try {
       await updateAncestry(characterId, newAncestry);
-    } catch (err) {
+    } catch (err: any) {
       // Rollback inside transition
       startTransition(() => setAncestry(previous));
       console.error(err);
-      // Optionally show a user-facing error here
+      toast({
+        title: "Error updating ancestry",
+        message: err,
+        variant: "error",
+      });
     }
   };
 

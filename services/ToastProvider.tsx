@@ -96,7 +96,10 @@ function ToastItem({ toast, onDismiss }: { toast: Toast; onDismiss: (id: string)
           {title && <p className="text-sm font-semibold">{title}</p>}
           <p className="text-sm opacity-90">{message}</p>
         </div>
-        <button onClick={() => onDismiss(id)} className="rounded-md p-1 opacity-60 transition hover:opacity-100">
+        <button
+          onClick={() => onDismiss(id)}
+          className="rounded-md p-1 opacity-60 transition hover:opacity-100 cursor-pointer"
+        >
           <FaX size={14} />
         </button>
       </div>
