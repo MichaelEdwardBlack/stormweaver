@@ -1,6 +1,6 @@
 import { ActionType, TalentNode } from "@/lib/data/tree";
 import { ActionCostIcon } from "./ActionCostIcon";
-import { GlossaryText } from "./GlossaryText";
+import { GlossaryText } from "../../../components/GlossaryText";
 
 type TalentNodeCardProps = {
   talent: TalentNode;

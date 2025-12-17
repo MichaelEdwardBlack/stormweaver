@@ -42,15 +42,9 @@ export async function toggleOriginCulture(characterId: string, culture: string) 
 
   const selectedCultureNames = culturalExperises.map((culture) => culture.name);
   if (selectedCultureNames.includes(culture)) {
-    const response = await prisma.characterExpertise.deleteMany({
+    await prisma.characterExpertise.deleteMany({
       where: { characterId, type: ExpertiseType.cultural, isOrigin: true, name: culture },
     });
-    revalidatePath(`/characters/${characterId}/edit/origin/culture`);
-    return {
-      type: "DELETE",
-      success: true,
-      count: response.count,
-    };
   } else {
     if (culturalExperises.length >= 2) {
       throw new Error("You've already selected the maximum amount of origin cultures");
@@ -63,8 +57,8 @@ export async function toggleOriginCulture(characterId: string, culture: string) 
         name: culture,
       },
     });
-    revalidatePath(`/characters/${characterId}/edit/origin/culture`);
   }
+  revalidatePath(`/characters/${characterId}/edit/origin/culture`);
 }
 
 export async function updateName(characterId: string, name: string) {
@@ -222,6 +216,32 @@ export async function updateSkill(characterId: string, skill: { skill: Skill; at
       skill: skill.skill,
       attribute: skill.attribute,
       rank: value,
+    },
+  });
+  revalidatePath(`/characters/${characterId}/edit`, "layout");
+}
+
+export async function addExpertise(characterId: string, expertise: { name: string; type: ExpertiseType }) {
+  const session = await auth();
+  if (!session) redirect("/auth/login");
+  await prisma.characterExpertise.create({
+    data: {
+      name: expertise.name,
+      type: expertise.type,
+      isOrigin: false,
+      characterId,
+    },
+  });
+  revalidatePath(`/characters/${characterId}/edit`, "layout");
+}
+
+export async function removeExpertise(characterId: string, name: string) {
+  const session = await auth();
+  if (!session) redirect("/auth/login");
+  await prisma.characterExpertise.deleteMany({
+    where: {
+      name,
+      characterId,
     },
   });
   revalidatePath(`/characters/${characterId}/edit`, "layout");

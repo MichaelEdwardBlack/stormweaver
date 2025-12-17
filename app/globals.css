@@ -94,25 +94,15 @@ h6 {
 }
 
 .glossary-link {
-  color: #4f7ee3;
+  color: var(--color-blue-500);
   font-weight: bold;
   background: none;
   border: none;
   cursor: pointer;
   text-decoration: underline;
 }
-
 .glossary-panel {
-  position: fixed;
-  right: 0;
-  top: 0;
-  width: 350px;
-  height: 100%;
-  background: #1e1e1e;
-  color: white;
-  box-shadow: -4px 0 10px rgba(0, 0, 0, 0.4);
-  padding: 20px;
-  z-index: 1000;
+  @apply fixed right-0 top-0 w-96 h-full bg-neutral-100 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 shadow-lg p-6 z-50;
 }
 
 table {

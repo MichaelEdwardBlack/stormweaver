@@ -54,9 +54,9 @@ export const Sidebar = ({
       <motion.aside
         animate={{ width: collapsed ? "4rem" : "16rem" }}
         transition={{ width: { duration: 0.3, ease: "easeInOut" } }}
-        style={{ height: "calc(100vh - 61px)" }}
+        // style={{ height: "calc(100vh - 70px)" }}
         className={cn(
-          "flex flex-col justify-between sticky top-14 md:top-16 overflow-x-hidden overflow-y-auto scrollbar-thin py-4 border-r",
+          "flex flex-col h-full md:h-auto justify-between sticky top-14 md:top-16 overflow-x-hidden overflow-y-auto scrollbar-thin py-4 border-r",
           "bg-neutral-100/60 dark:bg-neutral-900/60 backdrop-blur-md border-neutral-700/40",
           collapsed ? "items-center px-2" : "px-4",
           mobile && "fixed top-14 md:top-16 left-0 z-50 w-64 shadow-xl animate-in"
@@ -171,6 +171,7 @@ export const Sidebar = ({
         >
           {collapsed ? <LuPanelLeftOpen /> : <LuPanelLeftClose />}
         </button>
+        {/* <div className="h-full">SPACER</div> */}
       </motion.aside>
       {/* MOBILE BACKDROP */}
       {mobile && <div onClick={onClose} className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm" />}

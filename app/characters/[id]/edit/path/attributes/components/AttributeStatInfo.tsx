@@ -1,4 +1,4 @@
-import { GlossaryText } from "@/app/characters/components/GlossaryText";
+import { GlossaryText } from "@/components/GlossaryText";
 import { Attribute } from "@/lib/generated/prisma/enums";
 
 type AttributeStatInfoProps = {

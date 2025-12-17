@@ -99,14 +99,14 @@ export default async function CharacterEditLayout({ children, params }: Props) {
     },
   ];
   return (
-    <div className="relative flex flex-row">
+    <div className="relative flex flex-row overflow-hidden" style={{ height: "calc(100vh - 61px)" }}>
       <div className="hidden md:flex">
         <Sidebar sections={sections} />
       </div>
       <div className="md:hidden">
         <MobileSidebar sections={sections} />
       </div>
-      <main className="flex-1 w-full p-6 bg-neutral-50 dark:bg-neutral-900">
+      <main className="flex-1 w-full p-6 bg-neutral-50 dark:bg-neutral-900 overflow-auto scrollbar-thin">
         <CharacterProvider character={character}>{children}</CharacterProvider>
       </main>
     </div>
