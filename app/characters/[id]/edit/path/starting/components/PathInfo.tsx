@@ -9,7 +9,7 @@ export function PathInfo({ path }: { path: Path }) {
   return (
     <>
       {/* Header */}
-      <div className="sticky top-15 ml-0 z-20 backdrop-blur-lg border-b border-accent-500">
+      <div className="sticky -top-6 ml-0 z-20 backdrop-blur-lg border-b border-accent-500">
         <div className="flex flex-col gap-1">
           <h2 className="text-neutral-900 dark:text-neutral-100">{pathInfo.name}</h2>
           {pathInfo.startingPathSkill && (

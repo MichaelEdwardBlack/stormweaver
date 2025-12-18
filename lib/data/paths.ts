@@ -1,5 +1,4 @@
-import type { AttributeId } from "./attributes";
-import type { SkillId } from "./skills";
+import { Attribute, Skill } from "../generated/prisma/enums";
 import { HeroicPathTrees, type TalentTreeId, type TalentNode, SingerTree, RadiantPathTrees } from "./tree";
 
 // A subclass of a path, with its own talent tree
@@ -7,7 +6,7 @@ export type Subclass = {
   id: string;
   name: string;
   description: string;
-  attribute?: AttributeId;
+  attribute?: Attribute;
 };
 
 // A major path (like Warrior, Scholar, etc)
@@ -17,10 +16,10 @@ export type Path = {
   description: string;
   keyTalent: TalentNode; // required first talent of the path
   subclasses: Subclass[]; // usually 3 options after taking key talent
-  recommendedAttributes: AttributeId[];
+  recommendedAttributes: Attribute[];
   recommendedPaths?: string[];
-  startingPathSkill?: SkillId;
-  recommendedSkills?: SkillId[];
+  startingPathSkill?: Skill;
+  recommendedSkills?: Skill[];
 };
 
 const Abrasion: Subclass = {

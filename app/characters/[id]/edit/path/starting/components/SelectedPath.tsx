@@ -17,11 +17,11 @@ export function SelectedPath({ path }: Props) {
   const { openModal, closeModal } = useModal();
   const characterId = useCharacter().character.id;
   return (
-    <div className="relative">
+    <div>
       <Button
         variant="ghost"
         color="destructive"
-        className="fixed top-17 z-30 right-4"
+        className="fixed top-16 z-30 right-6"
         onClick={() => {
           openModal({
             title: "Are you sure?",

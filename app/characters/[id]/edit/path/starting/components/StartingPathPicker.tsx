@@ -11,9 +11,12 @@ import { useCharacter } from "@/services/CharacterProvider";
 import { useState } from "react";
 import { SelectedPath } from "./SelectedPath";
 import { PathInfo } from "./PathInfo";
+import { allBaseSkills } from "@/lib/data/skills";
+import { useToast } from "@/services/ToastProvider";
 
 export const StartingPathPicker = () => {
   const character = useCharacter().character;
+  const { toast } = useToast();
   const [path, setPath] = useState<Path | null>(null);
   const [isStacked, setIsStacked] = useState(true);
   const pathInfo = path ? Info[path] : null;
@@ -28,13 +31,29 @@ export const StartingPathPicker = () => {
           <Button
             variant="ghost"
             color="accent"
-            className="sticky top-17 z-30 mr-0 ml-auto mt-4 text-xl"
+            className="sticky -top-6 z-30 mr-0 ml-auto mt-4 text-xl"
             onClick={() => {
               if (!path) return;
               addCharacterPath(character.id, path, true);
               unlockCharacterTalent(character.id, pathInfo.keyTalent.id, false);
-              if (pathInfo.startingPathSkill) {
-                updateSkill(character.id, pathInfo.startingPathSkill, 1);
+              try {
+                if (pathInfo.startingPathSkill) {
+                  const skillAttribute = allBaseSkills.find((s) => s.skill === pathInfo.startingPathSkill)?.attribute;
+                  if (skillAttribute) {
+                    updateSkill(character.id, { skill: pathInfo.startingPathSkill, attribute: skillAttribute }, 1);
+                  } else {
+                    throw new Error("Starting path attribute not found for skill: " + pathInfo.startingPathSkill);
+                  }
+                } else {
+                  throw new Error("No starting path skill defined for path: " + pathInfo.name);
+                }
+              } catch (error) {
+                toast({
+                  title: "Error updating starting path skill",
+                  message: (error as Error).message,
+                  variant: "error",
+                  duration: 10000,
+                });
               }
               if (character.ancestry === "Singer") {
                 addCharacterPath(character.id, "singer", false);
