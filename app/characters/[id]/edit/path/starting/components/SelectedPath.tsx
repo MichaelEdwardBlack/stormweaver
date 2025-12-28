@@ -2,7 +2,7 @@
 
 import { TalentTree } from "@/app/characters/components/TalentTree";
 import { Path } from "@/lib/generated/prisma/enums";
-import { PathInfo } from "./PathInfo";
+import { PathInfo } from "../../../../components/PathInfo";
 import { Button } from "@/components/ui/buttons/Button";
 import { useModal } from "@/services/ModalProvider";
 import { useCharacter } from "@/services/CharacterProvider";

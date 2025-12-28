@@ -1,3 +1,6 @@
+import { FullCharacter } from "../actions/character";
+import { Talent } from "../generated/prisma/browser";
+
 type CalculateHealthProps = {
   level: number;
   strength: number;
@@ -62,4 +65,34 @@ export const calculateMaxAncestryTalents = (level: number, isSinger: boolean) =>
 export const calculateAvailablePoints = (level: number, isSinger: boolean, unlockedTalents: number) => {
   const total = calculateMaxTalents(level, isSinger);
   return total - unlockedTalents;
+};
+
+export const getBlockingRequirements = (talent: Talent, character: FullCharacter) => {
+  const blockingRequirements: string[] = [];
+  const characterTalentIds = character.talents.map((t) => t.talentId);
+  if (talent.requiredTalents) {
+    if (characterTalentIds.some((t) => talent.requiredTalents.includes(t))) {
+      blockingRequirements.push("Previous Talent");
+    }
+  }
+  if (talent.requiredSkillId && talent.requiredSkillRank) {
+    const characterSkill = character.skills.find((s) => s.skill === talent.requiredSkillId);
+    if ((characterSkill?.rank ?? 0) < talent.requiredSkillRank) {
+      blockingRequirements.push(`Skill Rank: ${talent.requiredSkillId} ${talent.requiredSkillRank}+`);
+    }
+  }
+  if (talent.requiredLevel) {
+    if (character.level < talent.requiredLevel) {
+      blockingRequirements.push(`Level: ${talent.requiredLevel}+`);
+    }
+  }
+  // if (isAncestryTalent) {
+  //   const unlockedAncestryTalents = get().unlockedAncestryTalents;
+  //   const level = useLevel.getState().level;
+  //   const totalAncestryTalents = calculateMaxAncestryTalents(level, useAncestry.getState().ancestry === "Singer"); // at levels 1, 6, 11, 16;
+  //   if (unlockedAncestryTalents.length >= totalAncestryTalents) {
+  //     blockingRequirements.push("You've reached your maximum number of Ancestry talent points at your current level");
+  //   }
+  // }
+  return blockingRequirements;
 };

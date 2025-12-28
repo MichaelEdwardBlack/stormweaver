@@ -1,10 +1,10 @@
 "use client";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaChevronRight } from "react-icons/fa";
 import { MotionButton } from "../buttons/MotionButton";
 import { cn } from "@/lib/utils/styles";
 import { Card } from "./Card";
+import { FaChevronDown } from "react-icons/fa6";
 
 type ExpandableCardProps = {
   id?: string;
@@ -57,11 +57,11 @@ export const ExpandableCard: React.FC<ExpandableCardProps> = ({
     >
       <div className="flex items-center gap-4">
         <motion.div
-          animate={{ rotate: open ? 90 : 0 }}
+          animate={{ rotate: open ? 180 : 0 }}
           transition={{ duration: 0.25, ease: "easeInOut" }}
           className="inline-block"
         >
-          <FaChevronRight className="dark:text-neutral-400 text-neutral-600" />
+          <FaChevronDown className="dark:text-neutral-400 text-neutral-600" />
         </motion.div>
         <div className="flex items-center justify-between w-full space-x-4">
           <div>

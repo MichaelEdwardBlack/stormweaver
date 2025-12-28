@@ -10,7 +10,7 @@ import { Path } from "@/lib/generated/prisma/enums";
 import { useCharacter } from "@/services/CharacterProvider";
 import { useState } from "react";
 import { SelectedPath } from "./SelectedPath";
-import { PathInfo } from "./PathInfo";
+import { PathInfo } from "../../../../components/PathInfo";
 import { allBaseSkills } from "@/lib/data/skills";
 import { useToast } from "@/services/ToastProvider";
 

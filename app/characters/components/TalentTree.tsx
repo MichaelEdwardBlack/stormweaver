@@ -104,9 +104,12 @@ export const TalentTree = ({
                   whileTap={{ scale: 0.97 }}
                 >
                   <motion.span layout>{node.name}</motion.span>
-                  <motion.div animate={{ rotate: collapsed ? -90 : 0 }} transition={{ duration: 0.25 }}>
-                    <FaChevronDown size={20} />
-                  </motion.div>
+                  <motion.span
+                    animate={{ rotate: collapsed ? 180 : 0 }}
+                    transition={{ duration: 0.25, ease: "easeInOut" }}
+                  >
+                    <FaChevronDown />
+                  </motion.span>
                 </motion.div>
               ) : (
                 <AnimatePresence mode="popLayout">

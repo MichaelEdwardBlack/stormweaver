@@ -7,6 +7,170 @@ import { Ancestry, Attribute, ExpertiseType, Path, Skill } from "../generated/pr
 import { revalidatePath } from "next/cache";
 import { CharacterGetPayload } from "../generated/prisma/models";
 
+export async function createCharacter() {
+  const session = await auth();
+  if (!session) throw redirect("/auth/login");
+
+  const character = await prisma.character.create({
+    data: {
+      userId: session.user.id,
+      name: "",
+      level: 1,
+    },
+  });
+
+  return character;
+}
+
+export async function initCharacterAttributes(characterId: string) {
+  const session = await auth();
+  if (!session) throw redirect("/auth/login");
+
+  await prisma.characterAttribute.createMany({
+    data: [
+      {
+        characterId: characterId,
+        attribute: Attribute.strength,
+        value: 0,
+      },
+      {
+        characterId: characterId,
+        attribute: Attribute.speed,
+        value: 0,
+      },
+      {
+        characterId: characterId,
+        attribute: Attribute.intellect,
+        value: 0,
+      },
+      {
+        characterId: characterId,
+        attribute: Attribute.willpower,
+        value: 0,
+      },
+      {
+        characterId: characterId,
+        attribute: Attribute.awareness,
+        value: 0,
+      },
+      {
+        characterId: characterId,
+        attribute: Attribute.presence,
+        value: 0,
+      },
+    ],
+  });
+}
+
+export async function initCharacterSkills(characterId: string) {
+  await prisma.characterSkill.createMany({
+    data: [
+      {
+        characterId: characterId,
+        skill: Skill.athletics,
+        rank: 0,
+        attribute: Attribute.strength,
+      },
+      {
+        characterId: characterId,
+        skill: Skill.heavyWeaponry,
+        rank: 0,
+        attribute: Attribute.strength,
+      },
+      {
+        characterId: characterId,
+        skill: Skill.agility,
+        rank: 0,
+        attribute: Attribute.speed,
+      },
+      {
+        characterId: characterId,
+        skill: Skill.lightWeaponry,
+        rank: 0,
+        attribute: Attribute.speed,
+      },
+      {
+        characterId: characterId,
+        skill: Skill.stealth,
+        rank: 0,
+        attribute: Attribute.speed,
+      },
+      {
+        characterId: characterId,
+        skill: Skill.thievery,
+        rank: 0,
+        attribute: Attribute.speed,
+      },
+      {
+        characterId: characterId,
+        skill: Skill.crafting,
+        rank: 0,
+        attribute: Attribute.intellect,
+      },
+      {
+        characterId: characterId,
+        skill: Skill.deduction,
+        rank: 0,
+        attribute: Attribute.intellect,
+      },
+      {
+        characterId: characterId,
+        skill: Skill.lore,
+        rank: 0,
+        attribute: Attribute.intellect,
+      },
+      {
+        characterId: characterId,
+        skill: Skill.medicine,
+        rank: 0,
+        attribute: Attribute.intellect,
+      },
+      {
+        characterId: characterId,
+        skill: Skill.discipline,
+        rank: 0,
+        attribute: Attribute.willpower,
+      },
+      {
+        characterId: characterId,
+        skill: Skill.intimidation,
+        rank: 0,
+        attribute: Attribute.willpower,
+      },
+      {
+        characterId: characterId,
+        skill: Skill.insight,
+        rank: 0,
+        attribute: Attribute.awareness,
+      },
+      {
+        characterId: characterId,
+        skill: Skill.perception,
+        rank: 0,
+        attribute: Attribute.awareness,
+      },
+      {
+        characterId: characterId,
+        skill: Skill.survival,
+        rank: 0,
+        attribute: Attribute.awareness,
+      },
+      {
+        characterId: characterId,
+        skill: Skill.leadership,
+        rank: 0,
+        attribute: Attribute.presence,
+      },
+      {
+        characterId: characterId,
+        skill: Skill.persuasion,
+        rank: 0,
+        attribute: Attribute.presence,
+      },
+    ],
+  });
+}
+
 export async function deleteCharacter(id: string) {
   const session = await auth();
   if (!session) throw new Error("Unauthorized");
@@ -79,7 +243,11 @@ export type FullCharacter = CharacterGetPayload<{
     expertises: true;
     attributes: true;
     skills: true;
-    talents: true;
+    talents: {
+      include: {
+        talent: true;
+      };
+    };
     paths: true;
     story: true;
   };
@@ -93,7 +261,11 @@ export async function getFullCharacter(characterId: string): Promise<FullCharact
       expertises: true,
       attributes: true,
       skills: true,
-      talents: true,
+      talents: {
+        include: {
+          talent: true,
+        },
+      },
       paths: true,
       story: true,
     },

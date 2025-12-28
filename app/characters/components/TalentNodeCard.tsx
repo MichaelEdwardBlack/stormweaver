@@ -1,6 +1,8 @@
 import { ActionType, TalentNode } from "@/lib/data/tree";
 import { ActionCostIcon } from "./ActionCostIcon";
 import { GlossaryText } from "../../../components/GlossaryText";
+import { useCharacter } from "@/services/CharacterProvider";
+import { calculateAvailablePoints, getBlockingRequirements } from "@/lib/utils/derivedStats";
 
 type TalentNodeCardProps = {
   talent: TalentNode;
@@ -9,6 +11,8 @@ type TalentNodeCardProps = {
   onSelect?: (talent: TalentNode) => void;
 };
 export const TalentNodeCard = ({ talent, readonly, asAncestryTalent = false, onSelect }: TalentNodeCardProps) => {
+  const character = useCharacter().character;
+  const unlockedTalentIds = character.talents.map((t) => t.talentId);
   // const {
   //   isTalentUnlocked,
   //   getBlockingRequirements,
@@ -45,11 +49,15 @@ export const TalentNodeCard = ({ talent, readonly, asAncestryTalent = false, onS
   // const blockingRequirements = getBlockingRequirements(talent, asAncestryTalent);
   // const isBlocked = blockingRequirements.length > 0;
   // const pointsAvailable = hasPointsAvailable();
-  const isUnlocked = false;
+  const isUnlocked = unlockedTalentIds.includes(talent.id);
   const isRefundable = true;
-  const blockingRequirements: string[] = [];
+  const blockingRequirements = getBlockingRequirements(talent, character);
   const isBlocked = false;
-  const pointsAvailable = false;
+  const pointsAvailable = calculateAvailablePoints(
+    character.level,
+    character.ancestry === "Singer",
+    character.talents.length
+  );
   const disabled = !pointsAvailable && ((isUnlocked && !isRefundable) || !isUnlocked);
 
   // const toggle = () => {
