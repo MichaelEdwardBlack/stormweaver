@@ -6,22 +6,12 @@ import { calculateAvailablePoints, getBlockingRequirements } from "@/lib/utils/d
 
 type TalentNodeCardProps = {
   talent: TalentNode;
+  isUnlocked?: boolean;
   readonly?: boolean;
-  asAncestryTalent?: boolean;
   onSelect?: (talent: TalentNode) => void;
 };
-export const TalentNodeCard = ({ talent, readonly, asAncestryTalent = false, onSelect }: TalentNodeCardProps) => {
+export const TalentNodeCard = ({ talent, isUnlocked = false, readonly, onSelect }: TalentNodeCardProps) => {
   const character = useCharacter().character;
-  const unlockedTalentIds = character.talents.map((t) => t.talentId);
-  // const {
-  //   isTalentUnlocked,
-  //   getBlockingRequirements,
-  //   unlockTalent,
-  //   unlockAncestryTalent,
-  //   isKeyTalent,
-  //   refundTalent,
-  //   hasPointsAvailable,
-  // } = useTalents();
   const requirements = [];
   if (talent.requirements?.attribute) {
     requirements.push(
@@ -44,34 +34,15 @@ export const TalentNodeCard = ({ talent, readonly, asAncestryTalent = false, onS
     requirements.push(`${talent.requirements.other.join(", ")}`);
   }
 
-  // const isUnlocked = isTalentUnlocked(talent.id);
-  // const isRefundable = !isKeyTalent(talent.id);
-  // const blockingRequirements = getBlockingRequirements(talent, asAncestryTalent);
-  // const isBlocked = blockingRequirements.length > 0;
-  // const pointsAvailable = hasPointsAvailable();
-  const isUnlocked = unlockedTalentIds.includes(talent.id);
-  const isRefundable = true;
-  const blockingRequirements = getBlockingRequirements(talent, character);
-  const isBlocked = false;
+  const isRefundable = !talent.isKeyTalent;
+  const blockingRequirements = isUnlocked ? [] : getBlockingRequirements(talent, character);
+  const isBlocked = blockingRequirements.length > 0;
   const pointsAvailable = calculateAvailablePoints(
     character.level,
     character.ancestry === "Singer",
     character.talents.length
   );
   const disabled = !pointsAvailable && ((isUnlocked && !isRefundable) || !isUnlocked);
-
-  // const toggle = () => {
-  // if (readonly || !isRefundable || isBlocked) return;
-  // if (isUnlocked) {
-  //   refundTalent(talent.id);
-  // } else {
-  //   unlockTalent(talent.id);
-  //   if (asAncestryTalent) {
-  //     console.log("unlocking ancestry talent", talent.id);
-  //     unlockAncestryTalent(talent.id);
-  //   }
-  // }
-  // };
 
   const getTooltip = () => {
     if (readonly) return "";
@@ -82,9 +53,17 @@ export const TalentNodeCard = ({ talent, readonly, asAncestryTalent = false, onS
       return `Blocked by: ${blockingRequirements.join(", ")}`;
     }
   };
+
+  const onClick = () => {
+    if (readonly) return;
+    if (isBlocked) return;
+    if (disabled) return;
+    if (isUnlocked && !isRefundable) return;
+    onSelect?.(talent);
+  };
   return (
     <div
-      onClick={() => onSelect?.(talent)}
+      onClick={onClick}
       title={getTooltip()}
       className={`
             border p-4 rounded-lg w-full z-10

@@ -12,8 +12,8 @@ type TalentTreeProps = {
   pathId: TalentTreeId;
   readonly?: boolean;
   isStacked?: boolean;
-  asAncestry?: boolean;
   onTalentSelect?: (talent: TalentNode) => void;
+  unlockedTalents?: string[];
 };
 
 const getBaseHeight = (pathId: TalentTreeId, isStacked: boolean) => {
@@ -24,14 +24,15 @@ export const TalentTree = ({
   pathId,
   readonly,
   isStacked = true,
-  asAncestry = false,
   onTalentSelect,
+  unlockedTalents,
 }: TalentTreeProps) => {
   const [isCollapsed, setIsCollapsed] = useState<boolean[]>([false, false, false]);
   const [height, setHeight] = useState(getBaseHeight(pathId, isStacked));
   const keyTalenId = PathInfo[pathId].keyTalent.id;
   const tree = {
     nodes: TalentTrees[pathId].nodes.map((node) => {
+      const isSinger = pathId === "singer";
       let categorizedNode = categorizeTalentNode(node, {
         isKeyTalent: node.id === keyTalenId,
         collapsedSubclasses: {
@@ -39,11 +40,13 @@ export const TalentTree = ({
           subclass2: isCollapsed[1],
           subclass3: isCollapsed[2],
         },
-        isStacked,
+        isStacked: isStacked && !isSinger,
       });
       if (isStacked) {
+        if (isSinger) categorizedNode.x += 0.5;
         categorizedNode.x += 0.6;
       } else {
+        if (isSinger) categorizedNode.x -= 1.5;
         categorizedNode.x += 2.6;
       }
       return categorizedNode;
@@ -70,8 +73,8 @@ export const TalentTree = ({
       <div
         className={cn(
           "z-0 relative overflow-y-hidden overflow-x-auto w-full",
-          pathId === "singer" && "max-w-[900px]",
-          isStacked ? "max-w-[630px]" : "max-w-[1820px]"
+          isStacked ? "max-w-[630px]" : "max-w-[1820px]",
+          pathId === "singer" && "max-w-[900px]"
         )}
         style={{ height: height }}
       >
@@ -124,8 +127,8 @@ export const TalentTree = ({
                       <TalentNodeCard
                         talent={node}
                         readonly={readonly}
-                        asAncestryTalent={asAncestry}
                         onSelect={onTalentSelect}
+                        isUnlocked={unlockedTalents?.includes(node.id)}
                       />
                     </motion.div>
                   )}

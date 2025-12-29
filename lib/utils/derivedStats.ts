@@ -1,5 +1,5 @@
 import { FullCharacter } from "../actions/character";
-import { Talent } from "../generated/prisma/browser";
+import { TalentEdge, TalentNode, TalentTrees } from "../data/tree";
 
 type CalculateHealthProps = {
   level: number;
@@ -67,32 +67,42 @@ export const calculateAvailablePoints = (level: number, isSinger: boolean, unloc
   return total - unlockedTalents;
 };
 
-export const getBlockingRequirements = (talent: Talent, character: FullCharacter) => {
+export const getBlockingRequirements = (
+  talent: TalentNode,
+  character: FullCharacter,
+  isAncestryTalent: boolean = false
+) => {
   const blockingRequirements: string[] = [];
   const characterTalentIds = character.talents.map((t) => t.talentId);
-  if (talent.requiredTalents) {
-    if (characterTalentIds.some((t) => talent.requiredTalents.includes(t))) {
+  if (!talent.requirements) return blockingRequirements;
+  if (talent.requirements.talents) {
+    if (!characterTalentIds.some((t) => talent.requirements?.talents?.includes(t))) {
       blockingRequirements.push("Previous Talent");
     }
   }
-  if (talent.requiredSkillId && talent.requiredSkillRank) {
-    const characterSkill = character.skills.find((s) => s.skill === talent.requiredSkillId);
-    if ((characterSkill?.rank ?? 0) < talent.requiredSkillRank) {
-      blockingRequirements.push(`Skill Rank: ${talent.requiredSkillId} ${talent.requiredSkillRank}+`);
+  if (talent.requirements.skill) {
+    const characterSkill = character.skills.find((s) => s.skill === talent.requirements?.skill?.id);
+    if ((characterSkill?.rank ?? 0) < talent.requirements.skill.min) {
+      blockingRequirements.push(`Skill Rank: ${talent.requirements.skill.id} ${talent.requirements.skill.min}+`);
     }
   }
-  if (talent.requiredLevel) {
-    if (character.level < talent.requiredLevel) {
-      blockingRequirements.push(`Level: ${talent.requiredLevel}+`);
+  if (talent.requirements.level) {
+    if (character.level < talent.requirements.level) {
+      blockingRequirements.push(`Level: ${talent.requirements.level}+`);
     }
   }
-  // if (isAncestryTalent) {
-  //   const unlockedAncestryTalents = get().unlockedAncestryTalents;
-  //   const level = useLevel.getState().level;
-  //   const totalAncestryTalents = calculateMaxAncestryTalents(level, useAncestry.getState().ancestry === "Singer"); // at levels 1, 6, 11, 16;
-  //   if (unlockedAncestryTalents.length >= totalAncestryTalents) {
-  //     blockingRequirements.push("You've reached your maximum number of Ancestry talent points at your current level");
-  //   }
-  // }
+  if (isAncestryTalent) {
+    const unlockedAncestryTalents = character.talents.filter((t) => t.isAncestryTalent);
+    const level = character.level;
+    const totalAncestryTalents = calculateMaxAncestryTalents(level, character.ancestry === "Singer"); // at levels 1, 6, 11, 16;
+    if (unlockedAncestryTalents.length >= totalAncestryTalents) {
+      blockingRequirements.push("You've reached your maximum number of Ancestry talent points at your current level");
+    }
+  }
   return blockingRequirements;
 };
+
+export function hasUnlockedChildren(nodeId: string, edges: TalentEdge[], unlocked: string[]) {
+  const children = edges.filter((e) => e.from === nodeId).map((e) => e.to);
+  return children.some((c) => unlocked.includes(c));
+}

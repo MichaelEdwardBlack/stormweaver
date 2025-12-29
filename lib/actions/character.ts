@@ -311,6 +311,18 @@ export async function addCharacterPath(characterId: string, path: Path, isStarti
   return result;
 }
 
+export async function removeCharacterPath(characterId: string, path: Path, isStartingPath = false) {
+  const session = await auth();
+  if (!session) redirect("/auth/login");
+  await prisma.characterPath.deleteMany({
+    where: {
+      characterId,
+      path,
+    },
+  });
+  revalidatePath(`/characters/${characterId}/edit`, "layout");
+}
+
 export async function unlockCharacterTalent(characterId: string, talentId: string, isAncestryTalent = false) {
   const session = await auth();
   if (!session) redirect("/auth/login");
@@ -319,6 +331,20 @@ export async function unlockCharacterTalent(characterId: string, talentId: strin
       isAncestryTalent,
       talentId,
       characterId,
+    },
+  });
+  revalidatePath(`/characters/${characterId}/edit`, "layout");
+}
+
+export async function refundCharacterTalent(characterId: string, talentId: string) {
+  const session = await auth();
+  if (!session) redirect("/auth/login");
+  await prisma.characterTalent.delete({
+    where: {
+      characterId_talentId: {
+        characterId,
+        talentId,
+      },
     },
   });
   revalidatePath(`/characters/${characterId}/edit`, "layout");

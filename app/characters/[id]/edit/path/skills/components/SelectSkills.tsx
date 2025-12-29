@@ -95,7 +95,7 @@ export const SelectSkills = ({ maxRankPerSkill, maxTotalRanks }: SelectSkillsPro
           <div className="col-span-6 md:col-span-8 lg:col-span-7 text-gray-400 text-sm italic">{skill.description}</div>
           <div className="col-span-1 md:col-span-1 lg:col-span-1 text-center">
             {attributeModifiers[skill.attribute] >= 0 ? "+" : ""}
-            {attributeModifiers[skill.attribute]}
+            {attributeModifiers[skill.attribute] + skill.rank}
           </div>
           <div className="flex lg:flex-row flex-col-reverse items-center gap-1 col-span-1 md:col-span-1 lg:col-span-2">
             {[1, 2, 3, 4, 5].map((rank) => (

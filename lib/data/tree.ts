@@ -1,6 +1,4 @@
-import { Path } from "../generated/prisma/enums";
-import type { AttributeId } from "./attributes";
-import type { SkillId } from "./skills";
+import { Attribute, Path, Skill } from "../generated/prisma/enums";
 
 export type HeroicPathId = "agent" | "envoy" | "hunter" | "leader" | "scholar" | "warrior";
 export type SingerPathId = "singer";
@@ -20,8 +18,8 @@ export type TalentId = string;
 // Prerequisites for unlocking a talent
 export type TalentRequirement = {
   talents?: TalentId[]; // require these specific talents
-  attribute?: { id: AttributeId; min: number }; // e.g., { id: 'strength', min: 1 }
-  skill?: { id: SkillId; min: number }; // e.g., { id: 'athletics', min: 2 }
+  attribute?: { id: Attribute; min: number }; // e.g., { id: 'strength', min: 1 }
+  skill?: { id: Skill; min: number }; // e.g., { id: 'athletics', min: 2 }
   other?: string[]; // e.g., ['shardblade', 'shardplate'],
   level?: number;
 };
@@ -42,6 +40,7 @@ export interface TalentNode {
   actionCost?: ActionType;
   requirements?: TalentRequirement;
   isSubclass?: boolean;
+  isKeyTalent?: boolean;
   x: number; // grid position
   y: number;
   txDiagonalOffset?: number;
@@ -67,6 +66,7 @@ export const AgentTree: TalentTree = {
       name: "Opportunist",
       description: "Once per round, you can reroll your plot die",
       actionCost: "Special Activation",
+      isKeyTalent: true,
       x: 0,
       y: 0,
     },
@@ -395,6 +395,7 @@ export const EnvoyTree: TalentTree = {
       name: "Rousing Precence",
       description: "An ally becomes _Determined until end of scene",
       actionCost: "1 Action",
+      isKeyTalent: true,
       x: 0,
       y: 0,
     },
@@ -746,6 +747,7 @@ export const HunterTree: TalentTree = {
       description:
         "Choose a character to be your quarry, gaining an advantage on tests to find, attack, and study them.",
       actionCost: "Special Activation",
+      isKeyTalent: true,
       x: 0,
       y: 0,
     },
@@ -1090,6 +1092,7 @@ export const LeaderTree: TalentTree = {
       description:
         "Spend 1 focus to give an ally within 20 feet a d4 command die. They can add it to one die roll on their next test.",
       actionCost: "1 Action",
+      isKeyTalent: true,
       x: 0,
       y: 0,
     },
@@ -1439,6 +1442,7 @@ export const ScholarTree: TalentTree = {
       description:
         "Temporarily gain a cultural or utility expertise and a rank in two non-surge cognitive skills. Reassign these after a long rest with library access.",
       actionCost: "Special Activation",
+      isKeyTalent: true,
       x: 0,
       y: 0,
     },
@@ -1768,6 +1772,7 @@ export const WarriorTree: TalentTree = {
       description:
         "Enter Vigilant Stance: Reduce the focus cost of Dodge and Reactive Strike by 1, and you can enter other stances as a Free Action.",
       actionCost: "1 Action",
+      isKeyTalent: true,
       x: 0,
       y: 0,
     },
@@ -2144,6 +2149,7 @@ export const SingerTree: TalentTree = {
       name: "Change Form",
       actionCost: "3 Actions",
       description: "During a highstorm, you can change into dullform, mateform, or another one of your singer forms.",
+      isKeyTalent: true,
       requirements: {
         other: ["Singer ancestry"],
       },
@@ -3528,6 +3534,7 @@ export const DustbringerTree: TalentTree = {
       id: "first_ideal_dustbringer",
       name: "First Ideal (Dustbringer Key)",
       actionCost: "Special Activation",
+      isKeyTalent: true,
       description:
         'Gain Investiture score and the Breathe Stormlight, Enhance, and Regenerate actions. When you complete the goal "Speak the First Ideal," you become Empowered and gain Abrasion and Division skills.',
       requirements: {
@@ -3674,6 +3681,7 @@ export const EdgedancerTree: TalentTree = {
       id: "first_ideal_edgedancer",
       name: "First Ideal (Edgedancer Key)",
       actionCost: "Special Activation",
+      isKeyTalent: true,
       description:
         'Gain Investiture score and the Breathe Stormlight, Enhance, and Regenerate actions. When you complete the goal "Speak the First Ideal," you become Empowered and gain Abrasion and Division skills.',
       requirements: {
@@ -3821,6 +3829,7 @@ export const ElsecallerTree: TalentTree = {
       id: "first_ideal_elsecaller",
       name: "First Ideal (Elsecaller Key)",
       actionCost: "Special Activation",
+      isKeyTalent: true,
       description:
         'Gain Investiture score and the Breathe Stormlight, Enhance, and Regenerate actions. When you complete the goal "Speak the First Ideal," you become Empowered and gain Abrasion and Division skills.',
       requirements: {
@@ -3968,6 +3977,7 @@ export const LightweaverTree: TalentTree = {
       id: "first_ideal_lightweaver",
       name: "First Ideal (Lightweaver Key)",
       actionCost: "Special Activation",
+      isKeyTalent: true,
       description:
         'Gain Investiture score and the Breathe Stormlight, Enhance, and Regenerate actions. When you complete the goal "Speak the First Ideal," you become Empowered and gain Illumination and Transformation.',
       requirements: {
@@ -4116,6 +4126,7 @@ export const SkybreakerTree: TalentTree = {
       id: "first_ideal_skybreaker",
       name: "First Ideal (Skybreaker Key)",
       actionCost: "Special Activation",
+      isKeyTalent: true,
       description:
         'Gain Investiture score and the Breathe Stormlight, Enhance, and Regenerate actions. When you complete the goal "Speak the First Ideal," you become Empowered and gain Division and Gravitation.',
       requirements: {
@@ -4262,6 +4273,7 @@ export const StonewardTree: TalentTree = {
       id: "first_ideal_stoneward",
       name: "First Ideal (Stoneward Key)",
       actionCost: "Special Activation",
+      isKeyTalent: true,
       description:
         'Gain Investiture score and the Breathe Stormlight, Enhance, and Regenerate actions. When you complete the goal "Speak the First Ideal," you become Empowered and gain Cohesion and Tension.',
       requirements: {
@@ -4410,6 +4422,7 @@ export const TruthwatcherTree: TalentTree = {
       id: "first_ideal_truthwatcher",
       name: "First Ideal (Truthwatcher Key)",
       actionCost: "Special Activation",
+      isKeyTalent: true,
       description:
         'Gain Investiture score and the Breathe Stormlight, Enhance, and Regenerate actions. When you complete the goal "Speak the First Ideal," you become Empowered and gain Adhesion and Gravitation.',
       requirements: {
@@ -4558,6 +4571,7 @@ export const WillshaperTree: TalentTree = {
       id: "first_ideal_willshaper",
       name: "First Ideal (Willshaper Key)",
       actionCost: "Special Activation",
+      isKeyTalent: true,
       description:
         'Gain Investiture score and the Breathe Stormlight, Enhance, and Regenerate actions. When you complete the goal "Speak the First Ideal," you become Empowered and gain Adhesion and Gravitation.',
       requirements: {
@@ -4704,6 +4718,7 @@ export const WindrunnerTree: TalentTree = {
       id: "first_ideal_windrunner",
       name: "First Ideal (Windrunner Key)",
       actionCost: "Special Activation",
+      isKeyTalent: true,
       description:
         'Gain Investiture score and the Breathe Stormlight, Enhance, and Regenerate actions. When you complete the goal "Speak the First Ideal," you become Empowered and gain Adhesion and Gravitation.',
       requirements: {
@@ -4867,3 +4882,8 @@ export const getTalentFromId = (talent: TalentId) => {
   const allTalents = Object.values(TalentTrees).reduce((nodes: TalentNode[], tree) => [...nodes, ...tree.nodes], []);
   return allTalents.find((t) => t.id === talent);
 };
+
+export const ALL_EDGES = Object.values(TalentTrees).reduce(
+  (edges: TalentEdge[], tree) => [...edges, ...tree.edges],
+  []
+);

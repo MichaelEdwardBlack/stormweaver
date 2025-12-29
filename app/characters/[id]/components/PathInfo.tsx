@@ -12,11 +12,9 @@ export function PathInfo({ path }: { path: Path }) {
       <div className="sticky -top-6 ml-0 z-20 backdrop-blur-lg border-b border-accent-500">
         <div className="flex flex-col gap-1">
           <h2 className="text-neutral-900 dark:text-neutral-100">{pathInfo.name}</h2>
-          {pathInfo.startingPathSkill && (
-            <p className="text-sm text-neutral-700 dark:text-neutral-300 capitalize">
-              Starting Path Skill: <span className="font-medium">{pathInfo.startingPathSkill}</span>
-            </p>
-          )}
+          <p className="text-sm text-neutral-700 dark:text-neutral-300 capitalize">
+            Starting Path Skill: <span className="font-medium">{pathInfo.startingPathSkill ?? "N/A"}</span>
+          </p>
         </div>
       </div>
 
