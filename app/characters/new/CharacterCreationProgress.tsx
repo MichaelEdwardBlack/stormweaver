@@ -34,7 +34,6 @@ export const CharacterCreationProgress = ({ userId }: { userId: string }) => {
   useEffect(() => {
     if (hasStarted.current === true) return;
     hasStarted.current = true;
-    console.log("starting character creation", hasStarted);
     startCharacterCreation();
   }, []);
 

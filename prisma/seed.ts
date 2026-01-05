@@ -61,10 +61,92 @@ async function main() {
           ? ItemAcquisition.talent
           : ItemAcquisition.reward
         : ItemAcquisition.purchase;
+    const rangeParts = weapon.range.match(/(\d+)\s*\/?\s*(\d+)?/);
+    let isRanged = false;
+    let reach = 5;
+    let shortRange, longRange;
+    if (weapon.range.includes("Ranged") && rangeParts) {
+      isRanged = true;
+      shortRange = Number.parseInt(rangeParts[1]);
+      longRange = Number.parseInt(rangeParts[2]);
+    } else {
+      reach += Number.parseInt(rangeParts?.at(1) ?? "0");
+    }
 
+    if (acquisition === "purchase") {
+      // also add one for starting kits
+      await prisma.itemTemplate.upsert({
+        where: { id: `starting_${id}` },
+        update: {
+          weapon: {
+            upsert: {
+              where: {
+                itemId: `starting_${id}`,
+              },
+              update: {
+                traits: weapon.traits,
+                expertTraits: weapon.expertTraits,
+              },
+              create: {
+                isRanged,
+                shortRange,
+                longRange,
+                reach,
+              },
+            },
+          },
+        },
+        create: {
+          id: `starting_${id}`,
+          name,
+          type: ItemType.weapon,
+          // description: "",
+          price: null,
+          acquisition: "startingKit",
+          weight,
+          modifierSource: {
+            create: {
+              type: SourceType.ITEM,
+              modifiers: {
+                create: [
+                  {
+                    targetType: ModifierTargetType.DAMAGE_DICE,
+                    operator: ModifierOperator.OVERRIDE,
+                    diceValue: weapon.damage.value,
+                  },
+                  {
+                    targetType: ModifierTargetType.DAMAGE_TYPE,
+                    operator: ModifierOperator.OVERRIDE,
+                    damageType: weapon.damage.type,
+                  },
+                ],
+              },
+            },
+          },
+        },
+      });
+    }
     await prisma.itemTemplate.upsert({
       where: { id },
-      update: {},
+      update: {
+        weapon: {
+          upsert: {
+            where: {
+              itemId: id,
+            },
+            update: {
+              traits: weapon.traits,
+              expertTraits: weapon.expertTraits,
+            },
+            create: {
+              isRanged,
+              shortRange,
+              longRange,
+              reach,
+            },
+          },
+        },
+      },
       create: {
         id,
         name,
@@ -107,9 +189,72 @@ async function main() {
         ? ItemAcquisition.talent
         : ItemAcquisition.purchase;
 
+    if (acquisition === "purchase") {
+      // also add one for starting kits
+      await prisma.itemTemplate.upsert({
+        where: { id: `starting_${id}` },
+        update: {
+          armor: {
+            upsert: {
+              where: {
+                itemId: `starting_${id}`,
+              },
+              update: {
+                traits: armor.traits,
+                expertTraits: armor.expertTraits,
+              },
+              create: {
+                traits: armor.traits,
+                expertTraits: armor.expertTraits,
+              },
+            },
+          },
+        },
+        create: {
+          id: `starting_${id}`,
+          name,
+          type: ItemType.armor,
+          // description: "",
+          price: null,
+          acquisition: "startingKit",
+          weight,
+          modifierSource: {
+            create: {
+              type: SourceType.ITEM,
+              modifiers: {
+                create: [
+                  {
+                    targetType: ModifierTargetType.ARMOR_DEFLECT,
+                    operator: ModifierOperator.ADD,
+                    value: armor.deflectValue,
+                  },
+                ],
+              },
+            },
+          },
+        },
+      });
+    }
+
     await prisma.itemTemplate.upsert({
       where: { id },
-      update: {},
+      update: {
+        armor: {
+          upsert: {
+            where: {
+              itemId: id,
+            },
+            update: {
+              traits: armor.traits,
+              expertTraits: armor.expertTraits,
+            },
+            create: {
+              traits: armor.traits,
+              expertTraits: armor.expertTraits,
+            },
+          },
+        },
+      },
       create: {
         id,
         name,

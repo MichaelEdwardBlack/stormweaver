@@ -9,6 +9,16 @@
 * 🟢 You can import this file directly.
 */
 
+export const EquipSlot = {
+  MAIN_HAND: 'MAIN_HAND',
+  OFF_HAND: 'OFF_HAND',
+  TWO_HAND: 'TWO_HAND',
+  ARMOR: 'ARMOR'
+} as const
+
+export type EquipSlot = (typeof EquipSlot)[keyof typeof EquipSlot]
+
+
 export const TreeView = {
   broad: 'broad',
   tall: 'tall'

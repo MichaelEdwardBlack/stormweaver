@@ -365,6 +365,23 @@ export type FloatWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedFloatFilter<$PrismaModel>
 }
 
+export type EnumEquipSlotNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.EquipSlot | Prisma.EnumEquipSlotFieldRefInput<$PrismaModel> | null
+  in?: $Enums.EquipSlot[] | Prisma.ListEnumEquipSlotFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.EquipSlot[] | Prisma.ListEnumEquipSlotFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumEquipSlotNullableFilter<$PrismaModel> | $Enums.EquipSlot | null
+}
+
+export type EnumEquipSlotNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.EquipSlot | Prisma.EnumEquipSlotFieldRefInput<$PrismaModel> | null
+  in?: $Enums.EquipSlot[] | Prisma.ListEnumEquipSlotFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.EquipSlot[] | Prisma.ListEnumEquipSlotFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumEquipSlotNullableWithAggregatesFilter<$PrismaModel> | $Enums.EquipSlot | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumEquipSlotNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumEquipSlotNullableFilter<$PrismaModel>
+}
+
 export type EnumPathFilter<$PrismaModel = never> = {
   equals?: $Enums.Path | Prisma.EnumPathFieldRefInput<$PrismaModel>
   in?: $Enums.Path[] | Prisma.ListEnumPathFieldRefInput<$PrismaModel>
@@ -801,6 +818,23 @@ export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedFloatFilter<$PrismaModel>
   _min?: Prisma.NestedFloatFilter<$PrismaModel>
   _max?: Prisma.NestedFloatFilter<$PrismaModel>
+}
+
+export type NestedEnumEquipSlotNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.EquipSlot | Prisma.EnumEquipSlotFieldRefInput<$PrismaModel> | null
+  in?: $Enums.EquipSlot[] | Prisma.ListEnumEquipSlotFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.EquipSlot[] | Prisma.ListEnumEquipSlotFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumEquipSlotNullableFilter<$PrismaModel> | $Enums.EquipSlot | null
+}
+
+export type NestedEnumEquipSlotNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.EquipSlot | Prisma.EnumEquipSlotFieldRefInput<$PrismaModel> | null
+  in?: $Enums.EquipSlot[] | Prisma.ListEnumEquipSlotFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.EquipSlot[] | Prisma.ListEnumEquipSlotFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumEquipSlotNullableWithAggregatesFilter<$PrismaModel> | $Enums.EquipSlot | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumEquipSlotNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumEquipSlotNullableFilter<$PrismaModel>
 }
 
 export type NestedEnumPathFilter<$PrismaModel = never> = {

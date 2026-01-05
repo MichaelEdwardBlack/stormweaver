@@ -3,6 +3,7 @@ import { Sidebar } from "./components/Sidebar";
 import { MobileSidebar } from "./components/MobileSidebar";
 import { getFullCharacter } from "@/lib/actions/character";
 import { CharacterProvider } from "@/services/CharacterProvider";
+import { StartingKits } from "@/lib/data/startingKits";
 
 interface Props {
   children: ReactNode;
@@ -14,6 +15,10 @@ export default async function CharacterEditLayout({ children, params }: Props) {
   const character = await getFullCharacter(id);
   const hasStartingPath = character.paths.findIndex((path) => path.isStartingPath) !== -1;
   const characterIntellect = character.attributes.find((attribute) => attribute.attribute === "intellect")?.value ?? 0;
+  const startingKit = StartingKits.find((kit) => kit.name === character.startingKit);
+  const startingWeapons = character.itemInstances.filter(
+    (instance) => instance.item.acquisition === "startingKit" && instance.item.type === "weapon"
+  );
   const sections = [
     {
       name: "Origin",
@@ -74,8 +79,20 @@ export default async function CharacterEditLayout({ children, params }: Props) {
       path: "equipment",
       children: [
         { name: "Starting Kit", path: "kit", showComplete: !!character.startingKit },
-        { name: "Weapons", path: "weapons" },
-        { name: "Armor", path: "armor" },
+        {
+          name: "Starting Marks",
+          path: "marks",
+          showComplete: character.marks > 0,
+          hide: !character.startingKit || character.startingKit === "Prisoner",
+        },
+        {
+          name: "Starting Weapons",
+          path: "startingWeapons",
+          showComplete: startingKit && startingWeapons.length >= startingKit.weapons.amount,
+          hide: !character.startingKit || character.startingKit === "Prisoner",
+        },
+        { name: "Purchase Weapons", path: "weapons" },
+        { name: "Purchase Armor", path: "armor" },
       ],
     },
     {

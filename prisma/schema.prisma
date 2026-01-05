@@ -68,23 +68,25 @@ model VerificationToken {
 }
 
 model Character {
-  id          String               @id @default(cuid())
-  name        String
-  level       Int                  @default(1)
-  visibility  Visibility           @default(owner)
-  createdAt   DateTime             @default(now())
-  updatedAt   DateTime             @updatedAt
-  ancestry    Ancestry?
-  startingKit String?
-  userId      String
-  user        User                 @relation(fields: [userId], references: [id])
-  attributes  CharacterAttribute[]
-  expertises  CharacterExpertise[]
-  equipment   CharacterItem[]
-  paths       CharacterPath[]
-  skills      CharacterSkill[]
-  story       CharacterStory?
-  talents     CharacterTalent[]
+  id              String               @id @default(cuid())
+  name            String
+  level           Int                  @default(1)
+  visibility      Visibility           @default(owner)
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt
+  ancestry        Ancestry?
+  startingKit     String?
+  marks           Int                  @default(0)
+  userId          String
+  user            User                 @relation(fields: [userId], references: [id])
+  attributes      CharacterAttribute[]
+  expertises      CharacterExpertise[]
+  itemInstances   ItemInstance[]
+  stackableItems  StackableItem[]
+  paths           CharacterPath[]
+  skills          CharacterSkill[]
+  story           CharacterStory?
+  talents         CharacterTalent[]
 }
 
 model CharacterAttribute {
@@ -143,17 +145,68 @@ model ItemTemplate {
   acquisition    ItemAcquisition @default(purchase)
   weight         Float
   acquireNote    String?
-  characterItems CharacterItem[]
   modifierSource ModifierSource?
+  weapon         Weapon?
+  armor          Armor?
+  itemInstances  ItemInstance[]
+  stackableItems StackableItem[]
 }
 
-model CharacterItem {
+model Weapon {
+  id            String       @id @default(cuid())
+  itemId        String       @unique
+  isRanged      Boolean      @default(false)
+  shortRange    Int?
+  longRange     Int?
+  reach         Int          @default(5)
+  traits        String[]
+  expertTraits  String[]
+
+  item          ItemTemplate @relation(fields: [itemId], references: [id], onDelete: Cascade)
+}
+
+model Armor {
+  id            String       @id @default(cuid())
+  itemId        String       @unique
+  traits        String[]
+  expertTraits  String[]
+
+  item          ItemTemplate @relation(fields: [itemId], references: [id], onDelete: Cascade)
+}
+
+model ItemInstance {
   id          String       @id @default(cuid())
   characterId String
-  equipped    Boolean      @default(false)
   itemId      String
+
+  equipped    Boolean      @default(false)
+  slot        EquipSlot?
+
   character   Character    @relation(fields: [characterId], references: [id], onDelete: Cascade)
   item        ItemTemplate @relation(fields: [itemId], references: [id])
+
+  @@index([characterId])
+  @@index([itemId])
+}
+
+enum EquipSlot {
+  MAIN_HAND
+  OFF_HAND
+  TWO_HAND
+  ARMOR
+}
+
+model StackableItem {
+  id          String       @id @default(cuid())
+  characterId String
+  itemId      String
+
+  quantity    Int          @default(1)
+
+  character   Character    @relation(fields: [characterId], references: [id], onDelete: Cascade)
+  item        ItemTemplate @relation(fields: [itemId], references: [id])
+
+  @@unique([characterId, itemId])
 }
 
 model CharacterPath {

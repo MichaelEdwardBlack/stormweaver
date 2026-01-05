@@ -28,10 +28,12 @@ export type AggregateCharacter = {
 
 export type CharacterAvgAggregateOutputType = {
   level: number | null
+  marks: number | null
 }
 
 export type CharacterSumAggregateOutputType = {
   level: number | null
+  marks: number | null
 }
 
 export type CharacterMinAggregateOutputType = {
@@ -43,6 +45,7 @@ export type CharacterMinAggregateOutputType = {
   updatedAt: Date | null
   ancestry: $Enums.Ancestry | null
   startingKit: string | null
+  marks: number | null
   userId: string | null
 }
 
@@ -55,6 +58,7 @@ export type CharacterMaxAggregateOutputType = {
   updatedAt: Date | null
   ancestry: $Enums.Ancestry | null
   startingKit: string | null
+  marks: number | null
   userId: string | null
 }
 
@@ -67,6 +71,7 @@ export type CharacterCountAggregateOutputType = {
   updatedAt: number
   ancestry: number
   startingKit: number
+  marks: number
   userId: number
   _all: number
 }
@@ -74,10 +79,12 @@ export type CharacterCountAggregateOutputType = {
 
 export type CharacterAvgAggregateInputType = {
   level?: true
+  marks?: true
 }
 
 export type CharacterSumAggregateInputType = {
   level?: true
+  marks?: true
 }
 
 export type CharacterMinAggregateInputType = {
@@ -89,6 +96,7 @@ export type CharacterMinAggregateInputType = {
   updatedAt?: true
   ancestry?: true
   startingKit?: true
+  marks?: true
   userId?: true
 }
 
@@ -101,6 +109,7 @@ export type CharacterMaxAggregateInputType = {
   updatedAt?: true
   ancestry?: true
   startingKit?: true
+  marks?: true
   userId?: true
 }
 
@@ -113,6 +122,7 @@ export type CharacterCountAggregateInputType = {
   updatedAt?: true
   ancestry?: true
   startingKit?: true
+  marks?: true
   userId?: true
   _all?: true
 }
@@ -212,6 +222,7 @@ export type CharacterGroupByOutputType = {
   updatedAt: Date
   ancestry: $Enums.Ancestry | null
   startingKit: string | null
+  marks: number
   userId: string
   _count: CharacterCountAggregateOutputType | null
   _avg: CharacterAvgAggregateOutputType | null
@@ -247,11 +258,13 @@ export type CharacterWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Character"> | Date | string
   ancestry?: Prisma.EnumAncestryNullableFilter<"Character"> | $Enums.Ancestry | null
   startingKit?: Prisma.StringNullableFilter<"Character"> | string | null
+  marks?: Prisma.IntFilter<"Character"> | number
   userId?: Prisma.StringFilter<"Character"> | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   attributes?: Prisma.CharacterAttributeListRelationFilter
   expertises?: Prisma.CharacterExpertiseListRelationFilter
-  equipment?: Prisma.CharacterItemListRelationFilter
+  itemInstances?: Prisma.ItemInstanceListRelationFilter
+  stackableItems?: Prisma.StackableItemListRelationFilter
   paths?: Prisma.CharacterPathListRelationFilter
   skills?: Prisma.CharacterSkillListRelationFilter
   story?: Prisma.XOR<Prisma.CharacterStoryNullableScalarRelationFilter, Prisma.CharacterStoryWhereInput> | null
@@ -267,11 +280,13 @@ export type CharacterOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   ancestry?: Prisma.SortOrderInput | Prisma.SortOrder
   startingKit?: Prisma.SortOrderInput | Prisma.SortOrder
+  marks?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   attributes?: Prisma.CharacterAttributeOrderByRelationAggregateInput
   expertises?: Prisma.CharacterExpertiseOrderByRelationAggregateInput
-  equipment?: Prisma.CharacterItemOrderByRelationAggregateInput
+  itemInstances?: Prisma.ItemInstanceOrderByRelationAggregateInput
+  stackableItems?: Prisma.StackableItemOrderByRelationAggregateInput
   paths?: Prisma.CharacterPathOrderByRelationAggregateInput
   skills?: Prisma.CharacterSkillOrderByRelationAggregateInput
   story?: Prisma.CharacterStoryOrderByWithRelationInput
@@ -290,11 +305,13 @@ export type CharacterWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Character"> | Date | string
   ancestry?: Prisma.EnumAncestryNullableFilter<"Character"> | $Enums.Ancestry | null
   startingKit?: Prisma.StringNullableFilter<"Character"> | string | null
+  marks?: Prisma.IntFilter<"Character"> | number
   userId?: Prisma.StringFilter<"Character"> | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   attributes?: Prisma.CharacterAttributeListRelationFilter
   expertises?: Prisma.CharacterExpertiseListRelationFilter
-  equipment?: Prisma.CharacterItemListRelationFilter
+  itemInstances?: Prisma.ItemInstanceListRelationFilter
+  stackableItems?: Prisma.StackableItemListRelationFilter
   paths?: Prisma.CharacterPathListRelationFilter
   skills?: Prisma.CharacterSkillListRelationFilter
   story?: Prisma.XOR<Prisma.CharacterStoryNullableScalarRelationFilter, Prisma.CharacterStoryWhereInput> | null
@@ -310,6 +327,7 @@ export type CharacterOrderByWithAggregationInput = {
   updatedAt?: Prisma.SortOrder
   ancestry?: Prisma.SortOrderInput | Prisma.SortOrder
   startingKit?: Prisma.SortOrderInput | Prisma.SortOrder
+  marks?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   _count?: Prisma.CharacterCountOrderByAggregateInput
   _avg?: Prisma.CharacterAvgOrderByAggregateInput
@@ -330,6 +348,7 @@ export type CharacterScalarWhereWithAggregatesInput = {
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Character"> | Date | string
   ancestry?: Prisma.EnumAncestryNullableWithAggregatesFilter<"Character"> | $Enums.Ancestry | null
   startingKit?: Prisma.StringNullableWithAggregatesFilter<"Character"> | string | null
+  marks?: Prisma.IntWithAggregatesFilter<"Character"> | number
   userId?: Prisma.StringWithAggregatesFilter<"Character"> | string
 }
 
@@ -342,10 +361,12 @@ export type CharacterCreateInput = {
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
   startingKit?: string | null
+  marks?: number
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   attributes?: Prisma.CharacterAttributeCreateNestedManyWithoutCharacterInput
   expertises?: Prisma.CharacterExpertiseCreateNestedManyWithoutCharacterInput
-  equipment?: Prisma.CharacterItemCreateNestedManyWithoutCharacterInput
+  itemInstances?: Prisma.ItemInstanceCreateNestedManyWithoutCharacterInput
+  stackableItems?: Prisma.StackableItemCreateNestedManyWithoutCharacterInput
   paths?: Prisma.CharacterPathCreateNestedManyWithoutCharacterInput
   skills?: Prisma.CharacterSkillCreateNestedManyWithoutCharacterInput
   story?: Prisma.CharacterStoryCreateNestedOneWithoutCharacterInput
@@ -361,10 +382,12 @@ export type CharacterUncheckedCreateInput = {
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
   startingKit?: string | null
+  marks?: number
   userId: string
   attributes?: Prisma.CharacterAttributeUncheckedCreateNestedManyWithoutCharacterInput
   expertises?: Prisma.CharacterExpertiseUncheckedCreateNestedManyWithoutCharacterInput
-  equipment?: Prisma.CharacterItemUncheckedCreateNestedManyWithoutCharacterInput
+  itemInstances?: Prisma.ItemInstanceUncheckedCreateNestedManyWithoutCharacterInput
+  stackableItems?: Prisma.StackableItemUncheckedCreateNestedManyWithoutCharacterInput
   paths?: Prisma.CharacterPathUncheckedCreateNestedManyWithoutCharacterInput
   skills?: Prisma.CharacterSkillUncheckedCreateNestedManyWithoutCharacterInput
   story?: Prisma.CharacterStoryUncheckedCreateNestedOneWithoutCharacterInput
@@ -380,10 +403,12 @@ export type CharacterUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
   startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marks?: Prisma.IntFieldUpdateOperationsInput | number
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   attributes?: Prisma.CharacterAttributeUpdateManyWithoutCharacterNestedInput
   expertises?: Prisma.CharacterExpertiseUpdateManyWithoutCharacterNestedInput
-  equipment?: Prisma.CharacterItemUpdateManyWithoutCharacterNestedInput
+  itemInstances?: Prisma.ItemInstanceUpdateManyWithoutCharacterNestedInput
+  stackableItems?: Prisma.StackableItemUpdateManyWithoutCharacterNestedInput
   paths?: Prisma.CharacterPathUpdateManyWithoutCharacterNestedInput
   skills?: Prisma.CharacterSkillUpdateManyWithoutCharacterNestedInput
   story?: Prisma.CharacterStoryUpdateOneWithoutCharacterNestedInput
@@ -399,10 +424,12 @@ export type CharacterUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
   startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marks?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   attributes?: Prisma.CharacterAttributeUncheckedUpdateManyWithoutCharacterNestedInput
   expertises?: Prisma.CharacterExpertiseUncheckedUpdateManyWithoutCharacterNestedInput
-  equipment?: Prisma.CharacterItemUncheckedUpdateManyWithoutCharacterNestedInput
+  itemInstances?: Prisma.ItemInstanceUncheckedUpdateManyWithoutCharacterNestedInput
+  stackableItems?: Prisma.StackableItemUncheckedUpdateManyWithoutCharacterNestedInput
   paths?: Prisma.CharacterPathUncheckedUpdateManyWithoutCharacterNestedInput
   skills?: Prisma.CharacterSkillUncheckedUpdateManyWithoutCharacterNestedInput
   story?: Prisma.CharacterStoryUncheckedUpdateOneWithoutCharacterNestedInput
@@ -418,6 +445,7 @@ export type CharacterCreateManyInput = {
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
   startingKit?: string | null
+  marks?: number
   userId: string
 }
 
@@ -430,6 +458,7 @@ export type CharacterUpdateManyMutationInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
   startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marks?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type CharacterUncheckedUpdateManyInput = {
@@ -441,6 +470,7 @@ export type CharacterUncheckedUpdateManyInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
   startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marks?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -463,11 +493,13 @@ export type CharacterCountOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
   ancestry?: Prisma.SortOrder
   startingKit?: Prisma.SortOrder
+  marks?: Prisma.SortOrder
   userId?: Prisma.SortOrder
 }
 
 export type CharacterAvgOrderByAggregateInput = {
   level?: Prisma.SortOrder
+  marks?: Prisma.SortOrder
 }
 
 export type CharacterMaxOrderByAggregateInput = {
@@ -479,6 +511,7 @@ export type CharacterMaxOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
   ancestry?: Prisma.SortOrder
   startingKit?: Prisma.SortOrder
+  marks?: Prisma.SortOrder
   userId?: Prisma.SortOrder
 }
 
@@ -491,11 +524,13 @@ export type CharacterMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
   ancestry?: Prisma.SortOrder
   startingKit?: Prisma.SortOrder
+  marks?: Prisma.SortOrder
   userId?: Prisma.SortOrder
 }
 
 export type CharacterSumOrderByAggregateInput = {
   level?: Prisma.SortOrder
+  marks?: Prisma.SortOrder
 }
 
 export type CharacterScalarRelationFilter = {
@@ -603,18 +638,32 @@ export type CharacterUpdateOneRequiredWithoutTalentsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CharacterUpdateToOneWithWhereWithoutTalentsInput, Prisma.CharacterUpdateWithoutTalentsInput>, Prisma.CharacterUncheckedUpdateWithoutTalentsInput>
 }
 
-export type CharacterCreateNestedOneWithoutEquipmentInput = {
-  create?: Prisma.XOR<Prisma.CharacterCreateWithoutEquipmentInput, Prisma.CharacterUncheckedCreateWithoutEquipmentInput>
-  connectOrCreate?: Prisma.CharacterCreateOrConnectWithoutEquipmentInput
+export type CharacterCreateNestedOneWithoutItemInstancesInput = {
+  create?: Prisma.XOR<Prisma.CharacterCreateWithoutItemInstancesInput, Prisma.CharacterUncheckedCreateWithoutItemInstancesInput>
+  connectOrCreate?: Prisma.CharacterCreateOrConnectWithoutItemInstancesInput
   connect?: Prisma.CharacterWhereUniqueInput
 }
 
-export type CharacterUpdateOneRequiredWithoutEquipmentNestedInput = {
-  create?: Prisma.XOR<Prisma.CharacterCreateWithoutEquipmentInput, Prisma.CharacterUncheckedCreateWithoutEquipmentInput>
-  connectOrCreate?: Prisma.CharacterCreateOrConnectWithoutEquipmentInput
-  upsert?: Prisma.CharacterUpsertWithoutEquipmentInput
+export type CharacterUpdateOneRequiredWithoutItemInstancesNestedInput = {
+  create?: Prisma.XOR<Prisma.CharacterCreateWithoutItemInstancesInput, Prisma.CharacterUncheckedCreateWithoutItemInstancesInput>
+  connectOrCreate?: Prisma.CharacterCreateOrConnectWithoutItemInstancesInput
+  upsert?: Prisma.CharacterUpsertWithoutItemInstancesInput
   connect?: Prisma.CharacterWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.CharacterUpdateToOneWithWhereWithoutEquipmentInput, Prisma.CharacterUpdateWithoutEquipmentInput>, Prisma.CharacterUncheckedUpdateWithoutEquipmentInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CharacterUpdateToOneWithWhereWithoutItemInstancesInput, Prisma.CharacterUpdateWithoutItemInstancesInput>, Prisma.CharacterUncheckedUpdateWithoutItemInstancesInput>
+}
+
+export type CharacterCreateNestedOneWithoutStackableItemsInput = {
+  create?: Prisma.XOR<Prisma.CharacterCreateWithoutStackableItemsInput, Prisma.CharacterUncheckedCreateWithoutStackableItemsInput>
+  connectOrCreate?: Prisma.CharacterCreateOrConnectWithoutStackableItemsInput
+  connect?: Prisma.CharacterWhereUniqueInput
+}
+
+export type CharacterUpdateOneRequiredWithoutStackableItemsNestedInput = {
+  create?: Prisma.XOR<Prisma.CharacterCreateWithoutStackableItemsInput, Prisma.CharacterUncheckedCreateWithoutStackableItemsInput>
+  connectOrCreate?: Prisma.CharacterCreateOrConnectWithoutStackableItemsInput
+  upsert?: Prisma.CharacterUpsertWithoutStackableItemsInput
+  connect?: Prisma.CharacterWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CharacterUpdateToOneWithWhereWithoutStackableItemsInput, Prisma.CharacterUpdateWithoutStackableItemsInput>, Prisma.CharacterUncheckedUpdateWithoutStackableItemsInput>
 }
 
 export type CharacterCreateNestedOneWithoutPathsInput = {
@@ -668,9 +717,11 @@ export type CharacterCreateWithoutUserInput = {
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
   startingKit?: string | null
+  marks?: number
   attributes?: Prisma.CharacterAttributeCreateNestedManyWithoutCharacterInput
   expertises?: Prisma.CharacterExpertiseCreateNestedManyWithoutCharacterInput
-  equipment?: Prisma.CharacterItemCreateNestedManyWithoutCharacterInput
+  itemInstances?: Prisma.ItemInstanceCreateNestedManyWithoutCharacterInput
+  stackableItems?: Prisma.StackableItemCreateNestedManyWithoutCharacterInput
   paths?: Prisma.CharacterPathCreateNestedManyWithoutCharacterInput
   skills?: Prisma.CharacterSkillCreateNestedManyWithoutCharacterInput
   story?: Prisma.CharacterStoryCreateNestedOneWithoutCharacterInput
@@ -686,9 +737,11 @@ export type CharacterUncheckedCreateWithoutUserInput = {
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
   startingKit?: string | null
+  marks?: number
   attributes?: Prisma.CharacterAttributeUncheckedCreateNestedManyWithoutCharacterInput
   expertises?: Prisma.CharacterExpertiseUncheckedCreateNestedManyWithoutCharacterInput
-  equipment?: Prisma.CharacterItemUncheckedCreateNestedManyWithoutCharacterInput
+  itemInstances?: Prisma.ItemInstanceUncheckedCreateNestedManyWithoutCharacterInput
+  stackableItems?: Prisma.StackableItemUncheckedCreateNestedManyWithoutCharacterInput
   paths?: Prisma.CharacterPathUncheckedCreateNestedManyWithoutCharacterInput
   skills?: Prisma.CharacterSkillUncheckedCreateNestedManyWithoutCharacterInput
   story?: Prisma.CharacterStoryUncheckedCreateNestedOneWithoutCharacterInput
@@ -733,6 +786,7 @@ export type CharacterScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Character"> | Date | string
   ancestry?: Prisma.EnumAncestryNullableFilter<"Character"> | $Enums.Ancestry | null
   startingKit?: Prisma.StringNullableFilter<"Character"> | string | null
+  marks?: Prisma.IntFilter<"Character"> | number
   userId?: Prisma.StringFilter<"Character"> | string
 }
 
@@ -745,9 +799,11 @@ export type CharacterCreateWithoutAttributesInput = {
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
   startingKit?: string | null
+  marks?: number
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   expertises?: Prisma.CharacterExpertiseCreateNestedManyWithoutCharacterInput
-  equipment?: Prisma.CharacterItemCreateNestedManyWithoutCharacterInput
+  itemInstances?: Prisma.ItemInstanceCreateNestedManyWithoutCharacterInput
+  stackableItems?: Prisma.StackableItemCreateNestedManyWithoutCharacterInput
   paths?: Prisma.CharacterPathCreateNestedManyWithoutCharacterInput
   skills?: Prisma.CharacterSkillCreateNestedManyWithoutCharacterInput
   story?: Prisma.CharacterStoryCreateNestedOneWithoutCharacterInput
@@ -763,9 +819,11 @@ export type CharacterUncheckedCreateWithoutAttributesInput = {
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
   startingKit?: string | null
+  marks?: number
   userId: string
   expertises?: Prisma.CharacterExpertiseUncheckedCreateNestedManyWithoutCharacterInput
-  equipment?: Prisma.CharacterItemUncheckedCreateNestedManyWithoutCharacterInput
+  itemInstances?: Prisma.ItemInstanceUncheckedCreateNestedManyWithoutCharacterInput
+  stackableItems?: Prisma.StackableItemUncheckedCreateNestedManyWithoutCharacterInput
   paths?: Prisma.CharacterPathUncheckedCreateNestedManyWithoutCharacterInput
   skills?: Prisma.CharacterSkillUncheckedCreateNestedManyWithoutCharacterInput
   story?: Prisma.CharacterStoryUncheckedCreateNestedOneWithoutCharacterInput
@@ -797,9 +855,11 @@ export type CharacterUpdateWithoutAttributesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
   startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marks?: Prisma.IntFieldUpdateOperationsInput | number
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   expertises?: Prisma.CharacterExpertiseUpdateManyWithoutCharacterNestedInput
-  equipment?: Prisma.CharacterItemUpdateManyWithoutCharacterNestedInput
+  itemInstances?: Prisma.ItemInstanceUpdateManyWithoutCharacterNestedInput
+  stackableItems?: Prisma.StackableItemUpdateManyWithoutCharacterNestedInput
   paths?: Prisma.CharacterPathUpdateManyWithoutCharacterNestedInput
   skills?: Prisma.CharacterSkillUpdateManyWithoutCharacterNestedInput
   story?: Prisma.CharacterStoryUpdateOneWithoutCharacterNestedInput
@@ -815,9 +875,11 @@ export type CharacterUncheckedUpdateWithoutAttributesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
   startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marks?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   expertises?: Prisma.CharacterExpertiseUncheckedUpdateManyWithoutCharacterNestedInput
-  equipment?: Prisma.CharacterItemUncheckedUpdateManyWithoutCharacterNestedInput
+  itemInstances?: Prisma.ItemInstanceUncheckedUpdateManyWithoutCharacterNestedInput
+  stackableItems?: Prisma.StackableItemUncheckedUpdateManyWithoutCharacterNestedInput
   paths?: Prisma.CharacterPathUncheckedUpdateManyWithoutCharacterNestedInput
   skills?: Prisma.CharacterSkillUncheckedUpdateManyWithoutCharacterNestedInput
   story?: Prisma.CharacterStoryUncheckedUpdateOneWithoutCharacterNestedInput
@@ -833,10 +895,12 @@ export type CharacterCreateWithoutSkillsInput = {
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
   startingKit?: string | null
+  marks?: number
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   attributes?: Prisma.CharacterAttributeCreateNestedManyWithoutCharacterInput
   expertises?: Prisma.CharacterExpertiseCreateNestedManyWithoutCharacterInput
-  equipment?: Prisma.CharacterItemCreateNestedManyWithoutCharacterInput
+  itemInstances?: Prisma.ItemInstanceCreateNestedManyWithoutCharacterInput
+  stackableItems?: Prisma.StackableItemCreateNestedManyWithoutCharacterInput
   paths?: Prisma.CharacterPathCreateNestedManyWithoutCharacterInput
   story?: Prisma.CharacterStoryCreateNestedOneWithoutCharacterInput
   talents?: Prisma.CharacterTalentCreateNestedManyWithoutCharacterInput
@@ -851,10 +915,12 @@ export type CharacterUncheckedCreateWithoutSkillsInput = {
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
   startingKit?: string | null
+  marks?: number
   userId: string
   attributes?: Prisma.CharacterAttributeUncheckedCreateNestedManyWithoutCharacterInput
   expertises?: Prisma.CharacterExpertiseUncheckedCreateNestedManyWithoutCharacterInput
-  equipment?: Prisma.CharacterItemUncheckedCreateNestedManyWithoutCharacterInput
+  itemInstances?: Prisma.ItemInstanceUncheckedCreateNestedManyWithoutCharacterInput
+  stackableItems?: Prisma.StackableItemUncheckedCreateNestedManyWithoutCharacterInput
   paths?: Prisma.CharacterPathUncheckedCreateNestedManyWithoutCharacterInput
   story?: Prisma.CharacterStoryUncheckedCreateNestedOneWithoutCharacterInput
   talents?: Prisma.CharacterTalentUncheckedCreateNestedManyWithoutCharacterInput
@@ -885,10 +951,12 @@ export type CharacterUpdateWithoutSkillsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
   startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marks?: Prisma.IntFieldUpdateOperationsInput | number
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   attributes?: Prisma.CharacterAttributeUpdateManyWithoutCharacterNestedInput
   expertises?: Prisma.CharacterExpertiseUpdateManyWithoutCharacterNestedInput
-  equipment?: Prisma.CharacterItemUpdateManyWithoutCharacterNestedInput
+  itemInstances?: Prisma.ItemInstanceUpdateManyWithoutCharacterNestedInput
+  stackableItems?: Prisma.StackableItemUpdateManyWithoutCharacterNestedInput
   paths?: Prisma.CharacterPathUpdateManyWithoutCharacterNestedInput
   story?: Prisma.CharacterStoryUpdateOneWithoutCharacterNestedInput
   talents?: Prisma.CharacterTalentUpdateManyWithoutCharacterNestedInput
@@ -903,10 +971,12 @@ export type CharacterUncheckedUpdateWithoutSkillsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
   startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marks?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   attributes?: Prisma.CharacterAttributeUncheckedUpdateManyWithoutCharacterNestedInput
   expertises?: Prisma.CharacterExpertiseUncheckedUpdateManyWithoutCharacterNestedInput
-  equipment?: Prisma.CharacterItemUncheckedUpdateManyWithoutCharacterNestedInput
+  itemInstances?: Prisma.ItemInstanceUncheckedUpdateManyWithoutCharacterNestedInput
+  stackableItems?: Prisma.StackableItemUncheckedUpdateManyWithoutCharacterNestedInput
   paths?: Prisma.CharacterPathUncheckedUpdateManyWithoutCharacterNestedInput
   story?: Prisma.CharacterStoryUncheckedUpdateOneWithoutCharacterNestedInput
   talents?: Prisma.CharacterTalentUncheckedUpdateManyWithoutCharacterNestedInput
@@ -921,10 +991,12 @@ export type CharacterCreateWithoutTalentsInput = {
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
   startingKit?: string | null
+  marks?: number
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   attributes?: Prisma.CharacterAttributeCreateNestedManyWithoutCharacterInput
   expertises?: Prisma.CharacterExpertiseCreateNestedManyWithoutCharacterInput
-  equipment?: Prisma.CharacterItemCreateNestedManyWithoutCharacterInput
+  itemInstances?: Prisma.ItemInstanceCreateNestedManyWithoutCharacterInput
+  stackableItems?: Prisma.StackableItemCreateNestedManyWithoutCharacterInput
   paths?: Prisma.CharacterPathCreateNestedManyWithoutCharacterInput
   skills?: Prisma.CharacterSkillCreateNestedManyWithoutCharacterInput
   story?: Prisma.CharacterStoryCreateNestedOneWithoutCharacterInput
@@ -939,10 +1011,12 @@ export type CharacterUncheckedCreateWithoutTalentsInput = {
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
   startingKit?: string | null
+  marks?: number
   userId: string
   attributes?: Prisma.CharacterAttributeUncheckedCreateNestedManyWithoutCharacterInput
   expertises?: Prisma.CharacterExpertiseUncheckedCreateNestedManyWithoutCharacterInput
-  equipment?: Prisma.CharacterItemUncheckedCreateNestedManyWithoutCharacterInput
+  itemInstances?: Prisma.ItemInstanceUncheckedCreateNestedManyWithoutCharacterInput
+  stackableItems?: Prisma.StackableItemUncheckedCreateNestedManyWithoutCharacterInput
   paths?: Prisma.CharacterPathUncheckedCreateNestedManyWithoutCharacterInput
   skills?: Prisma.CharacterSkillUncheckedCreateNestedManyWithoutCharacterInput
   story?: Prisma.CharacterStoryUncheckedCreateNestedOneWithoutCharacterInput
@@ -973,10 +1047,12 @@ export type CharacterUpdateWithoutTalentsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
   startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marks?: Prisma.IntFieldUpdateOperationsInput | number
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   attributes?: Prisma.CharacterAttributeUpdateManyWithoutCharacterNestedInput
   expertises?: Prisma.CharacterExpertiseUpdateManyWithoutCharacterNestedInput
-  equipment?: Prisma.CharacterItemUpdateManyWithoutCharacterNestedInput
+  itemInstances?: Prisma.ItemInstanceUpdateManyWithoutCharacterNestedInput
+  stackableItems?: Prisma.StackableItemUpdateManyWithoutCharacterNestedInput
   paths?: Prisma.CharacterPathUpdateManyWithoutCharacterNestedInput
   skills?: Prisma.CharacterSkillUpdateManyWithoutCharacterNestedInput
   story?: Prisma.CharacterStoryUpdateOneWithoutCharacterNestedInput
@@ -991,16 +1067,18 @@ export type CharacterUncheckedUpdateWithoutTalentsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
   startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marks?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   attributes?: Prisma.CharacterAttributeUncheckedUpdateManyWithoutCharacterNestedInput
   expertises?: Prisma.CharacterExpertiseUncheckedUpdateManyWithoutCharacterNestedInput
-  equipment?: Prisma.CharacterItemUncheckedUpdateManyWithoutCharacterNestedInput
+  itemInstances?: Prisma.ItemInstanceUncheckedUpdateManyWithoutCharacterNestedInput
+  stackableItems?: Prisma.StackableItemUncheckedUpdateManyWithoutCharacterNestedInput
   paths?: Prisma.CharacterPathUncheckedUpdateManyWithoutCharacterNestedInput
   skills?: Prisma.CharacterSkillUncheckedUpdateManyWithoutCharacterNestedInput
   story?: Prisma.CharacterStoryUncheckedUpdateOneWithoutCharacterNestedInput
 }
 
-export type CharacterCreateWithoutEquipmentInput = {
+export type CharacterCreateWithoutItemInstancesInput = {
   id?: string
   name: string
   level?: number
@@ -1009,16 +1087,18 @@ export type CharacterCreateWithoutEquipmentInput = {
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
   startingKit?: string | null
+  marks?: number
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   attributes?: Prisma.CharacterAttributeCreateNestedManyWithoutCharacterInput
   expertises?: Prisma.CharacterExpertiseCreateNestedManyWithoutCharacterInput
+  stackableItems?: Prisma.StackableItemCreateNestedManyWithoutCharacterInput
   paths?: Prisma.CharacterPathCreateNestedManyWithoutCharacterInput
   skills?: Prisma.CharacterSkillCreateNestedManyWithoutCharacterInput
   story?: Prisma.CharacterStoryCreateNestedOneWithoutCharacterInput
   talents?: Prisma.CharacterTalentCreateNestedManyWithoutCharacterInput
 }
 
-export type CharacterUncheckedCreateWithoutEquipmentInput = {
+export type CharacterUncheckedCreateWithoutItemInstancesInput = {
   id?: string
   name: string
   level?: number
@@ -1027,32 +1107,34 @@ export type CharacterUncheckedCreateWithoutEquipmentInput = {
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
   startingKit?: string | null
+  marks?: number
   userId: string
   attributes?: Prisma.CharacterAttributeUncheckedCreateNestedManyWithoutCharacterInput
   expertises?: Prisma.CharacterExpertiseUncheckedCreateNestedManyWithoutCharacterInput
+  stackableItems?: Prisma.StackableItemUncheckedCreateNestedManyWithoutCharacterInput
   paths?: Prisma.CharacterPathUncheckedCreateNestedManyWithoutCharacterInput
   skills?: Prisma.CharacterSkillUncheckedCreateNestedManyWithoutCharacterInput
   story?: Prisma.CharacterStoryUncheckedCreateNestedOneWithoutCharacterInput
   talents?: Prisma.CharacterTalentUncheckedCreateNestedManyWithoutCharacterInput
 }
 
-export type CharacterCreateOrConnectWithoutEquipmentInput = {
+export type CharacterCreateOrConnectWithoutItemInstancesInput = {
   where: Prisma.CharacterWhereUniqueInput
-  create: Prisma.XOR<Prisma.CharacterCreateWithoutEquipmentInput, Prisma.CharacterUncheckedCreateWithoutEquipmentInput>
+  create: Prisma.XOR<Prisma.CharacterCreateWithoutItemInstancesInput, Prisma.CharacterUncheckedCreateWithoutItemInstancesInput>
 }
 
-export type CharacterUpsertWithoutEquipmentInput = {
-  update: Prisma.XOR<Prisma.CharacterUpdateWithoutEquipmentInput, Prisma.CharacterUncheckedUpdateWithoutEquipmentInput>
-  create: Prisma.XOR<Prisma.CharacterCreateWithoutEquipmentInput, Prisma.CharacterUncheckedCreateWithoutEquipmentInput>
+export type CharacterUpsertWithoutItemInstancesInput = {
+  update: Prisma.XOR<Prisma.CharacterUpdateWithoutItemInstancesInput, Prisma.CharacterUncheckedUpdateWithoutItemInstancesInput>
+  create: Prisma.XOR<Prisma.CharacterCreateWithoutItemInstancesInput, Prisma.CharacterUncheckedCreateWithoutItemInstancesInput>
   where?: Prisma.CharacterWhereInput
 }
 
-export type CharacterUpdateToOneWithWhereWithoutEquipmentInput = {
+export type CharacterUpdateToOneWithWhereWithoutItemInstancesInput = {
   where?: Prisma.CharacterWhereInput
-  data: Prisma.XOR<Prisma.CharacterUpdateWithoutEquipmentInput, Prisma.CharacterUncheckedUpdateWithoutEquipmentInput>
+  data: Prisma.XOR<Prisma.CharacterUpdateWithoutItemInstancesInput, Prisma.CharacterUncheckedUpdateWithoutItemInstancesInput>
 }
 
-export type CharacterUpdateWithoutEquipmentInput = {
+export type CharacterUpdateWithoutItemInstancesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   level?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1061,16 +1143,18 @@ export type CharacterUpdateWithoutEquipmentInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
   startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marks?: Prisma.IntFieldUpdateOperationsInput | number
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   attributes?: Prisma.CharacterAttributeUpdateManyWithoutCharacterNestedInput
   expertises?: Prisma.CharacterExpertiseUpdateManyWithoutCharacterNestedInput
+  stackableItems?: Prisma.StackableItemUpdateManyWithoutCharacterNestedInput
   paths?: Prisma.CharacterPathUpdateManyWithoutCharacterNestedInput
   skills?: Prisma.CharacterSkillUpdateManyWithoutCharacterNestedInput
   story?: Prisma.CharacterStoryUpdateOneWithoutCharacterNestedInput
   talents?: Prisma.CharacterTalentUpdateManyWithoutCharacterNestedInput
 }
 
-export type CharacterUncheckedUpdateWithoutEquipmentInput = {
+export type CharacterUncheckedUpdateWithoutItemInstancesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   level?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1079,9 +1163,107 @@ export type CharacterUncheckedUpdateWithoutEquipmentInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
   startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marks?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   attributes?: Prisma.CharacterAttributeUncheckedUpdateManyWithoutCharacterNestedInput
   expertises?: Prisma.CharacterExpertiseUncheckedUpdateManyWithoutCharacterNestedInput
+  stackableItems?: Prisma.StackableItemUncheckedUpdateManyWithoutCharacterNestedInput
+  paths?: Prisma.CharacterPathUncheckedUpdateManyWithoutCharacterNestedInput
+  skills?: Prisma.CharacterSkillUncheckedUpdateManyWithoutCharacterNestedInput
+  story?: Prisma.CharacterStoryUncheckedUpdateOneWithoutCharacterNestedInput
+  talents?: Prisma.CharacterTalentUncheckedUpdateManyWithoutCharacterNestedInput
+}
+
+export type CharacterCreateWithoutStackableItemsInput = {
+  id?: string
+  name: string
+  level?: number
+  visibility?: $Enums.Visibility
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  ancestry?: $Enums.Ancestry | null
+  startingKit?: string | null
+  marks?: number
+  user: Prisma.UserCreateNestedOneWithoutCharactersInput
+  attributes?: Prisma.CharacterAttributeCreateNestedManyWithoutCharacterInput
+  expertises?: Prisma.CharacterExpertiseCreateNestedManyWithoutCharacterInput
+  itemInstances?: Prisma.ItemInstanceCreateNestedManyWithoutCharacterInput
+  paths?: Prisma.CharacterPathCreateNestedManyWithoutCharacterInput
+  skills?: Prisma.CharacterSkillCreateNestedManyWithoutCharacterInput
+  story?: Prisma.CharacterStoryCreateNestedOneWithoutCharacterInput
+  talents?: Prisma.CharacterTalentCreateNestedManyWithoutCharacterInput
+}
+
+export type CharacterUncheckedCreateWithoutStackableItemsInput = {
+  id?: string
+  name: string
+  level?: number
+  visibility?: $Enums.Visibility
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  ancestry?: $Enums.Ancestry | null
+  startingKit?: string | null
+  marks?: number
+  userId: string
+  attributes?: Prisma.CharacterAttributeUncheckedCreateNestedManyWithoutCharacterInput
+  expertises?: Prisma.CharacterExpertiseUncheckedCreateNestedManyWithoutCharacterInput
+  itemInstances?: Prisma.ItemInstanceUncheckedCreateNestedManyWithoutCharacterInput
+  paths?: Prisma.CharacterPathUncheckedCreateNestedManyWithoutCharacterInput
+  skills?: Prisma.CharacterSkillUncheckedCreateNestedManyWithoutCharacterInput
+  story?: Prisma.CharacterStoryUncheckedCreateNestedOneWithoutCharacterInput
+  talents?: Prisma.CharacterTalentUncheckedCreateNestedManyWithoutCharacterInput
+}
+
+export type CharacterCreateOrConnectWithoutStackableItemsInput = {
+  where: Prisma.CharacterWhereUniqueInput
+  create: Prisma.XOR<Prisma.CharacterCreateWithoutStackableItemsInput, Prisma.CharacterUncheckedCreateWithoutStackableItemsInput>
+}
+
+export type CharacterUpsertWithoutStackableItemsInput = {
+  update: Prisma.XOR<Prisma.CharacterUpdateWithoutStackableItemsInput, Prisma.CharacterUncheckedUpdateWithoutStackableItemsInput>
+  create: Prisma.XOR<Prisma.CharacterCreateWithoutStackableItemsInput, Prisma.CharacterUncheckedCreateWithoutStackableItemsInput>
+  where?: Prisma.CharacterWhereInput
+}
+
+export type CharacterUpdateToOneWithWhereWithoutStackableItemsInput = {
+  where?: Prisma.CharacterWhereInput
+  data: Prisma.XOR<Prisma.CharacterUpdateWithoutStackableItemsInput, Prisma.CharacterUncheckedUpdateWithoutStackableItemsInput>
+}
+
+export type CharacterUpdateWithoutStackableItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  level?: Prisma.IntFieldUpdateOperationsInput | number
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
+  startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marks?: Prisma.IntFieldUpdateOperationsInput | number
+  user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
+  attributes?: Prisma.CharacterAttributeUpdateManyWithoutCharacterNestedInput
+  expertises?: Prisma.CharacterExpertiseUpdateManyWithoutCharacterNestedInput
+  itemInstances?: Prisma.ItemInstanceUpdateManyWithoutCharacterNestedInput
+  paths?: Prisma.CharacterPathUpdateManyWithoutCharacterNestedInput
+  skills?: Prisma.CharacterSkillUpdateManyWithoutCharacterNestedInput
+  story?: Prisma.CharacterStoryUpdateOneWithoutCharacterNestedInput
+  talents?: Prisma.CharacterTalentUpdateManyWithoutCharacterNestedInput
+}
+
+export type CharacterUncheckedUpdateWithoutStackableItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  level?: Prisma.IntFieldUpdateOperationsInput | number
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
+  startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marks?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  attributes?: Prisma.CharacterAttributeUncheckedUpdateManyWithoutCharacterNestedInput
+  expertises?: Prisma.CharacterExpertiseUncheckedUpdateManyWithoutCharacterNestedInput
+  itemInstances?: Prisma.ItemInstanceUncheckedUpdateManyWithoutCharacterNestedInput
   paths?: Prisma.CharacterPathUncheckedUpdateManyWithoutCharacterNestedInput
   skills?: Prisma.CharacterSkillUncheckedUpdateManyWithoutCharacterNestedInput
   story?: Prisma.CharacterStoryUncheckedUpdateOneWithoutCharacterNestedInput
@@ -1097,10 +1279,12 @@ export type CharacterCreateWithoutPathsInput = {
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
   startingKit?: string | null
+  marks?: number
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   attributes?: Prisma.CharacterAttributeCreateNestedManyWithoutCharacterInput
   expertises?: Prisma.CharacterExpertiseCreateNestedManyWithoutCharacterInput
-  equipment?: Prisma.CharacterItemCreateNestedManyWithoutCharacterInput
+  itemInstances?: Prisma.ItemInstanceCreateNestedManyWithoutCharacterInput
+  stackableItems?: Prisma.StackableItemCreateNestedManyWithoutCharacterInput
   skills?: Prisma.CharacterSkillCreateNestedManyWithoutCharacterInput
   story?: Prisma.CharacterStoryCreateNestedOneWithoutCharacterInput
   talents?: Prisma.CharacterTalentCreateNestedManyWithoutCharacterInput
@@ -1115,10 +1299,12 @@ export type CharacterUncheckedCreateWithoutPathsInput = {
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
   startingKit?: string | null
+  marks?: number
   userId: string
   attributes?: Prisma.CharacterAttributeUncheckedCreateNestedManyWithoutCharacterInput
   expertises?: Prisma.CharacterExpertiseUncheckedCreateNestedManyWithoutCharacterInput
-  equipment?: Prisma.CharacterItemUncheckedCreateNestedManyWithoutCharacterInput
+  itemInstances?: Prisma.ItemInstanceUncheckedCreateNestedManyWithoutCharacterInput
+  stackableItems?: Prisma.StackableItemUncheckedCreateNestedManyWithoutCharacterInput
   skills?: Prisma.CharacterSkillUncheckedCreateNestedManyWithoutCharacterInput
   story?: Prisma.CharacterStoryUncheckedCreateNestedOneWithoutCharacterInput
   talents?: Prisma.CharacterTalentUncheckedCreateNestedManyWithoutCharacterInput
@@ -1149,10 +1335,12 @@ export type CharacterUpdateWithoutPathsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
   startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marks?: Prisma.IntFieldUpdateOperationsInput | number
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   attributes?: Prisma.CharacterAttributeUpdateManyWithoutCharacterNestedInput
   expertises?: Prisma.CharacterExpertiseUpdateManyWithoutCharacterNestedInput
-  equipment?: Prisma.CharacterItemUpdateManyWithoutCharacterNestedInput
+  itemInstances?: Prisma.ItemInstanceUpdateManyWithoutCharacterNestedInput
+  stackableItems?: Prisma.StackableItemUpdateManyWithoutCharacterNestedInput
   skills?: Prisma.CharacterSkillUpdateManyWithoutCharacterNestedInput
   story?: Prisma.CharacterStoryUpdateOneWithoutCharacterNestedInput
   talents?: Prisma.CharacterTalentUpdateManyWithoutCharacterNestedInput
@@ -1167,10 +1355,12 @@ export type CharacterUncheckedUpdateWithoutPathsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
   startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marks?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   attributes?: Prisma.CharacterAttributeUncheckedUpdateManyWithoutCharacterNestedInput
   expertises?: Prisma.CharacterExpertiseUncheckedUpdateManyWithoutCharacterNestedInput
-  equipment?: Prisma.CharacterItemUncheckedUpdateManyWithoutCharacterNestedInput
+  itemInstances?: Prisma.ItemInstanceUncheckedUpdateManyWithoutCharacterNestedInput
+  stackableItems?: Prisma.StackableItemUncheckedUpdateManyWithoutCharacterNestedInput
   skills?: Prisma.CharacterSkillUncheckedUpdateManyWithoutCharacterNestedInput
   story?: Prisma.CharacterStoryUncheckedUpdateOneWithoutCharacterNestedInput
   talents?: Prisma.CharacterTalentUncheckedUpdateManyWithoutCharacterNestedInput
@@ -1185,9 +1375,11 @@ export type CharacterCreateWithoutExpertisesInput = {
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
   startingKit?: string | null
+  marks?: number
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   attributes?: Prisma.CharacterAttributeCreateNestedManyWithoutCharacterInput
-  equipment?: Prisma.CharacterItemCreateNestedManyWithoutCharacterInput
+  itemInstances?: Prisma.ItemInstanceCreateNestedManyWithoutCharacterInput
+  stackableItems?: Prisma.StackableItemCreateNestedManyWithoutCharacterInput
   paths?: Prisma.CharacterPathCreateNestedManyWithoutCharacterInput
   skills?: Prisma.CharacterSkillCreateNestedManyWithoutCharacterInput
   story?: Prisma.CharacterStoryCreateNestedOneWithoutCharacterInput
@@ -1203,9 +1395,11 @@ export type CharacterUncheckedCreateWithoutExpertisesInput = {
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
   startingKit?: string | null
+  marks?: number
   userId: string
   attributes?: Prisma.CharacterAttributeUncheckedCreateNestedManyWithoutCharacterInput
-  equipment?: Prisma.CharacterItemUncheckedCreateNestedManyWithoutCharacterInput
+  itemInstances?: Prisma.ItemInstanceUncheckedCreateNestedManyWithoutCharacterInput
+  stackableItems?: Prisma.StackableItemUncheckedCreateNestedManyWithoutCharacterInput
   paths?: Prisma.CharacterPathUncheckedCreateNestedManyWithoutCharacterInput
   skills?: Prisma.CharacterSkillUncheckedCreateNestedManyWithoutCharacterInput
   story?: Prisma.CharacterStoryUncheckedCreateNestedOneWithoutCharacterInput
@@ -1237,9 +1431,11 @@ export type CharacterUpdateWithoutExpertisesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
   startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marks?: Prisma.IntFieldUpdateOperationsInput | number
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   attributes?: Prisma.CharacterAttributeUpdateManyWithoutCharacterNestedInput
-  equipment?: Prisma.CharacterItemUpdateManyWithoutCharacterNestedInput
+  itemInstances?: Prisma.ItemInstanceUpdateManyWithoutCharacterNestedInput
+  stackableItems?: Prisma.StackableItemUpdateManyWithoutCharacterNestedInput
   paths?: Prisma.CharacterPathUpdateManyWithoutCharacterNestedInput
   skills?: Prisma.CharacterSkillUpdateManyWithoutCharacterNestedInput
   story?: Prisma.CharacterStoryUpdateOneWithoutCharacterNestedInput
@@ -1255,9 +1451,11 @@ export type CharacterUncheckedUpdateWithoutExpertisesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
   startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marks?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   attributes?: Prisma.CharacterAttributeUncheckedUpdateManyWithoutCharacterNestedInput
-  equipment?: Prisma.CharacterItemUncheckedUpdateManyWithoutCharacterNestedInput
+  itemInstances?: Prisma.ItemInstanceUncheckedUpdateManyWithoutCharacterNestedInput
+  stackableItems?: Prisma.StackableItemUncheckedUpdateManyWithoutCharacterNestedInput
   paths?: Prisma.CharacterPathUncheckedUpdateManyWithoutCharacterNestedInput
   skills?: Prisma.CharacterSkillUncheckedUpdateManyWithoutCharacterNestedInput
   story?: Prisma.CharacterStoryUncheckedUpdateOneWithoutCharacterNestedInput
@@ -1273,10 +1471,12 @@ export type CharacterCreateWithoutStoryInput = {
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
   startingKit?: string | null
+  marks?: number
   user: Prisma.UserCreateNestedOneWithoutCharactersInput
   attributes?: Prisma.CharacterAttributeCreateNestedManyWithoutCharacterInput
   expertises?: Prisma.CharacterExpertiseCreateNestedManyWithoutCharacterInput
-  equipment?: Prisma.CharacterItemCreateNestedManyWithoutCharacterInput
+  itemInstances?: Prisma.ItemInstanceCreateNestedManyWithoutCharacterInput
+  stackableItems?: Prisma.StackableItemCreateNestedManyWithoutCharacterInput
   paths?: Prisma.CharacterPathCreateNestedManyWithoutCharacterInput
   skills?: Prisma.CharacterSkillCreateNestedManyWithoutCharacterInput
   talents?: Prisma.CharacterTalentCreateNestedManyWithoutCharacterInput
@@ -1291,10 +1491,12 @@ export type CharacterUncheckedCreateWithoutStoryInput = {
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
   startingKit?: string | null
+  marks?: number
   userId: string
   attributes?: Prisma.CharacterAttributeUncheckedCreateNestedManyWithoutCharacterInput
   expertises?: Prisma.CharacterExpertiseUncheckedCreateNestedManyWithoutCharacterInput
-  equipment?: Prisma.CharacterItemUncheckedCreateNestedManyWithoutCharacterInput
+  itemInstances?: Prisma.ItemInstanceUncheckedCreateNestedManyWithoutCharacterInput
+  stackableItems?: Prisma.StackableItemUncheckedCreateNestedManyWithoutCharacterInput
   paths?: Prisma.CharacterPathUncheckedCreateNestedManyWithoutCharacterInput
   skills?: Prisma.CharacterSkillUncheckedCreateNestedManyWithoutCharacterInput
   talents?: Prisma.CharacterTalentUncheckedCreateNestedManyWithoutCharacterInput
@@ -1325,10 +1527,12 @@ export type CharacterUpdateWithoutStoryInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
   startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marks?: Prisma.IntFieldUpdateOperationsInput | number
   user?: Prisma.UserUpdateOneRequiredWithoutCharactersNestedInput
   attributes?: Prisma.CharacterAttributeUpdateManyWithoutCharacterNestedInput
   expertises?: Prisma.CharacterExpertiseUpdateManyWithoutCharacterNestedInput
-  equipment?: Prisma.CharacterItemUpdateManyWithoutCharacterNestedInput
+  itemInstances?: Prisma.ItemInstanceUpdateManyWithoutCharacterNestedInput
+  stackableItems?: Prisma.StackableItemUpdateManyWithoutCharacterNestedInput
   paths?: Prisma.CharacterPathUpdateManyWithoutCharacterNestedInput
   skills?: Prisma.CharacterSkillUpdateManyWithoutCharacterNestedInput
   talents?: Prisma.CharacterTalentUpdateManyWithoutCharacterNestedInput
@@ -1343,10 +1547,12 @@ export type CharacterUncheckedUpdateWithoutStoryInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
   startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marks?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   attributes?: Prisma.CharacterAttributeUncheckedUpdateManyWithoutCharacterNestedInput
   expertises?: Prisma.CharacterExpertiseUncheckedUpdateManyWithoutCharacterNestedInput
-  equipment?: Prisma.CharacterItemUncheckedUpdateManyWithoutCharacterNestedInput
+  itemInstances?: Prisma.ItemInstanceUncheckedUpdateManyWithoutCharacterNestedInput
+  stackableItems?: Prisma.StackableItemUncheckedUpdateManyWithoutCharacterNestedInput
   paths?: Prisma.CharacterPathUncheckedUpdateManyWithoutCharacterNestedInput
   skills?: Prisma.CharacterSkillUncheckedUpdateManyWithoutCharacterNestedInput
   talents?: Prisma.CharacterTalentUncheckedUpdateManyWithoutCharacterNestedInput
@@ -1361,6 +1567,7 @@ export type CharacterCreateManyUserInput = {
   updatedAt?: Date | string
   ancestry?: $Enums.Ancestry | null
   startingKit?: string | null
+  marks?: number
 }
 
 export type CharacterUpdateWithoutUserInput = {
@@ -1372,9 +1579,11 @@ export type CharacterUpdateWithoutUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
   startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marks?: Prisma.IntFieldUpdateOperationsInput | number
   attributes?: Prisma.CharacterAttributeUpdateManyWithoutCharacterNestedInput
   expertises?: Prisma.CharacterExpertiseUpdateManyWithoutCharacterNestedInput
-  equipment?: Prisma.CharacterItemUpdateManyWithoutCharacterNestedInput
+  itemInstances?: Prisma.ItemInstanceUpdateManyWithoutCharacterNestedInput
+  stackableItems?: Prisma.StackableItemUpdateManyWithoutCharacterNestedInput
   paths?: Prisma.CharacterPathUpdateManyWithoutCharacterNestedInput
   skills?: Prisma.CharacterSkillUpdateManyWithoutCharacterNestedInput
   story?: Prisma.CharacterStoryUpdateOneWithoutCharacterNestedInput
@@ -1390,9 +1599,11 @@ export type CharacterUncheckedUpdateWithoutUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
   startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marks?: Prisma.IntFieldUpdateOperationsInput | number
   attributes?: Prisma.CharacterAttributeUncheckedUpdateManyWithoutCharacterNestedInput
   expertises?: Prisma.CharacterExpertiseUncheckedUpdateManyWithoutCharacterNestedInput
-  equipment?: Prisma.CharacterItemUncheckedUpdateManyWithoutCharacterNestedInput
+  itemInstances?: Prisma.ItemInstanceUncheckedUpdateManyWithoutCharacterNestedInput
+  stackableItems?: Prisma.StackableItemUncheckedUpdateManyWithoutCharacterNestedInput
   paths?: Prisma.CharacterPathUncheckedUpdateManyWithoutCharacterNestedInput
   skills?: Prisma.CharacterSkillUncheckedUpdateManyWithoutCharacterNestedInput
   story?: Prisma.CharacterStoryUncheckedUpdateOneWithoutCharacterNestedInput
@@ -1408,6 +1619,7 @@ export type CharacterUncheckedUpdateManyWithoutUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ancestry?: Prisma.NullableEnumAncestryFieldUpdateOperationsInput | $Enums.Ancestry | null
   startingKit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marks?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 
@@ -1418,7 +1630,8 @@ export type CharacterUncheckedUpdateManyWithoutUserInput = {
 export type CharacterCountOutputType = {
   attributes: number
   expertises: number
-  equipment: number
+  itemInstances: number
+  stackableItems: number
   paths: number
   skills: number
   talents: number
@@ -1427,7 +1640,8 @@ export type CharacterCountOutputType = {
 export type CharacterCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   attributes?: boolean | CharacterCountOutputTypeCountAttributesArgs
   expertises?: boolean | CharacterCountOutputTypeCountExpertisesArgs
-  equipment?: boolean | CharacterCountOutputTypeCountEquipmentArgs
+  itemInstances?: boolean | CharacterCountOutputTypeCountItemInstancesArgs
+  stackableItems?: boolean | CharacterCountOutputTypeCountStackableItemsArgs
   paths?: boolean | CharacterCountOutputTypeCountPathsArgs
   skills?: boolean | CharacterCountOutputTypeCountSkillsArgs
   talents?: boolean | CharacterCountOutputTypeCountTalentsArgs
@@ -1460,8 +1674,15 @@ export type CharacterCountOutputTypeCountExpertisesArgs<ExtArgs extends runtime.
 /**
  * CharacterCountOutputType without action
  */
-export type CharacterCountOutputTypeCountEquipmentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.CharacterItemWhereInput
+export type CharacterCountOutputTypeCountItemInstancesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ItemInstanceWhereInput
+}
+
+/**
+ * CharacterCountOutputType without action
+ */
+export type CharacterCountOutputTypeCountStackableItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.StackableItemWhereInput
 }
 
 /**
@@ -1495,11 +1716,13 @@ export type CharacterSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   updatedAt?: boolean
   ancestry?: boolean
   startingKit?: boolean
+  marks?: boolean
   userId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   attributes?: boolean | Prisma.Character$attributesArgs<ExtArgs>
   expertises?: boolean | Prisma.Character$expertisesArgs<ExtArgs>
-  equipment?: boolean | Prisma.Character$equipmentArgs<ExtArgs>
+  itemInstances?: boolean | Prisma.Character$itemInstancesArgs<ExtArgs>
+  stackableItems?: boolean | Prisma.Character$stackableItemsArgs<ExtArgs>
   paths?: boolean | Prisma.Character$pathsArgs<ExtArgs>
   skills?: boolean | Prisma.Character$skillsArgs<ExtArgs>
   story?: boolean | Prisma.Character$storyArgs<ExtArgs>
@@ -1516,6 +1739,7 @@ export type CharacterSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   updatedAt?: boolean
   ancestry?: boolean
   startingKit?: boolean
+  marks?: boolean
   userId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["character"]>
@@ -1529,6 +1753,7 @@ export type CharacterSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   updatedAt?: boolean
   ancestry?: boolean
   startingKit?: boolean
+  marks?: boolean
   userId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["character"]>
@@ -1542,15 +1767,17 @@ export type CharacterSelectScalar = {
   updatedAt?: boolean
   ancestry?: boolean
   startingKit?: boolean
+  marks?: boolean
   userId?: boolean
 }
 
-export type CharacterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "level" | "visibility" | "createdAt" | "updatedAt" | "ancestry" | "startingKit" | "userId", ExtArgs["result"]["character"]>
+export type CharacterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "level" | "visibility" | "createdAt" | "updatedAt" | "ancestry" | "startingKit" | "marks" | "userId", ExtArgs["result"]["character"]>
 export type CharacterInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   attributes?: boolean | Prisma.Character$attributesArgs<ExtArgs>
   expertises?: boolean | Prisma.Character$expertisesArgs<ExtArgs>
-  equipment?: boolean | Prisma.Character$equipmentArgs<ExtArgs>
+  itemInstances?: boolean | Prisma.Character$itemInstancesArgs<ExtArgs>
+  stackableItems?: boolean | Prisma.Character$stackableItemsArgs<ExtArgs>
   paths?: boolean | Prisma.Character$pathsArgs<ExtArgs>
   skills?: boolean | Prisma.Character$skillsArgs<ExtArgs>
   story?: boolean | Prisma.Character$storyArgs<ExtArgs>
@@ -1570,7 +1797,8 @@ export type $CharacterPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     user: Prisma.$UserPayload<ExtArgs>
     attributes: Prisma.$CharacterAttributePayload<ExtArgs>[]
     expertises: Prisma.$CharacterExpertisePayload<ExtArgs>[]
-    equipment: Prisma.$CharacterItemPayload<ExtArgs>[]
+    itemInstances: Prisma.$ItemInstancePayload<ExtArgs>[]
+    stackableItems: Prisma.$StackableItemPayload<ExtArgs>[]
     paths: Prisma.$CharacterPathPayload<ExtArgs>[]
     skills: Prisma.$CharacterSkillPayload<ExtArgs>[]
     story: Prisma.$CharacterStoryPayload<ExtArgs> | null
@@ -1585,6 +1813,7 @@ export type $CharacterPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     updatedAt: Date
     ancestry: $Enums.Ancestry | null
     startingKit: string | null
+    marks: number
     userId: string
   }, ExtArgs["result"]["character"]>
   composites: {}
@@ -1983,7 +2212,8 @@ export interface Prisma__CharacterClient<T, Null = never, ExtArgs extends runtim
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   attributes<T extends Prisma.Character$attributesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Character$attributesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CharacterAttributePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   expertises<T extends Prisma.Character$expertisesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Character$expertisesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CharacterExpertisePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  equipment<T extends Prisma.Character$equipmentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Character$equipmentArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CharacterItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  itemInstances<T extends Prisma.Character$itemInstancesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Character$itemInstancesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ItemInstancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  stackableItems<T extends Prisma.Character$stackableItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Character$stackableItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StackableItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   paths<T extends Prisma.Character$pathsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Character$pathsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CharacterPathPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   skills<T extends Prisma.Character$skillsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Character$skillsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CharacterSkillPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   story<T extends Prisma.Character$storyArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Character$storyArgs<ExtArgs>>): Prisma.Prisma__CharacterStoryClient<runtime.Types.Result.GetResult<Prisma.$CharacterStoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -2025,6 +2255,7 @@ export interface CharacterFieldRefs {
   readonly updatedAt: Prisma.FieldRef<"Character", 'DateTime'>
   readonly ancestry: Prisma.FieldRef<"Character", 'Ancestry'>
   readonly startingKit: Prisma.FieldRef<"Character", 'String'>
+  readonly marks: Prisma.FieldRef<"Character", 'Int'>
   readonly userId: Prisma.FieldRef<"Character", 'String'>
 }
     
@@ -2470,27 +2701,51 @@ export type Character$expertisesArgs<ExtArgs extends runtime.Types.Extensions.In
 }
 
 /**
- * Character.equipment
+ * Character.itemInstances
  */
-export type Character$equipmentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Character$itemInstancesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the CharacterItem
+   * Select specific fields to fetch from the ItemInstance
    */
-  select?: Prisma.CharacterItemSelect<ExtArgs> | null
+  select?: Prisma.ItemInstanceSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the CharacterItem
+   * Omit specific fields from the ItemInstance
    */
-  omit?: Prisma.CharacterItemOmit<ExtArgs> | null
+  omit?: Prisma.ItemInstanceOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.CharacterItemInclude<ExtArgs> | null
-  where?: Prisma.CharacterItemWhereInput
-  orderBy?: Prisma.CharacterItemOrderByWithRelationInput | Prisma.CharacterItemOrderByWithRelationInput[]
-  cursor?: Prisma.CharacterItemWhereUniqueInput
+  include?: Prisma.ItemInstanceInclude<ExtArgs> | null
+  where?: Prisma.ItemInstanceWhereInput
+  orderBy?: Prisma.ItemInstanceOrderByWithRelationInput | Prisma.ItemInstanceOrderByWithRelationInput[]
+  cursor?: Prisma.ItemInstanceWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.CharacterItemScalarFieldEnum | Prisma.CharacterItemScalarFieldEnum[]
+  distinct?: Prisma.ItemInstanceScalarFieldEnum | Prisma.ItemInstanceScalarFieldEnum[]
+}
+
+/**
+ * Character.stackableItems
+ */
+export type Character$stackableItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the StackableItem
+   */
+  select?: Prisma.StackableItemSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the StackableItem
+   */
+  omit?: Prisma.StackableItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StackableItemInclude<ExtArgs> | null
+  where?: Prisma.StackableItemWhereInput
+  orderBy?: Prisma.StackableItemOrderByWithRelationInput | Prisma.StackableItemOrderByWithRelationInput[]
+  cursor?: Prisma.StackableItemWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.StackableItemScalarFieldEnum | Prisma.StackableItemScalarFieldEnum[]
 }
 
 /**

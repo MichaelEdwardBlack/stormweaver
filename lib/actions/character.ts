@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { Ancestry, Attribute, ExpertiseType, Path, Skill } from "../generated/prisma/enums";
 import { revalidatePath } from "next/cache";
 import { CharacterGetPayload } from "../generated/prisma/models";
+import { StartingKits } from "../data/startingKits";
 
 export async function createCharacter() {
   const session = await auth();
@@ -248,6 +249,36 @@ export type FullCharacter = CharacterGetPayload<{
         talent: true;
       };
     };
+    itemInstances: {
+      include: {
+        item: {
+          include: {
+            modifierSource: {
+              include: {
+                modifiers: true;
+              };
+            };
+            weapon: true;
+            armor: true;
+          };
+        };
+      };
+    };
+    stackableItems: {
+      include: {
+        item: {
+          include: {
+            modifierSource: {
+              include: {
+                modifiers: true;
+              };
+            };
+            weapon: true;
+            armor: true;
+          };
+        };
+      };
+    };
     paths: true;
     story: true;
   };
@@ -264,6 +295,36 @@ export async function getFullCharacter(characterId: string): Promise<FullCharact
       talents: {
         include: {
           talent: true,
+        },
+      },
+      itemInstances: {
+        include: {
+          item: {
+            include: {
+              modifierSource: {
+                include: {
+                  modifiers: true,
+                },
+              },
+              weapon: true,
+              armor: true,
+            },
+          },
+        },
+      },
+      stackableItems: {
+        include: {
+          item: {
+            include: {
+              modifierSource: {
+                include: {
+                  modifiers: true,
+                },
+              },
+              weapon: true,
+              armor: true,
+            },
+          },
         },
       },
       paths: true,
@@ -440,6 +501,176 @@ export async function removeExpertise(characterId: string, name: string) {
     where: {
       name,
       characterId,
+    },
+  });
+  revalidatePath(`/characters/${characterId}/edit`, "layout");
+}
+
+export async function updateCharacterKit(characterId: string, startingKit: string | null) {
+  const session = await auth();
+  if (!session) redirect("/auth/login");
+  await clearStartingEquipment(characterId);
+  await updateCharacterMarks(characterId, 0);
+
+  await prisma.character.update({
+    where: { id: characterId },
+    data: {
+      startingKit: startingKit,
+    },
+  });
+  const fullKit = StartingKits.find((kit) => kit.name === startingKit);
+  if (fullKit) {
+    fullKit.armor.forEach((a) => addCharacterItem(characterId, `starting_${a.toLowerCase()}`));
+  }
+
+  revalidatePath(`/characters/${characterId}/edit`, "layout");
+}
+
+export async function updateCharacterMarks(characterId: string, marks: number) {
+  const session = await auth();
+  if (!session) redirect("/auth/login");
+  await prisma.character.update({
+    where: { id: characterId },
+    data: {
+      marks,
+    },
+  });
+
+  revalidatePath(`/characters/${characterId}/edit`, "layout");
+}
+
+export async function clearPurchasedEquipment(characterId: string) {
+  const session = await auth();
+  if (!session) redirect("/auth/login");
+
+  await prisma.itemInstance.deleteMany({
+    where: {
+      characterId,
+      AND: {
+        item: {
+          acquisition: "purchase",
+        },
+      },
+    },
+  });
+  await prisma.stackableItem.deleteMany({
+    where: {
+      characterId,
+      AND: {
+        item: {
+          acquisition: "purchase",
+        },
+      },
+    },
+  });
+
+  revalidatePath(`/characters/${characterId}/edit`, "layout");
+}
+
+export async function clearStartingEquipment(characterId: string) {
+  const session = await auth();
+  if (!session) redirect("/auth/login");
+
+  await prisma.itemInstance.deleteMany({
+    where: {
+      characterId,
+      AND: {
+        item: {
+          acquisition: "startingKit",
+        },
+      },
+    },
+  });
+  await prisma.stackableItem.deleteMany({
+    where: {
+      characterId,
+      AND: {
+        item: {
+          acquisition: "startingKit",
+        },
+      },
+    },
+  });
+
+  revalidatePath(`/characters/${characterId}/edit`, "layout");
+}
+
+export async function clearEquipment(characterId: string) {
+  const session = await auth();
+  if (!session) redirect("/auth/login");
+
+  await prisma.itemInstance.deleteMany({
+    where: {
+      characterId,
+    },
+  });
+  await prisma.stackableItem.deleteMany({
+    where: {
+      characterId,
+    },
+  });
+
+  revalidatePath(`/characters/${characterId}/edit`, "layout");
+}
+
+export async function addCharacterItem(characterId: string, itemId: string) {
+  const session = await auth();
+  if (!session) redirect("/auth/login");
+
+  await prisma.itemInstance.create({
+    data: {
+      characterId,
+      itemId,
+    },
+  });
+  await prisma.stackableItem.upsert({
+    where: {
+      characterId_itemId: {
+        characterId,
+        itemId,
+      },
+    },
+    update: {
+      quantity: { increment: 1 },
+    },
+    create: {
+      characterId,
+      itemId,
+      quantity: 1,
+    },
+  });
+  revalidatePath(`/characters/${characterId}/edit`, "layout");
+}
+
+export async function removeCharacterItem(characterId: string, itemId: string) {
+  const session = await auth();
+  if (!session) redirect("/auth/login");
+
+  await prisma.$transaction(async (tx) => {
+    const instance = await tx.itemInstance.findFirst({
+      where: {
+        characterId,
+        itemId,
+      },
+      // TODO: if this app gets popular we may want a more deterministic way to delete based on time created
+    });
+
+    if (!instance) return;
+
+    await tx.itemInstance.delete({
+      where: { id: instance.id },
+    });
+  });
+
+  await prisma.stackableItem.update({
+    where: {
+      characterId_itemId: {
+        characterId,
+        itemId,
+      },
+    },
+    data: {
+      quantity: { decrement: 1 },
     },
   });
   revalidatePath(`/characters/${characterId}/edit`, "layout");

@@ -62,7 +62,10 @@ export const ModelName = {
   Talent: 'Talent',
   CharacterTalent: 'CharacterTalent',
   ItemTemplate: 'ItemTemplate',
-  CharacterItem: 'CharacterItem',
+  Weapon: 'Weapon',
+  Armor: 'Armor',
+  ItemInstance: 'ItemInstance',
+  StackableItem: 'StackableItem',
   CharacterPath: 'CharacterPath',
   CharacterExpertise: 'CharacterExpertise',
   CharacterStory: 'CharacterStory',
@@ -160,6 +163,7 @@ export const CharacterScalarFieldEnum = {
   updatedAt: 'updatedAt',
   ancestry: 'ancestry',
   startingKit: 'startingKit',
+  marks: 'marks',
   userId: 'userId'
 } as const
 
@@ -227,14 +231,49 @@ export const ItemTemplateScalarFieldEnum = {
 export type ItemTemplateScalarFieldEnum = (typeof ItemTemplateScalarFieldEnum)[keyof typeof ItemTemplateScalarFieldEnum]
 
 
-export const CharacterItemScalarFieldEnum = {
+export const WeaponScalarFieldEnum = {
   id: 'id',
-  characterId: 'characterId',
-  equipped: 'equipped',
-  itemId: 'itemId'
+  itemId: 'itemId',
+  isRanged: 'isRanged',
+  shortRange: 'shortRange',
+  longRange: 'longRange',
+  reach: 'reach',
+  traits: 'traits',
+  expertTraits: 'expertTraits'
 } as const
 
-export type CharacterItemScalarFieldEnum = (typeof CharacterItemScalarFieldEnum)[keyof typeof CharacterItemScalarFieldEnum]
+export type WeaponScalarFieldEnum = (typeof WeaponScalarFieldEnum)[keyof typeof WeaponScalarFieldEnum]
+
+
+export const ArmorScalarFieldEnum = {
+  id: 'id',
+  itemId: 'itemId',
+  traits: 'traits',
+  expertTraits: 'expertTraits'
+} as const
+
+export type ArmorScalarFieldEnum = (typeof ArmorScalarFieldEnum)[keyof typeof ArmorScalarFieldEnum]
+
+
+export const ItemInstanceScalarFieldEnum = {
+  id: 'id',
+  characterId: 'characterId',
+  itemId: 'itemId',
+  equipped: 'equipped',
+  slot: 'slot'
+} as const
+
+export type ItemInstanceScalarFieldEnum = (typeof ItemInstanceScalarFieldEnum)[keyof typeof ItemInstanceScalarFieldEnum]
+
+
+export const StackableItemScalarFieldEnum = {
+  id: 'id',
+  characterId: 'characterId',
+  itemId: 'itemId',
+  quantity: 'quantity'
+} as const
+
+export type StackableItemScalarFieldEnum = (typeof StackableItemScalarFieldEnum)[keyof typeof StackableItemScalarFieldEnum]
 
 
 export const CharacterPathScalarFieldEnum = {

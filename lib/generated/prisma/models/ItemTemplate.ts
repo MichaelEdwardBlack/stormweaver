@@ -244,8 +244,11 @@ export type ItemTemplateWhereInput = {
   acquisition?: Prisma.EnumItemAcquisitionFilter<"ItemTemplate"> | $Enums.ItemAcquisition
   weight?: Prisma.FloatFilter<"ItemTemplate"> | number
   acquireNote?: Prisma.StringNullableFilter<"ItemTemplate"> | string | null
-  characterItems?: Prisma.CharacterItemListRelationFilter
   modifierSource?: Prisma.XOR<Prisma.ModifierSourceNullableScalarRelationFilter, Prisma.ModifierSourceWhereInput> | null
+  weapon?: Prisma.XOR<Prisma.WeaponNullableScalarRelationFilter, Prisma.WeaponWhereInput> | null
+  armor?: Prisma.XOR<Prisma.ArmorNullableScalarRelationFilter, Prisma.ArmorWhereInput> | null
+  itemInstances?: Prisma.ItemInstanceListRelationFilter
+  stackableItems?: Prisma.StackableItemListRelationFilter
 }
 
 export type ItemTemplateOrderByWithRelationInput = {
@@ -257,8 +260,11 @@ export type ItemTemplateOrderByWithRelationInput = {
   acquisition?: Prisma.SortOrder
   weight?: Prisma.SortOrder
   acquireNote?: Prisma.SortOrderInput | Prisma.SortOrder
-  characterItems?: Prisma.CharacterItemOrderByRelationAggregateInput
   modifierSource?: Prisma.ModifierSourceOrderByWithRelationInput
+  weapon?: Prisma.WeaponOrderByWithRelationInput
+  armor?: Prisma.ArmorOrderByWithRelationInput
+  itemInstances?: Prisma.ItemInstanceOrderByRelationAggregateInput
+  stackableItems?: Prisma.StackableItemOrderByRelationAggregateInput
 }
 
 export type ItemTemplateWhereUniqueInput = Prisma.AtLeast<{
@@ -273,8 +279,11 @@ export type ItemTemplateWhereUniqueInput = Prisma.AtLeast<{
   acquisition?: Prisma.EnumItemAcquisitionFilter<"ItemTemplate"> | $Enums.ItemAcquisition
   weight?: Prisma.FloatFilter<"ItemTemplate"> | number
   acquireNote?: Prisma.StringNullableFilter<"ItemTemplate"> | string | null
-  characterItems?: Prisma.CharacterItemListRelationFilter
   modifierSource?: Prisma.XOR<Prisma.ModifierSourceNullableScalarRelationFilter, Prisma.ModifierSourceWhereInput> | null
+  weapon?: Prisma.XOR<Prisma.WeaponNullableScalarRelationFilter, Prisma.WeaponWhereInput> | null
+  armor?: Prisma.XOR<Prisma.ArmorNullableScalarRelationFilter, Prisma.ArmorWhereInput> | null
+  itemInstances?: Prisma.ItemInstanceListRelationFilter
+  stackableItems?: Prisma.StackableItemListRelationFilter
 }, "id">
 
 export type ItemTemplateOrderByWithAggregationInput = {
@@ -316,8 +325,11 @@ export type ItemTemplateCreateInput = {
   acquisition?: $Enums.ItemAcquisition
   weight: number
   acquireNote?: string | null
-  characterItems?: Prisma.CharacterItemCreateNestedManyWithoutItemInput
   modifierSource?: Prisma.ModifierSourceCreateNestedOneWithoutItemInput
+  weapon?: Prisma.WeaponCreateNestedOneWithoutItemInput
+  armor?: Prisma.ArmorCreateNestedOneWithoutItemInput
+  itemInstances?: Prisma.ItemInstanceCreateNestedManyWithoutItemInput
+  stackableItems?: Prisma.StackableItemCreateNestedManyWithoutItemInput
 }
 
 export type ItemTemplateUncheckedCreateInput = {
@@ -329,8 +341,11 @@ export type ItemTemplateUncheckedCreateInput = {
   acquisition?: $Enums.ItemAcquisition
   weight: number
   acquireNote?: string | null
-  characterItems?: Prisma.CharacterItemUncheckedCreateNestedManyWithoutItemInput
   modifierSource?: Prisma.ModifierSourceUncheckedCreateNestedOneWithoutItemInput
+  weapon?: Prisma.WeaponUncheckedCreateNestedOneWithoutItemInput
+  armor?: Prisma.ArmorUncheckedCreateNestedOneWithoutItemInput
+  itemInstances?: Prisma.ItemInstanceUncheckedCreateNestedManyWithoutItemInput
+  stackableItems?: Prisma.StackableItemUncheckedCreateNestedManyWithoutItemInput
 }
 
 export type ItemTemplateUpdateInput = {
@@ -342,8 +357,11 @@ export type ItemTemplateUpdateInput = {
   acquisition?: Prisma.EnumItemAcquisitionFieldUpdateOperationsInput | $Enums.ItemAcquisition
   weight?: Prisma.FloatFieldUpdateOperationsInput | number
   acquireNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  characterItems?: Prisma.CharacterItemUpdateManyWithoutItemNestedInput
   modifierSource?: Prisma.ModifierSourceUpdateOneWithoutItemNestedInput
+  weapon?: Prisma.WeaponUpdateOneWithoutItemNestedInput
+  armor?: Prisma.ArmorUpdateOneWithoutItemNestedInput
+  itemInstances?: Prisma.ItemInstanceUpdateManyWithoutItemNestedInput
+  stackableItems?: Prisma.StackableItemUpdateManyWithoutItemNestedInput
 }
 
 export type ItemTemplateUncheckedUpdateInput = {
@@ -355,8 +373,11 @@ export type ItemTemplateUncheckedUpdateInput = {
   acquisition?: Prisma.EnumItemAcquisitionFieldUpdateOperationsInput | $Enums.ItemAcquisition
   weight?: Prisma.FloatFieldUpdateOperationsInput | number
   acquireNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  characterItems?: Prisma.CharacterItemUncheckedUpdateManyWithoutItemNestedInput
   modifierSource?: Prisma.ModifierSourceUncheckedUpdateOneWithoutItemNestedInput
+  weapon?: Prisma.WeaponUncheckedUpdateOneWithoutItemNestedInput
+  armor?: Prisma.ArmorUncheckedUpdateOneWithoutItemNestedInput
+  itemInstances?: Prisma.ItemInstanceUncheckedUpdateManyWithoutItemNestedInput
+  stackableItems?: Prisma.StackableItemUncheckedUpdateManyWithoutItemNestedInput
 }
 
 export type ItemTemplateCreateManyInput = {
@@ -461,18 +482,60 @@ export type FloatFieldUpdateOperationsInput = {
   divide?: number
 }
 
-export type ItemTemplateCreateNestedOneWithoutCharacterItemsInput = {
-  create?: Prisma.XOR<Prisma.ItemTemplateCreateWithoutCharacterItemsInput, Prisma.ItemTemplateUncheckedCreateWithoutCharacterItemsInput>
-  connectOrCreate?: Prisma.ItemTemplateCreateOrConnectWithoutCharacterItemsInput
+export type ItemTemplateCreateNestedOneWithoutWeaponInput = {
+  create?: Prisma.XOR<Prisma.ItemTemplateCreateWithoutWeaponInput, Prisma.ItemTemplateUncheckedCreateWithoutWeaponInput>
+  connectOrCreate?: Prisma.ItemTemplateCreateOrConnectWithoutWeaponInput
   connect?: Prisma.ItemTemplateWhereUniqueInput
 }
 
-export type ItemTemplateUpdateOneRequiredWithoutCharacterItemsNestedInput = {
-  create?: Prisma.XOR<Prisma.ItemTemplateCreateWithoutCharacterItemsInput, Prisma.ItemTemplateUncheckedCreateWithoutCharacterItemsInput>
-  connectOrCreate?: Prisma.ItemTemplateCreateOrConnectWithoutCharacterItemsInput
-  upsert?: Prisma.ItemTemplateUpsertWithoutCharacterItemsInput
+export type ItemTemplateUpdateOneRequiredWithoutWeaponNestedInput = {
+  create?: Prisma.XOR<Prisma.ItemTemplateCreateWithoutWeaponInput, Prisma.ItemTemplateUncheckedCreateWithoutWeaponInput>
+  connectOrCreate?: Prisma.ItemTemplateCreateOrConnectWithoutWeaponInput
+  upsert?: Prisma.ItemTemplateUpsertWithoutWeaponInput
   connect?: Prisma.ItemTemplateWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ItemTemplateUpdateToOneWithWhereWithoutCharacterItemsInput, Prisma.ItemTemplateUpdateWithoutCharacterItemsInput>, Prisma.ItemTemplateUncheckedUpdateWithoutCharacterItemsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ItemTemplateUpdateToOneWithWhereWithoutWeaponInput, Prisma.ItemTemplateUpdateWithoutWeaponInput>, Prisma.ItemTemplateUncheckedUpdateWithoutWeaponInput>
+}
+
+export type ItemTemplateCreateNestedOneWithoutArmorInput = {
+  create?: Prisma.XOR<Prisma.ItemTemplateCreateWithoutArmorInput, Prisma.ItemTemplateUncheckedCreateWithoutArmorInput>
+  connectOrCreate?: Prisma.ItemTemplateCreateOrConnectWithoutArmorInput
+  connect?: Prisma.ItemTemplateWhereUniqueInput
+}
+
+export type ItemTemplateUpdateOneRequiredWithoutArmorNestedInput = {
+  create?: Prisma.XOR<Prisma.ItemTemplateCreateWithoutArmorInput, Prisma.ItemTemplateUncheckedCreateWithoutArmorInput>
+  connectOrCreate?: Prisma.ItemTemplateCreateOrConnectWithoutArmorInput
+  upsert?: Prisma.ItemTemplateUpsertWithoutArmorInput
+  connect?: Prisma.ItemTemplateWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ItemTemplateUpdateToOneWithWhereWithoutArmorInput, Prisma.ItemTemplateUpdateWithoutArmorInput>, Prisma.ItemTemplateUncheckedUpdateWithoutArmorInput>
+}
+
+export type ItemTemplateCreateNestedOneWithoutItemInstancesInput = {
+  create?: Prisma.XOR<Prisma.ItemTemplateCreateWithoutItemInstancesInput, Prisma.ItemTemplateUncheckedCreateWithoutItemInstancesInput>
+  connectOrCreate?: Prisma.ItemTemplateCreateOrConnectWithoutItemInstancesInput
+  connect?: Prisma.ItemTemplateWhereUniqueInput
+}
+
+export type ItemTemplateUpdateOneRequiredWithoutItemInstancesNestedInput = {
+  create?: Prisma.XOR<Prisma.ItemTemplateCreateWithoutItemInstancesInput, Prisma.ItemTemplateUncheckedCreateWithoutItemInstancesInput>
+  connectOrCreate?: Prisma.ItemTemplateCreateOrConnectWithoutItemInstancesInput
+  upsert?: Prisma.ItemTemplateUpsertWithoutItemInstancesInput
+  connect?: Prisma.ItemTemplateWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ItemTemplateUpdateToOneWithWhereWithoutItemInstancesInput, Prisma.ItemTemplateUpdateWithoutItemInstancesInput>, Prisma.ItemTemplateUncheckedUpdateWithoutItemInstancesInput>
+}
+
+export type ItemTemplateCreateNestedOneWithoutStackableItemsInput = {
+  create?: Prisma.XOR<Prisma.ItemTemplateCreateWithoutStackableItemsInput, Prisma.ItemTemplateUncheckedCreateWithoutStackableItemsInput>
+  connectOrCreate?: Prisma.ItemTemplateCreateOrConnectWithoutStackableItemsInput
+  connect?: Prisma.ItemTemplateWhereUniqueInput
+}
+
+export type ItemTemplateUpdateOneRequiredWithoutStackableItemsNestedInput = {
+  create?: Prisma.XOR<Prisma.ItemTemplateCreateWithoutStackableItemsInput, Prisma.ItemTemplateUncheckedCreateWithoutStackableItemsInput>
+  connectOrCreate?: Prisma.ItemTemplateCreateOrConnectWithoutStackableItemsInput
+  upsert?: Prisma.ItemTemplateUpsertWithoutStackableItemsInput
+  connect?: Prisma.ItemTemplateWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ItemTemplateUpdateToOneWithWhereWithoutStackableItemsInput, Prisma.ItemTemplateUpdateWithoutStackableItemsInput>, Prisma.ItemTemplateUncheckedUpdateWithoutStackableItemsInput>
 }
 
 export type ItemTemplateCreateNestedOneWithoutModifierSourceInput = {
@@ -491,7 +554,7 @@ export type ItemTemplateUpdateOneWithoutModifierSourceNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ItemTemplateUpdateToOneWithWhereWithoutModifierSourceInput, Prisma.ItemTemplateUpdateWithoutModifierSourceInput>, Prisma.ItemTemplateUncheckedUpdateWithoutModifierSourceInput>
 }
 
-export type ItemTemplateCreateWithoutCharacterItemsInput = {
+export type ItemTemplateCreateWithoutWeaponInput = {
   id?: string
   name: string
   type: $Enums.ItemType
@@ -501,9 +564,12 @@ export type ItemTemplateCreateWithoutCharacterItemsInput = {
   weight: number
   acquireNote?: string | null
   modifierSource?: Prisma.ModifierSourceCreateNestedOneWithoutItemInput
+  armor?: Prisma.ArmorCreateNestedOneWithoutItemInput
+  itemInstances?: Prisma.ItemInstanceCreateNestedManyWithoutItemInput
+  stackableItems?: Prisma.StackableItemCreateNestedManyWithoutItemInput
 }
 
-export type ItemTemplateUncheckedCreateWithoutCharacterItemsInput = {
+export type ItemTemplateUncheckedCreateWithoutWeaponInput = {
   id?: string
   name: string
   type: $Enums.ItemType
@@ -513,25 +579,28 @@ export type ItemTemplateUncheckedCreateWithoutCharacterItemsInput = {
   weight: number
   acquireNote?: string | null
   modifierSource?: Prisma.ModifierSourceUncheckedCreateNestedOneWithoutItemInput
+  armor?: Prisma.ArmorUncheckedCreateNestedOneWithoutItemInput
+  itemInstances?: Prisma.ItemInstanceUncheckedCreateNestedManyWithoutItemInput
+  stackableItems?: Prisma.StackableItemUncheckedCreateNestedManyWithoutItemInput
 }
 
-export type ItemTemplateCreateOrConnectWithoutCharacterItemsInput = {
+export type ItemTemplateCreateOrConnectWithoutWeaponInput = {
   where: Prisma.ItemTemplateWhereUniqueInput
-  create: Prisma.XOR<Prisma.ItemTemplateCreateWithoutCharacterItemsInput, Prisma.ItemTemplateUncheckedCreateWithoutCharacterItemsInput>
+  create: Prisma.XOR<Prisma.ItemTemplateCreateWithoutWeaponInput, Prisma.ItemTemplateUncheckedCreateWithoutWeaponInput>
 }
 
-export type ItemTemplateUpsertWithoutCharacterItemsInput = {
-  update: Prisma.XOR<Prisma.ItemTemplateUpdateWithoutCharacterItemsInput, Prisma.ItemTemplateUncheckedUpdateWithoutCharacterItemsInput>
-  create: Prisma.XOR<Prisma.ItemTemplateCreateWithoutCharacterItemsInput, Prisma.ItemTemplateUncheckedCreateWithoutCharacterItemsInput>
+export type ItemTemplateUpsertWithoutWeaponInput = {
+  update: Prisma.XOR<Prisma.ItemTemplateUpdateWithoutWeaponInput, Prisma.ItemTemplateUncheckedUpdateWithoutWeaponInput>
+  create: Prisma.XOR<Prisma.ItemTemplateCreateWithoutWeaponInput, Prisma.ItemTemplateUncheckedCreateWithoutWeaponInput>
   where?: Prisma.ItemTemplateWhereInput
 }
 
-export type ItemTemplateUpdateToOneWithWhereWithoutCharacterItemsInput = {
+export type ItemTemplateUpdateToOneWithWhereWithoutWeaponInput = {
   where?: Prisma.ItemTemplateWhereInput
-  data: Prisma.XOR<Prisma.ItemTemplateUpdateWithoutCharacterItemsInput, Prisma.ItemTemplateUncheckedUpdateWithoutCharacterItemsInput>
+  data: Prisma.XOR<Prisma.ItemTemplateUpdateWithoutWeaponInput, Prisma.ItemTemplateUncheckedUpdateWithoutWeaponInput>
 }
 
-export type ItemTemplateUpdateWithoutCharacterItemsInput = {
+export type ItemTemplateUpdateWithoutWeaponInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumItemTypeFieldUpdateOperationsInput | $Enums.ItemType
@@ -541,9 +610,12 @@ export type ItemTemplateUpdateWithoutCharacterItemsInput = {
   weight?: Prisma.FloatFieldUpdateOperationsInput | number
   acquireNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   modifierSource?: Prisma.ModifierSourceUpdateOneWithoutItemNestedInput
+  armor?: Prisma.ArmorUpdateOneWithoutItemNestedInput
+  itemInstances?: Prisma.ItemInstanceUpdateManyWithoutItemNestedInput
+  stackableItems?: Prisma.StackableItemUpdateManyWithoutItemNestedInput
 }
 
-export type ItemTemplateUncheckedUpdateWithoutCharacterItemsInput = {
+export type ItemTemplateUncheckedUpdateWithoutWeaponInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumItemTypeFieldUpdateOperationsInput | $Enums.ItemType
@@ -553,6 +625,237 @@ export type ItemTemplateUncheckedUpdateWithoutCharacterItemsInput = {
   weight?: Prisma.FloatFieldUpdateOperationsInput | number
   acquireNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   modifierSource?: Prisma.ModifierSourceUncheckedUpdateOneWithoutItemNestedInput
+  armor?: Prisma.ArmorUncheckedUpdateOneWithoutItemNestedInput
+  itemInstances?: Prisma.ItemInstanceUncheckedUpdateManyWithoutItemNestedInput
+  stackableItems?: Prisma.StackableItemUncheckedUpdateManyWithoutItemNestedInput
+}
+
+export type ItemTemplateCreateWithoutArmorInput = {
+  id?: string
+  name: string
+  type: $Enums.ItemType
+  description?: string | null
+  price?: number | null
+  acquisition?: $Enums.ItemAcquisition
+  weight: number
+  acquireNote?: string | null
+  modifierSource?: Prisma.ModifierSourceCreateNestedOneWithoutItemInput
+  weapon?: Prisma.WeaponCreateNestedOneWithoutItemInput
+  itemInstances?: Prisma.ItemInstanceCreateNestedManyWithoutItemInput
+  stackableItems?: Prisma.StackableItemCreateNestedManyWithoutItemInput
+}
+
+export type ItemTemplateUncheckedCreateWithoutArmorInput = {
+  id?: string
+  name: string
+  type: $Enums.ItemType
+  description?: string | null
+  price?: number | null
+  acquisition?: $Enums.ItemAcquisition
+  weight: number
+  acquireNote?: string | null
+  modifierSource?: Prisma.ModifierSourceUncheckedCreateNestedOneWithoutItemInput
+  weapon?: Prisma.WeaponUncheckedCreateNestedOneWithoutItemInput
+  itemInstances?: Prisma.ItemInstanceUncheckedCreateNestedManyWithoutItemInput
+  stackableItems?: Prisma.StackableItemUncheckedCreateNestedManyWithoutItemInput
+}
+
+export type ItemTemplateCreateOrConnectWithoutArmorInput = {
+  where: Prisma.ItemTemplateWhereUniqueInput
+  create: Prisma.XOR<Prisma.ItemTemplateCreateWithoutArmorInput, Prisma.ItemTemplateUncheckedCreateWithoutArmorInput>
+}
+
+export type ItemTemplateUpsertWithoutArmorInput = {
+  update: Prisma.XOR<Prisma.ItemTemplateUpdateWithoutArmorInput, Prisma.ItemTemplateUncheckedUpdateWithoutArmorInput>
+  create: Prisma.XOR<Prisma.ItemTemplateCreateWithoutArmorInput, Prisma.ItemTemplateUncheckedCreateWithoutArmorInput>
+  where?: Prisma.ItemTemplateWhereInput
+}
+
+export type ItemTemplateUpdateToOneWithWhereWithoutArmorInput = {
+  where?: Prisma.ItemTemplateWhereInput
+  data: Prisma.XOR<Prisma.ItemTemplateUpdateWithoutArmorInput, Prisma.ItemTemplateUncheckedUpdateWithoutArmorInput>
+}
+
+export type ItemTemplateUpdateWithoutArmorInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumItemTypeFieldUpdateOperationsInput | $Enums.ItemType
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  price?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  acquisition?: Prisma.EnumItemAcquisitionFieldUpdateOperationsInput | $Enums.ItemAcquisition
+  weight?: Prisma.FloatFieldUpdateOperationsInput | number
+  acquireNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  modifierSource?: Prisma.ModifierSourceUpdateOneWithoutItemNestedInput
+  weapon?: Prisma.WeaponUpdateOneWithoutItemNestedInput
+  itemInstances?: Prisma.ItemInstanceUpdateManyWithoutItemNestedInput
+  stackableItems?: Prisma.StackableItemUpdateManyWithoutItemNestedInput
+}
+
+export type ItemTemplateUncheckedUpdateWithoutArmorInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumItemTypeFieldUpdateOperationsInput | $Enums.ItemType
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  price?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  acquisition?: Prisma.EnumItemAcquisitionFieldUpdateOperationsInput | $Enums.ItemAcquisition
+  weight?: Prisma.FloatFieldUpdateOperationsInput | number
+  acquireNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  modifierSource?: Prisma.ModifierSourceUncheckedUpdateOneWithoutItemNestedInput
+  weapon?: Prisma.WeaponUncheckedUpdateOneWithoutItemNestedInput
+  itemInstances?: Prisma.ItemInstanceUncheckedUpdateManyWithoutItemNestedInput
+  stackableItems?: Prisma.StackableItemUncheckedUpdateManyWithoutItemNestedInput
+}
+
+export type ItemTemplateCreateWithoutItemInstancesInput = {
+  id?: string
+  name: string
+  type: $Enums.ItemType
+  description?: string | null
+  price?: number | null
+  acquisition?: $Enums.ItemAcquisition
+  weight: number
+  acquireNote?: string | null
+  modifierSource?: Prisma.ModifierSourceCreateNestedOneWithoutItemInput
+  weapon?: Prisma.WeaponCreateNestedOneWithoutItemInput
+  armor?: Prisma.ArmorCreateNestedOneWithoutItemInput
+  stackableItems?: Prisma.StackableItemCreateNestedManyWithoutItemInput
+}
+
+export type ItemTemplateUncheckedCreateWithoutItemInstancesInput = {
+  id?: string
+  name: string
+  type: $Enums.ItemType
+  description?: string | null
+  price?: number | null
+  acquisition?: $Enums.ItemAcquisition
+  weight: number
+  acquireNote?: string | null
+  modifierSource?: Prisma.ModifierSourceUncheckedCreateNestedOneWithoutItemInput
+  weapon?: Prisma.WeaponUncheckedCreateNestedOneWithoutItemInput
+  armor?: Prisma.ArmorUncheckedCreateNestedOneWithoutItemInput
+  stackableItems?: Prisma.StackableItemUncheckedCreateNestedManyWithoutItemInput
+}
+
+export type ItemTemplateCreateOrConnectWithoutItemInstancesInput = {
+  where: Prisma.ItemTemplateWhereUniqueInput
+  create: Prisma.XOR<Prisma.ItemTemplateCreateWithoutItemInstancesInput, Prisma.ItemTemplateUncheckedCreateWithoutItemInstancesInput>
+}
+
+export type ItemTemplateUpsertWithoutItemInstancesInput = {
+  update: Prisma.XOR<Prisma.ItemTemplateUpdateWithoutItemInstancesInput, Prisma.ItemTemplateUncheckedUpdateWithoutItemInstancesInput>
+  create: Prisma.XOR<Prisma.ItemTemplateCreateWithoutItemInstancesInput, Prisma.ItemTemplateUncheckedCreateWithoutItemInstancesInput>
+  where?: Prisma.ItemTemplateWhereInput
+}
+
+export type ItemTemplateUpdateToOneWithWhereWithoutItemInstancesInput = {
+  where?: Prisma.ItemTemplateWhereInput
+  data: Prisma.XOR<Prisma.ItemTemplateUpdateWithoutItemInstancesInput, Prisma.ItemTemplateUncheckedUpdateWithoutItemInstancesInput>
+}
+
+export type ItemTemplateUpdateWithoutItemInstancesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumItemTypeFieldUpdateOperationsInput | $Enums.ItemType
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  price?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  acquisition?: Prisma.EnumItemAcquisitionFieldUpdateOperationsInput | $Enums.ItemAcquisition
+  weight?: Prisma.FloatFieldUpdateOperationsInput | number
+  acquireNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  modifierSource?: Prisma.ModifierSourceUpdateOneWithoutItemNestedInput
+  weapon?: Prisma.WeaponUpdateOneWithoutItemNestedInput
+  armor?: Prisma.ArmorUpdateOneWithoutItemNestedInput
+  stackableItems?: Prisma.StackableItemUpdateManyWithoutItemNestedInput
+}
+
+export type ItemTemplateUncheckedUpdateWithoutItemInstancesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumItemTypeFieldUpdateOperationsInput | $Enums.ItemType
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  price?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  acquisition?: Prisma.EnumItemAcquisitionFieldUpdateOperationsInput | $Enums.ItemAcquisition
+  weight?: Prisma.FloatFieldUpdateOperationsInput | number
+  acquireNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  modifierSource?: Prisma.ModifierSourceUncheckedUpdateOneWithoutItemNestedInput
+  weapon?: Prisma.WeaponUncheckedUpdateOneWithoutItemNestedInput
+  armor?: Prisma.ArmorUncheckedUpdateOneWithoutItemNestedInput
+  stackableItems?: Prisma.StackableItemUncheckedUpdateManyWithoutItemNestedInput
+}
+
+export type ItemTemplateCreateWithoutStackableItemsInput = {
+  id?: string
+  name: string
+  type: $Enums.ItemType
+  description?: string | null
+  price?: number | null
+  acquisition?: $Enums.ItemAcquisition
+  weight: number
+  acquireNote?: string | null
+  modifierSource?: Prisma.ModifierSourceCreateNestedOneWithoutItemInput
+  weapon?: Prisma.WeaponCreateNestedOneWithoutItemInput
+  armor?: Prisma.ArmorCreateNestedOneWithoutItemInput
+  itemInstances?: Prisma.ItemInstanceCreateNestedManyWithoutItemInput
+}
+
+export type ItemTemplateUncheckedCreateWithoutStackableItemsInput = {
+  id?: string
+  name: string
+  type: $Enums.ItemType
+  description?: string | null
+  price?: number | null
+  acquisition?: $Enums.ItemAcquisition
+  weight: number
+  acquireNote?: string | null
+  modifierSource?: Prisma.ModifierSourceUncheckedCreateNestedOneWithoutItemInput
+  weapon?: Prisma.WeaponUncheckedCreateNestedOneWithoutItemInput
+  armor?: Prisma.ArmorUncheckedCreateNestedOneWithoutItemInput
+  itemInstances?: Prisma.ItemInstanceUncheckedCreateNestedManyWithoutItemInput
+}
+
+export type ItemTemplateCreateOrConnectWithoutStackableItemsInput = {
+  where: Prisma.ItemTemplateWhereUniqueInput
+  create: Prisma.XOR<Prisma.ItemTemplateCreateWithoutStackableItemsInput, Prisma.ItemTemplateUncheckedCreateWithoutStackableItemsInput>
+}
+
+export type ItemTemplateUpsertWithoutStackableItemsInput = {
+  update: Prisma.XOR<Prisma.ItemTemplateUpdateWithoutStackableItemsInput, Prisma.ItemTemplateUncheckedUpdateWithoutStackableItemsInput>
+  create: Prisma.XOR<Prisma.ItemTemplateCreateWithoutStackableItemsInput, Prisma.ItemTemplateUncheckedCreateWithoutStackableItemsInput>
+  where?: Prisma.ItemTemplateWhereInput
+}
+
+export type ItemTemplateUpdateToOneWithWhereWithoutStackableItemsInput = {
+  where?: Prisma.ItemTemplateWhereInput
+  data: Prisma.XOR<Prisma.ItemTemplateUpdateWithoutStackableItemsInput, Prisma.ItemTemplateUncheckedUpdateWithoutStackableItemsInput>
+}
+
+export type ItemTemplateUpdateWithoutStackableItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumItemTypeFieldUpdateOperationsInput | $Enums.ItemType
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  price?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  acquisition?: Prisma.EnumItemAcquisitionFieldUpdateOperationsInput | $Enums.ItemAcquisition
+  weight?: Prisma.FloatFieldUpdateOperationsInput | number
+  acquireNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  modifierSource?: Prisma.ModifierSourceUpdateOneWithoutItemNestedInput
+  weapon?: Prisma.WeaponUpdateOneWithoutItemNestedInput
+  armor?: Prisma.ArmorUpdateOneWithoutItemNestedInput
+  itemInstances?: Prisma.ItemInstanceUpdateManyWithoutItemNestedInput
+}
+
+export type ItemTemplateUncheckedUpdateWithoutStackableItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumItemTypeFieldUpdateOperationsInput | $Enums.ItemType
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  price?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  acquisition?: Prisma.EnumItemAcquisitionFieldUpdateOperationsInput | $Enums.ItemAcquisition
+  weight?: Prisma.FloatFieldUpdateOperationsInput | number
+  acquireNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  modifierSource?: Prisma.ModifierSourceUncheckedUpdateOneWithoutItemNestedInput
+  weapon?: Prisma.WeaponUncheckedUpdateOneWithoutItemNestedInput
+  armor?: Prisma.ArmorUncheckedUpdateOneWithoutItemNestedInput
+  itemInstances?: Prisma.ItemInstanceUncheckedUpdateManyWithoutItemNestedInput
 }
 
 export type ItemTemplateCreateWithoutModifierSourceInput = {
@@ -564,7 +867,10 @@ export type ItemTemplateCreateWithoutModifierSourceInput = {
   acquisition?: $Enums.ItemAcquisition
   weight: number
   acquireNote?: string | null
-  characterItems?: Prisma.CharacterItemCreateNestedManyWithoutItemInput
+  weapon?: Prisma.WeaponCreateNestedOneWithoutItemInput
+  armor?: Prisma.ArmorCreateNestedOneWithoutItemInput
+  itemInstances?: Prisma.ItemInstanceCreateNestedManyWithoutItemInput
+  stackableItems?: Prisma.StackableItemCreateNestedManyWithoutItemInput
 }
 
 export type ItemTemplateUncheckedCreateWithoutModifierSourceInput = {
@@ -576,7 +882,10 @@ export type ItemTemplateUncheckedCreateWithoutModifierSourceInput = {
   acquisition?: $Enums.ItemAcquisition
   weight: number
   acquireNote?: string | null
-  characterItems?: Prisma.CharacterItemUncheckedCreateNestedManyWithoutItemInput
+  weapon?: Prisma.WeaponUncheckedCreateNestedOneWithoutItemInput
+  armor?: Prisma.ArmorUncheckedCreateNestedOneWithoutItemInput
+  itemInstances?: Prisma.ItemInstanceUncheckedCreateNestedManyWithoutItemInput
+  stackableItems?: Prisma.StackableItemUncheckedCreateNestedManyWithoutItemInput
 }
 
 export type ItemTemplateCreateOrConnectWithoutModifierSourceInput = {
@@ -604,7 +913,10 @@ export type ItemTemplateUpdateWithoutModifierSourceInput = {
   acquisition?: Prisma.EnumItemAcquisitionFieldUpdateOperationsInput | $Enums.ItemAcquisition
   weight?: Prisma.FloatFieldUpdateOperationsInput | number
   acquireNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  characterItems?: Prisma.CharacterItemUpdateManyWithoutItemNestedInput
+  weapon?: Prisma.WeaponUpdateOneWithoutItemNestedInput
+  armor?: Prisma.ArmorUpdateOneWithoutItemNestedInput
+  itemInstances?: Prisma.ItemInstanceUpdateManyWithoutItemNestedInput
+  stackableItems?: Prisma.StackableItemUpdateManyWithoutItemNestedInput
 }
 
 export type ItemTemplateUncheckedUpdateWithoutModifierSourceInput = {
@@ -616,7 +928,10 @@ export type ItemTemplateUncheckedUpdateWithoutModifierSourceInput = {
   acquisition?: Prisma.EnumItemAcquisitionFieldUpdateOperationsInput | $Enums.ItemAcquisition
   weight?: Prisma.FloatFieldUpdateOperationsInput | number
   acquireNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  characterItems?: Prisma.CharacterItemUncheckedUpdateManyWithoutItemNestedInput
+  weapon?: Prisma.WeaponUncheckedUpdateOneWithoutItemNestedInput
+  armor?: Prisma.ArmorUncheckedUpdateOneWithoutItemNestedInput
+  itemInstances?: Prisma.ItemInstanceUncheckedUpdateManyWithoutItemNestedInput
+  stackableItems?: Prisma.StackableItemUncheckedUpdateManyWithoutItemNestedInput
 }
 
 
@@ -625,11 +940,13 @@ export type ItemTemplateUncheckedUpdateWithoutModifierSourceInput = {
  */
 
 export type ItemTemplateCountOutputType = {
-  characterItems: number
+  itemInstances: number
+  stackableItems: number
 }
 
 export type ItemTemplateCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  characterItems?: boolean | ItemTemplateCountOutputTypeCountCharacterItemsArgs
+  itemInstances?: boolean | ItemTemplateCountOutputTypeCountItemInstancesArgs
+  stackableItems?: boolean | ItemTemplateCountOutputTypeCountStackableItemsArgs
 }
 
 /**
@@ -645,8 +962,15 @@ export type ItemTemplateCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types
 /**
  * ItemTemplateCountOutputType without action
  */
-export type ItemTemplateCountOutputTypeCountCharacterItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.CharacterItemWhereInput
+export type ItemTemplateCountOutputTypeCountItemInstancesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ItemInstanceWhereInput
+}
+
+/**
+ * ItemTemplateCountOutputType without action
+ */
+export type ItemTemplateCountOutputTypeCountStackableItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.StackableItemWhereInput
 }
 
 
@@ -659,8 +983,11 @@ export type ItemTemplateSelect<ExtArgs extends runtime.Types.Extensions.Internal
   acquisition?: boolean
   weight?: boolean
   acquireNote?: boolean
-  characterItems?: boolean | Prisma.ItemTemplate$characterItemsArgs<ExtArgs>
   modifierSource?: boolean | Prisma.ItemTemplate$modifierSourceArgs<ExtArgs>
+  weapon?: boolean | Prisma.ItemTemplate$weaponArgs<ExtArgs>
+  armor?: boolean | Prisma.ItemTemplate$armorArgs<ExtArgs>
+  itemInstances?: boolean | Prisma.ItemTemplate$itemInstancesArgs<ExtArgs>
+  stackableItems?: boolean | Prisma.ItemTemplate$stackableItemsArgs<ExtArgs>
   _count?: boolean | Prisma.ItemTemplateCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["itemTemplate"]>
 
@@ -699,8 +1026,11 @@ export type ItemTemplateSelectScalar = {
 
 export type ItemTemplateOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "type" | "description" | "price" | "acquisition" | "weight" | "acquireNote", ExtArgs["result"]["itemTemplate"]>
 export type ItemTemplateInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  characterItems?: boolean | Prisma.ItemTemplate$characterItemsArgs<ExtArgs>
   modifierSource?: boolean | Prisma.ItemTemplate$modifierSourceArgs<ExtArgs>
+  weapon?: boolean | Prisma.ItemTemplate$weaponArgs<ExtArgs>
+  armor?: boolean | Prisma.ItemTemplate$armorArgs<ExtArgs>
+  itemInstances?: boolean | Prisma.ItemTemplate$itemInstancesArgs<ExtArgs>
+  stackableItems?: boolean | Prisma.ItemTemplate$stackableItemsArgs<ExtArgs>
   _count?: boolean | Prisma.ItemTemplateCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ItemTemplateIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -709,8 +1039,11 @@ export type ItemTemplateIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types
 export type $ItemTemplatePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "ItemTemplate"
   objects: {
-    characterItems: Prisma.$CharacterItemPayload<ExtArgs>[]
     modifierSource: Prisma.$ModifierSourcePayload<ExtArgs> | null
+    weapon: Prisma.$WeaponPayload<ExtArgs> | null
+    armor: Prisma.$ArmorPayload<ExtArgs> | null
+    itemInstances: Prisma.$ItemInstancePayload<ExtArgs>[]
+    stackableItems: Prisma.$StackableItemPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1115,8 +1448,11 @@ readonly fields: ItemTemplateFieldRefs;
  */
 export interface Prisma__ItemTemplateClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  characterItems<T extends Prisma.ItemTemplate$characterItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ItemTemplate$characterItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CharacterItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   modifierSource<T extends Prisma.ItemTemplate$modifierSourceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ItemTemplate$modifierSourceArgs<ExtArgs>>): Prisma.Prisma__ModifierSourceClient<runtime.Types.Result.GetResult<Prisma.$ModifierSourcePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  weapon<T extends Prisma.ItemTemplate$weaponArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ItemTemplate$weaponArgs<ExtArgs>>): Prisma.Prisma__WeaponClient<runtime.Types.Result.GetResult<Prisma.$WeaponPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  armor<T extends Prisma.ItemTemplate$armorArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ItemTemplate$armorArgs<ExtArgs>>): Prisma.Prisma__ArmorClient<runtime.Types.Result.GetResult<Prisma.$ArmorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  itemInstances<T extends Prisma.ItemTemplate$itemInstancesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ItemTemplate$itemInstancesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ItemInstancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  stackableItems<T extends Prisma.ItemTemplate$stackableItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ItemTemplate$stackableItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StackableItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1542,30 +1878,6 @@ export type ItemTemplateDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.
 }
 
 /**
- * ItemTemplate.characterItems
- */
-export type ItemTemplate$characterItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the CharacterItem
-   */
-  select?: Prisma.CharacterItemSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the CharacterItem
-   */
-  omit?: Prisma.CharacterItemOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.CharacterItemInclude<ExtArgs> | null
-  where?: Prisma.CharacterItemWhereInput
-  orderBy?: Prisma.CharacterItemOrderByWithRelationInput | Prisma.CharacterItemOrderByWithRelationInput[]
-  cursor?: Prisma.CharacterItemWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.CharacterItemScalarFieldEnum | Prisma.CharacterItemScalarFieldEnum[]
-}
-
-/**
  * ItemTemplate.modifierSource
  */
 export type ItemTemplate$modifierSourceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1582,6 +1894,92 @@ export type ItemTemplate$modifierSourceArgs<ExtArgs extends runtime.Types.Extens
    */
   include?: Prisma.ModifierSourceInclude<ExtArgs> | null
   where?: Prisma.ModifierSourceWhereInput
+}
+
+/**
+ * ItemTemplate.weapon
+ */
+export type ItemTemplate$weaponArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Weapon
+   */
+  select?: Prisma.WeaponSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Weapon
+   */
+  omit?: Prisma.WeaponOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WeaponInclude<ExtArgs> | null
+  where?: Prisma.WeaponWhereInput
+}
+
+/**
+ * ItemTemplate.armor
+ */
+export type ItemTemplate$armorArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Armor
+   */
+  select?: Prisma.ArmorSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Armor
+   */
+  omit?: Prisma.ArmorOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ArmorInclude<ExtArgs> | null
+  where?: Prisma.ArmorWhereInput
+}
+
+/**
+ * ItemTemplate.itemInstances
+ */
+export type ItemTemplate$itemInstancesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ItemInstance
+   */
+  select?: Prisma.ItemInstanceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ItemInstance
+   */
+  omit?: Prisma.ItemInstanceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ItemInstanceInclude<ExtArgs> | null
+  where?: Prisma.ItemInstanceWhereInput
+  orderBy?: Prisma.ItemInstanceOrderByWithRelationInput | Prisma.ItemInstanceOrderByWithRelationInput[]
+  cursor?: Prisma.ItemInstanceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ItemInstanceScalarFieldEnum | Prisma.ItemInstanceScalarFieldEnum[]
+}
+
+/**
+ * ItemTemplate.stackableItems
+ */
+export type ItemTemplate$stackableItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the StackableItem
+   */
+  select?: Prisma.StackableItemSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the StackableItem
+   */
+  omit?: Prisma.StackableItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StackableItemInclude<ExtArgs> | null
+  where?: Prisma.StackableItemWhereInput
+  orderBy?: Prisma.StackableItemOrderByWithRelationInput | Prisma.StackableItemOrderByWithRelationInput[]
+  cursor?: Prisma.StackableItemWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.StackableItemScalarFieldEnum | Prisma.StackableItemScalarFieldEnum[]
 }
 
 /**

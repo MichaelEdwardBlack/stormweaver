@@ -73,10 +73,25 @@ export type CharacterTalent = Prisma.CharacterTalentModel
  */
 export type ItemTemplate = Prisma.ItemTemplateModel
 /**
- * Model CharacterItem
+ * Model Weapon
  * 
  */
-export type CharacterItem = Prisma.CharacterItemModel
+export type Weapon = Prisma.WeaponModel
+/**
+ * Model Armor
+ * 
+ */
+export type Armor = Prisma.ArmorModel
+/**
+ * Model ItemInstance
+ * 
+ */
+export type ItemInstance = Prisma.ItemInstanceModel
+/**
+ * Model StackableItem
+ * 
+ */
+export type StackableItem = Prisma.StackableItemModel
 /**
  * Model CharacterPath
  * 
